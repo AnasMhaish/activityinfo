@@ -2,14 +2,20 @@ package org.activityinfo.core.shared;
 
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
-public class LocalizedString {
+public class LocalizedString implements Serializable {
 
     public static final LocalizedString EMPTY = new LocalizedString("");
     public static final String DEFAULT_LOCALE = "en";
 
-    private final String value;
-    private final String locale;
+    private String value;
+    private String locale;
+
+
+    public LocalizedString() {
+    }
+
 
     public LocalizedString(String value, String locale) {
         this.value = value != null ? value : "";

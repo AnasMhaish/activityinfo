@@ -23,8 +23,9 @@ package org.activityinfo.legacy.shared.command;
  */
 
 import com.extjs.gxt.ui.client.data.RpcMap;
+import org.activityinfo.legacy.shared.command.result.CommandResult;
 
-public interface SiteCommand {
+public interface SiteCommand<T extends CommandResult> extends Command<T> {
     public int getSiteId();
 
     public RpcMap getProperties();

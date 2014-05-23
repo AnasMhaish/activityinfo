@@ -21,9 +21,11 @@ package org.activityinfo.core.shared.hash;
  * #L%
  */
 
+import java.io.Serializable;
+
 /**
  * @author yuriyz on 3/6/14.
  */
-public interface HashCode {
+public interface HashCode extends Serializable {
     String asString();
 }

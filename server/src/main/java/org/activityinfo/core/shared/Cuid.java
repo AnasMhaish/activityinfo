@@ -1,12 +1,13 @@
 package org.activityinfo.core.shared;
 
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 
 /**
  * Collision-Resistant Unique ID.
  *
  */
-public final class Cuid {
+public final class Cuid implements Serializable {
 
     @Nonnull
     private final String value;

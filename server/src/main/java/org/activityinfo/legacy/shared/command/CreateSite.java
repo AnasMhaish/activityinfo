@@ -31,7 +31,7 @@ import org.activityinfo.legacy.shared.model.SiteDTO;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class CreateSite implements MutatingCommand<CreateResult>, SiteCommand {
+public class CreateSite implements MutatingCommand<CreateResult>, SiteCommand<CreateResult> {
 
     private RpcMap properties;
 

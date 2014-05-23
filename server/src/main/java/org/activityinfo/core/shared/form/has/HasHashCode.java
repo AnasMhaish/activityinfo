@@ -27,5 +27,4 @@ import org.activityinfo.core.shared.hash.HashCode;
  * @author yuriyz on 3/6/14.
  */
 public interface HasHashCode {
-    HashCode getHashCode();
 }

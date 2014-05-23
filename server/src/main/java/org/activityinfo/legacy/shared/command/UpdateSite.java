@@ -31,7 +31,7 @@ import org.activityinfo.legacy.shared.model.SiteDTO;
 
 import java.util.Map;
 
-public class UpdateSite implements MutatingCommand<VoidResult>, SiteCommand {
+public class UpdateSite implements MutatingCommand<VoidResult>, SiteCommand<VoidResult> {
 
     private int siteId;
     private RpcMap changes;

@@ -137,7 +137,7 @@ public class UserDatabase implements java.io.Serializable, Deleteable {
     /**
      * @return The user who owns this database
      */
-    @ManyToOne(fetch = FetchType.EAGER) @JoinColumn(name = "OwnerUserId", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "OwnerUserId", nullable = false)
     public User getOwner() {
         return this.owner;
     }
@@ -265,7 +265,7 @@ public class UserDatabase implements java.io.Serializable, Deleteable {
         this.lockedPeriods = lockedPeriods;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "userDatabase")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userDatabase")
     public Set<LockedPeriod> getLockedPeriods() {
         return lockedPeriods;
     }
@@ -274,7 +274,7 @@ public class UserDatabase implements java.io.Serializable, Deleteable {
         this.targets = targets;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "userDatabase")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userDatabase")
     public Set<Target> getTargets() {
         return targets;
     }

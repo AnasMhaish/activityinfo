@@ -19,6 +19,9 @@ import java.util.Set;
  */
 public class FormField implements FormElement {
 
+    public static final Cuid CLASS_ID = new Cuid("_form_field");
+
+
     private final Cuid id;
     private LocalizedString label;
     private LocalizedString description;

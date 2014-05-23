@@ -2,6 +2,8 @@ package org.activityinfo.core.shared.form;
 
 import org.activityinfo.core.shared.Resource;
 
-public interface FormElement extends Resource {
+import java.io.Serializable;
+
+public interface FormElement extends Resource, Serializable {
 
 }

@@ -3,7 +3,11 @@ package org.activityinfo.legacy.shared.command;
 import org.activityinfo.legacy.shared.model.ActivityDTO;
 
 /**
- * Retrieves a FormClass (ActivityDTO for now)
+ * Retrieves a ViewModel for a FormClass (ActivityDTO for now)
+ *
+ * The ViewModel is a combination of the FormClass instance along
+ * with related instances and classes necessary to render a
+ * form for the user.
  *
  */
 public class GetFormViewModel implements Command<ActivityDTO> {

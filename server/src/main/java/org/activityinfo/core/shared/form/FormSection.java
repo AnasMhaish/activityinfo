@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class FormSection implements FormElement, FormElementContainer {
 
+    public static final Cuid CLASS_ID = new Cuid("_form_section");
+
 
     private final Cuid id;
     private LocalizedString label;

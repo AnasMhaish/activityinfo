@@ -80,6 +80,7 @@ public class BaseEntityHandler {
             indicator.setMandatory((Boolean) changes.get("mandatory"));
         }
 
+        indicator.getActivity().setSchemaVersion( indicator.getActivity().getSchemaVersion() + 1);
         indicator.getActivity().getDatabase().setLastSchemaUpdate(new Date());
     }
 
@@ -90,7 +91,10 @@ public class BaseEntityHandler {
         if (changes.containsKey("sortOrder")) {
             attribute.setSortOrder((Integer) changes.get("sortOrder"));
         }
-        // TODO: update lastSchemaUpdate
+        for(Activity activity : attribute.getGroup().getActivities()) {
+            activity.setSchemaVersion( activity.getSchemaVersion() + 1);
+            activity.getDatabase().setLastSchemaUpdate(new Date());
+        }
     }
 
     protected void updateAttributeGroupProperties(AttributeGroup group, Map<String, Object> changes) {
@@ -106,6 +110,10 @@ public class BaseEntityHandler {
         }
         if (changes.containsKey("mandatory")) {
             group.setMandatory((Boolean) changes.get("mandatory"));
+        }
+        for(Activity activity : group.getActivities()) {
+            activity.setSchemaVersion( activity.getSchemaVersion() + 1);
+            activity.getDatabase().setLastSchemaUpdate(new Date());
         }
     }
 

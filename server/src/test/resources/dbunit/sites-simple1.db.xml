@@ -116,6 +116,14 @@
   <attributeGroup attributeGroupId="991" name="Deleted"
                   dateDeleted="2011-1-1" multipleAllowed="1" sortOrder="1" mandatory="0"/>
 
+  <attributeGroup attributeGroupId="992" name="Donor"
+                  multipleAllowed="1" sortOrder="1" mandatory="0"/>
+
+  <attribute attributeId="9921" attributeGroupId="992" sortOrder="1" name="Echo"/>
+  <attribute attributeId="9922" attributeGroupId="992" sortOrder="1" name="USAID"/>
+  <attribute attributeId="9923" attributeGroupId="992" sortOrder="1" name="DFID"/>
+
+
   <!-- Database: PEAR -->
 
   <userDatabase databaseId="1" name="PEAR" countryId="1"
@@ -194,6 +202,9 @@
   <activity activityId="3" databaseId="2"
             name="Appui aux centres de santé" reportingFrequency="1" allowEdit="1"
             sortOrder="1" locationTypeId="1" published="0"/>
+
+  <attributeGroupInActivity attributeGroupId="992" activityId="3"/>
+
 
 
   <!-- Appui CS Indicator 1: Utilisation Rate -->

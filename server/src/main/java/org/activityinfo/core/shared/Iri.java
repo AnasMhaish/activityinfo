@@ -1,9 +1,11 @@
 package org.activityinfo.core.shared;
 
+import java.io.Serializable;
+
 /**
  * Internationalized Resource Identifier
  */
-public class Iri {
+public class Iri implements Serializable {
 
     private final String string;
 

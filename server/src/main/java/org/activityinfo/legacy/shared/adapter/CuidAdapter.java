@@ -7,6 +7,7 @@ import org.activityinfo.core.shared.Cuids;
 import org.activityinfo.core.shared.Iri;
 import org.activityinfo.core.shared.form.FormInstance;
 import org.activityinfo.legacy.client.KeyGenerator;
+import org.activityinfo.legacy.shared.command.Month;
 import org.activityinfo.legacy.shared.model.ActivityDTO;
 import org.activityinfo.legacy.shared.model.AttributeGroupDTO;
 import org.activityinfo.legacy.shared.model.EntityDTO;
@@ -26,6 +27,10 @@ public class CuidAdapter {
     public static final char SITE_DOMAIN = 's';
 
     public static final char ACTIVITY_DOMAIN = 'a';
+
+    public static final char ACTIVITY_MONTHLY_REPORT = 'M';
+
+    public static final char MONTHLY_REPORT_INSTANCE = 'q';
 
     public static final char LOCATION_DOMAIN = 'g'; // avoid lower case l !
 
@@ -221,8 +226,11 @@ public class CuidAdapter {
      * references the given AttributeGroup FormClass
      */
     public static Cuid attributeGroupField(ActivityDTO activity, AttributeGroupDTO group) {
-        return new Cuid(ACTIVITY_DOMAIN + block(activity) + "a" +
-                        Integer.toString(group.getId(), Cuids.RADIX));
+        return attributeGroupField(activity.getId(), group.getId());
+    }
+
+    public static Cuid attributeGroupField(Cuid siteFormId, AttributeGroupDTO group) {
+        return attributeGroupField(getLegacyIdFromCuid(siteFormId), group.getId());
     }
 
     /**
@@ -301,5 +309,17 @@ public class CuidAdapter {
 
     public static Cuid generateLocationCuid() {
         return locationInstanceId(new KeyGenerator().generateInt());
+    }
+
+    public static Cuid monthlyReportFormClass(int activityId) {
+        return cuid(ACTIVITY_MONTHLY_REPORT, activityId);
+    }
+
+    public static Month monthFromReportId(Cuid instanceId) {
+        return new Month(getBlock(instanceId, 1), getBlock(instanceId, 2));
+    }
+
+    public static Cuid monthlyReportInstanceId(int siteId, Month month) {
+        return new Cuid(MONTHLY_REPORT_INSTANCE + block(siteId) + block(month.getYear()) + block(month.getMonth()));
     }
 }

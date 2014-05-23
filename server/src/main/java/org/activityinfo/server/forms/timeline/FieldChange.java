@@ -1,4 +1,4 @@
-package org.activityinfo.legacy.shared.command;
+package org.activityinfo.server.forms.timeline;
 
 /*
  * #%L
@@ -22,26 +22,37 @@ package org.activityinfo.legacy.shared.command;
  * #L%
  */
 
-import org.activityinfo.legacy.shared.command.result.HtmlResult;
+import org.activityinfo.core.shared.form.FormField;
 
-public class GetSiteHistory implements Command<HtmlResult> {
-    private static final long serialVersionUID = 1475811548735657666L;
+public class FieldChange {
+    private FormField field;
+    private Object oldValue;
+    private Object newValue;
 
-    private int siteId;
-
-    public GetSiteHistory() {
+    public FieldChange(FormField field, Object oldValue, Object newValue) {
+        this.field = field;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
     }
 
-    public GetSiteHistory(int siteId) {
-        this.siteId = siteId;
+    public FormField getField() {
+        return field;
     }
 
-    public int getSiteId() {
-        return siteId;
+    public Object getOldValue() {
+        return oldValue;
+    }
+
+    public Object getNewValue() {
+        return newValue;
+    }
+
+    public String getFieldLabel() {
+        return field.getLabel().getValue();
     }
 
     @Override
     public String toString() {
-        return "GetSiteHistory(" + siteId + ")";
+        return field.getLabel() + ": " + oldValue + " -> " + newValue;
     }
 }

@@ -90,6 +90,10 @@ public class FormInstance implements Resource, HasHashCode {
         }
     }
 
+    public void set(Map<Cuid, Object> valueMap) {
+        valueMap.putAll(valueMap);
+    }
+
     public void set(@NotNull Cuid fieldId, Object fieldValue) {
         Preconditions.checkNotNull(fieldId);
         if (fieldValue instanceof LocalDate) {
@@ -102,6 +106,10 @@ public class FormInstance implements Resource, HasHashCode {
         }
 
         valueMap.put(fieldId, fieldValue);
+    }
+
+    public void remove(Cuid fieldId) {
+        valueMap.remove(fieldId);
     }
 
     public Object get(Cuid fieldId) {
@@ -165,10 +173,6 @@ public class FormInstance implements Resource, HasHashCode {
         return null;
     }
 
-    public HashCode getHashCode() {
-        return hashCode;
-    }
-
     public void setHashCode(HashCode hashCode) {
         this.hashCode = hashCode;
     }
@@ -181,5 +185,6 @@ public class FormInstance implements Resource, HasHashCode {
                 ", valueMap=" + valueMap +
                 '}';
     }
+
 
 }
