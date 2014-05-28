@@ -33,7 +33,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
 /**
  * One-to-one DTO for the
  * {@link org.activityinfo.server.database.hibernate.entity.Indicator} domain
- * object.
+ * obje
  *
  * @author Alex Bertram
  */

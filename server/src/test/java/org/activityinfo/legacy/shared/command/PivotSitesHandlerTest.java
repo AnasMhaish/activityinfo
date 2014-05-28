@@ -24,30 +24,44 @@ package org.activityinfo.legacy.shared.command;
 
 import com.bedatadriven.rebar.time.calendar.LocalDate;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.inject.Inject;
+import org.activityinfo.core.client.InstanceQuery;
+import org.activityinfo.core.client.QueryResult;
+import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.core.shared.Projection;
+import org.activityinfo.core.shared.criteria.ClassCriteria;
+import org.activityinfo.core.shared.cube.*;
+import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.core.shared.table.ArrayColumnView;
+import org.activityinfo.core.shared.table.ColumnView;
+import org.activityinfo.core.shared.table.TableModel;
 import org.activityinfo.fixtures.InjectionSupport;
 import org.activityinfo.fixtures.Modules;
+import org.activityinfo.legacy.shared.adapter.CuidAdapter;
+import org.activityinfo.legacy.shared.adapter.ResourceLocatorAdaptor;
 import org.activityinfo.legacy.shared.command.PivotSites.ValueType;
 import org.activityinfo.legacy.shared.command.result.Bucket;
 import org.activityinfo.legacy.shared.exception.CommandException;
-import org.activityinfo.legacy.shared.reports.content.DimensionCategory;
-import org.activityinfo.legacy.shared.reports.content.EntityCategory;
-import org.activityinfo.legacy.shared.reports.content.QuarterCategory;
-import org.activityinfo.legacy.shared.reports.content.WeekCategory;
+import org.activityinfo.legacy.shared.reports.content.*;
 import org.activityinfo.legacy.shared.reports.model.*;
 import org.activityinfo.server.command.CommandTestCase2;
 import org.activityinfo.server.database.OnDataSet;
 import org.activityinfo.server.database.TestDatabaseModule;
 import org.activityinfo.server.report.util.DateUtilCalendarImpl;
+import org.activityinfo.ui.client.component.table.FieldColumn;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static java.util.Arrays.asList;
+import static org.activityinfo.core.client.PromiseMatchers.assertResolves;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(InjectionSupport.class)
@@ -68,6 +82,9 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
 
     private static final int OWNER_USER_ID = 1;
     private static final int NB_BENEFICIARIES_ID = 1;
+
+    @Inject
+    private EntityManager em;
 
     @BeforeClass
     public static void setup() {
@@ -118,7 +135,7 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
     @Test
     public void testYears() {
         forTotalSiteCounts();
-        filteringOnDatabases(1,2);
+        filteringOnDatabases(1, 2);
         dimensions.add(new DateDimension(DateUnit.YEAR));
 
         execute();
@@ -164,7 +181,7 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
     @Test
     public void testMonths() {
         forTotalSiteCounts();
-        filteringOnDatabases(1,2);
+        filteringOnDatabases(1, 2);
         dimensions.add(new DateDimension(DateUnit.MONTH));
         filter.setDateRange(new DateUtilCalendarImpl().yearRange(2009));
 
@@ -211,6 +228,166 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
                 .andItsPartnerLabelIs("NRC");
         assertThat().forPartner(2).thereIsOneBucketWithValue(10000)
                 .andItsPartnerLabelIs("Solidarites");
+
+
+        PivotSites query = composeQuery();
+
+        TableModel tableModel = new TableModel();
+        tableModel.setFormClassId(CuidAdapter.activityFormClass(1));
+        FieldPath path1 = new FieldPath(CuidAdapter.indicatorField(1));
+        FieldPath path2 = new FieldPath(CuidAdapter.partnerField(1),
+                CuidAdapter.field(CuidAdapter.partnerFormClass(1), CuidAdapter.NAME_FIELD));
+
+        FieldColumn beneficiaries = new FieldColumn(path1, "Beneficiaries");
+        FieldColumn partner = new FieldColumn(path2, "Partner");
+
+        tableModel.setColumns(Arrays.asList(beneficiaries, partner));
+
+        CubeModel cubeModel = new CubeModel(tableModel);
+        cubeModel.getDimensions().add(new DimensionModel(partner.getId()));
+        cubeModel.setMeasure(new MeasureModel(AggregationType.SUM, beneficiaries.getId()));
+
+        Map<Cuid, ColumnView> tableData = buildTable(tableModel);
+
+        List<Bucket> buckets = buildCube(cubeModel, tableData);
+
+        printBuckets(buckets);
+
+
+
+//
+//        int formClassId = 1;
+//        int indicatorId = 1;
+//        double[] indicatorColumn = buildIndicatorColumn(formClassId, indicatorId);
+//
+//        System.out.println(Arrays.toString(indicatorColumn));
+
+
+    }
+
+    private List<Bucket> buildCube(CubeModel cubeModel, Map<Cuid, ColumnView> tableData) {
+
+        Map<BucketKey, Aggregator> aggregators = Maps.newHashMap();
+
+        Object[] dimensions = new Object[cubeModel.getDimensions().size()];
+
+        int numRows = tableData.values().iterator().next().numRows();
+
+        for(int i=0;i!=numRows;++i) {
+
+            for(int j=0;j!=cubeModel.getDimensions().size();++j) {
+                DimensionModel dim = cubeModel.getDimensions().get(j);
+                dimensions[j] = tableData.get(dim.getColumnId()).get(i);
+            }
+            BucketKey key = new BucketKey(dimensions);
+            Aggregator aggregator = aggregators.get(key);
+            if(aggregator == null) {
+                aggregator = createAggregator(cubeModel);
+                aggregators.put(key, aggregator);
+            }
+
+            aggregator.value(tableData.get(cubeModel.getMeasure().getColumnId())
+                                      .getDouble(i));
+        }
+
+        List<Bucket> buckets = Lists.newArrayList();
+        for(BucketKey key : aggregators.keySet()) {
+            Bucket bucket = new Bucket(aggregators.get(key).compute());
+            for(int j=0;j!=cubeModel.getDimensions().size();++j) {
+                DimensionModel dim = cubeModel.getDimensions().get(j);
+                bucket.setCategory(
+                        toLegacyDimension(cubeModel, dim),
+                        toLegacyDimensionCategory(cubeModel, dim, key.getCategory(j)));
+            }
+            buckets.add(bucket);
+        }
+
+        return buckets;
+    }
+
+    private DimensionCategory toLegacyDimensionCategory(CubeModel cubeModel, DimensionModel dim, Object category) {
+        return new SimpleCategory("" + category);
+
+    }
+
+    private Dimension toLegacyDimension(CubeModel cubeModel, DimensionModel dim) {
+        return new Dimension(DimensionType.Partner);
+    }
+
+    private Aggregator createAggregator(CubeModel cubeModel) {
+
+        if(cubeModel.getMeasure().getAggregationType() == AggregationType.SUM) {
+            return new SumAggregator();
+        } else {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    /**
+     *
+     * @param tableModel
+     * @return map from ColumnId -> ColumnView
+     */
+    private Map<Cuid, ColumnView> buildTable(TableModel tableModel) {
+
+//        Multimap<Cuid, FieldPath> paths = HashMultimap.create();
+//        for(FieldColumn column : tableModel.getColumns()) {
+//            paths.putAll(column.getId(), column.getFieldPaths());
+//        }
+
+        Map<Cuid, ColumnView> results = Maps.newHashMap();
+
+        for(FieldColumn column : tableModel.getColumns()) {
+
+            ArrayColumnView value = fetchColumn(tableModel.getFormClassId(), column);
+            results.put(column.getId(), value);
+
+        }
+
+        return results;
+
+    }
+
+    private ArrayColumnView fetchColumn(Cuid formClassId, FieldColumn column) {
+        ResourceLocatorAdaptor locator = new ResourceLocatorAdaptor(getDispatcher());
+        QueryResult queryResult = assertResolves(locator.queryProjection(new InstanceQuery(column.getFieldPaths(),
+                new ClassCriteria(formClassId))));
+
+        List<Projection> rows = queryResult.getProjections();
+    
+        Object[] columnArray = new Object[queryResult.getTotalCount()];
+        for(int i=0; i!=queryResult.getTotalCount();++i) {
+            for(FieldPath path : column.getFieldPaths()) {
+                Object value = rows.get(i).getValue(path);
+                if(value != null) {
+                    columnArray[i] = value;
+                }
+            }
+        }
+        return new ArrayColumnView(columnArray);
+    }
+
+    private double[] buildIndicatorColumn(int formClassId, int indicatorId) {
+        List resultList = em.createNativeQuery("select fieldValues.value from site s left join " +
+                                               "(select p.siteid, iv.value from reportingperiod p " +
+                                               "left join indicatorvalue iv on (p.reportingPeriodId = iv" +
+                                               ".ReportingPeriodId) " +
+                                               "where iv.indicatorId = " + indicatorId +
+                                               ") fieldValues on (s.siteid=fieldValues.siteid) " +
+                                               "where s.activityId=" + formClassId + " order by s.siteid")
+                            .getResultList();
+
+        double[] values = new double[resultList.size()];
+        int row = 0;
+        for(Object result : resultList) {
+            Number value = (Number) result;
+            if(value == null) {
+                values[row++] = Double.NaN;
+            } else {
+                values[row++] = value.doubleValue();
+            }
+        }
+        return values;
     }
 
     @Test
@@ -334,8 +511,7 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
         // valueType=TOTAL_SITES]
         withPartnerAsDimension();
         forTotalSiteCounts();
-        filter.addRestriction(DimensionType.Indicator,
-                Lists.newArrayList(1, 2, 3));
+        filter.addRestriction(DimensionType.Indicator, Lists.newArrayList(1, 2, 3));
 
         execute();
     }
@@ -464,12 +640,9 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
         execute();
 
         assertEquals(3, buckets.size());
-        assertEquals(1500, (int) findBucketByQuarter(buckets, 2009, 1)
-                .doubleValue());
-        assertEquals(3600, (int) findBucketByQuarter(buckets, 2009, 2)
-                .doubleValue());
-        assertEquals(10000, (int) findBucketByQuarter(buckets, 2008, 4)
-                .doubleValue());
+        assertEquals(1500, (int) findBucketByQuarter(buckets, 2009, 1).doubleValue());
+        assertEquals(3600, (int) findBucketByQuarter(buckets, 2009, 2).doubleValue());
+        assertEquals(10000, (int) findBucketByQuarter(buckets, 2008, 4).doubleValue());
     }
 
     @Test
@@ -496,7 +669,7 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
     public void testLinkedPartnerSiteCount() {
         withPartnerAsDimension();
         forTotalSiteCounts();
-        filteringOnDatabases(1,2);
+        filteringOnDatabases(1, 2);
         execute();
         assertThat().thereAre(2).buckets();
         assertThat().forPartner(1).thereIsOneBucketWithValue(2).andItsPartnerLabelIs("NRC");
@@ -521,7 +694,7 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
     public void testLinkedAttributegroupFilterData() {
         withAttributeGroupDim();
         forFilterData();
-        filteringOnDatabases(1,2);
+        filteringOnDatabases(1, 2);
         execute();
 
         assertThat().thereAre(2).buckets();
@@ -642,8 +815,7 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
         assertThat().forLocation(2).thereIsOneBucketWithValue(3600).at(27.328491, -2.712609);
 
         // should be calculated from RDC's MBR
-        assertThat().forLocation(4).thereIsOneBucketWithValue(44).at(
-                (12.18794184 + 31.306) / 2,
+        assertThat().forLocation(4).thereIsOneBucketWithValue(44).at((12.18794184 + 31.306) / 2,
                 (-13.45599996 + 5.386098154) / 2);
     }
 
@@ -659,8 +831,7 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
                 (28.30146624 + 29.0339514) / 2.0,
                 (-2.998746978 + -2.494392989) / 2.0);
 
-        assertThat().forTerritoire(12).thereIsOneBucketWithValue(5100).at(
-                (26.8106418 + 28.37725848) / 2.0,
+        assertThat().forTerritoire(12).thereIsOneBucketWithValue(5100).at((26.8106418 + 28.37725848) / 2.0,
                 (-4.022388142 + -1.991221064) / 2.0);
     }
 
@@ -745,7 +916,7 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
 
         setUser(OWNER_USER_ID);
         try {
-            PivotSites pivot = new PivotSites(dimensions, filter);
+            PivotSites pivot = composeQuery();
             pivot.setValueType(valueType);
             pivot.setPointRequested(pointsRequested);
             buckets = execute(pivot).getBuckets();
@@ -753,8 +924,12 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
             throw new RuntimeException(e);
         }
 
+        printBuckets(buckets);
+    }
+
+    private void printBuckets(List<Bucket> buckets1) {
         System.out.println("Buckets = [");
-        for (Bucket bucket : buckets) {
+        for (Bucket bucket : buckets1) {
             System.out.print("  { Value: " + bucket.doubleValue());
             for (Dimension dim : bucket.dimensions()) {
                 DimensionCategory cat = bucket.getCategory(dim);
@@ -764,6 +939,10 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
             System.out.println("\n  }");
         }
         System.out.print("]\n");
+    }
+
+    private PivotSites composeQuery() {
+        return new PivotSites(dimensions, filter);
     }
 
     public AssertionBuilder assertThat() {
