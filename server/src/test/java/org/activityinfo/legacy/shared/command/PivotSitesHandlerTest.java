@@ -26,15 +26,11 @@ import com.bedatadriven.rebar.time.calendar.LocalDate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
-import org.activityinfo.core.client.InstanceQuery;
-import org.activityinfo.core.client.QueryResult;
-import org.activityinfo.core.shared.Cuid;
-import org.activityinfo.core.shared.Projection;
-import org.activityinfo.core.shared.criteria.ClassCriteria;
+import org.activityinfo.core.client.ResourceLocator;
 import org.activityinfo.core.shared.cube.*;
 import org.activityinfo.core.shared.form.tree.FieldPath;
-import org.activityinfo.core.shared.table.ArrayColumnView;
 import org.activityinfo.core.shared.table.TableColumnData;
+import org.activityinfo.core.shared.table.TableColumnDataBuilder;
 import org.activityinfo.core.shared.table.TableModel;
 import org.activityinfo.fixtures.InjectionSupport;
 import org.activityinfo.fixtures.Modules;
@@ -232,6 +228,8 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
 
         PivotSites query = composeQuery();
 
+        ResourceLocator resourceLocator = new ResourceLocatorAdaptor(getDispatcher());
+
         TableModel tableModel = new TableModel();
         tableModel.setFormClassId(CuidAdapter.activityFormClass(1));
         FieldPath path1 = new FieldPath(CuidAdapter.indicatorField(1));
@@ -247,7 +245,7 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
         cubeModel.getDimensions().add(new DimensionModel(partner.getId()));
         cubeModel.setMeasure(new MeasureModel(AggregationType.SUM, beneficiaries.getId()));
 
-        TableColumnData tableData = buildTable(tableModel);
+        TableColumnData tableData = assertResolves(new TableColumnDataBuilder(resourceLocator).build(tableModel));
 
         List<Bucket> buckets = buildCube(cubeModel, tableData);
 
@@ -321,50 +319,6 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
         } else {
             throw new UnsupportedOperationException();
         }
-    }
-
-    /**
-     *
-     * @param tableModel
-     * @return map from ColumnId -> ColumnView
-     */
-    private TableColumnData buildTable(TableModel tableModel) {
-
-//        Multimap<Cuid, FieldPath> paths = HashMultimap.create();
-//        for(FieldColumn column : tableModel.getColumns()) {
-//            paths.putAll(column.getId(), column.getFieldPaths());
-//        }
-
-        TableColumnData tableData = new TableColumnData();
-
-        for(FieldColumn column : tableModel.getColumns()) {
-
-            ArrayColumnView value = fetchColumn(tableModel.getFormClassId(), column);
-            tableData.getColumnIdToViewMap().put(column.getId(), value);
-
-        }
-
-        return tableData;
-
-    }
-
-    private ArrayColumnView fetchColumn(Cuid formClassId, FieldColumn column) {
-        ResourceLocatorAdaptor locator = new ResourceLocatorAdaptor(getDispatcher());
-        QueryResult queryResult = assertResolves(locator.queryProjection(new InstanceQuery(column.getFieldPaths(),
-                new ClassCriteria(formClassId))));
-
-        List<Projection> rows = queryResult.getProjections();
-    
-        Object[] columnArray = new Object[queryResult.getTotalCount()];
-        for(int i=0; i!=queryResult.getTotalCount();++i) {
-            for(FieldPath path : column.getFieldPaths()) {
-                Object value = rows.get(i).getValue(path);
-                if(value != null) {
-                    columnArray[i] = value;
-                }
-            }
-        }
-        return new ArrayColumnView(columnArray);
     }
 
     private double[] buildIndicatorColumn(int formClassId, int indicatorId) {

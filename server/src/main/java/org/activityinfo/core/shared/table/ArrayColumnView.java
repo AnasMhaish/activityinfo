@@ -1,14 +1,29 @@
 package org.activityinfo.core.shared.table;
 
+import org.activityinfo.core.shared.Cuid;
+
 /**
  * Created by alex on 5/28/14.
  */
 public class ArrayColumnView implements ColumnView {
 
+    private Cuid columnId;
     private final Object[] values;
 
     public ArrayColumnView(Object[] values) {
         this.values = values;
+    }
+
+    public Cuid getColumnId() {
+        return columnId;
+    }
+
+    public void setColumnId(Cuid columnId) {
+        this.columnId = columnId;
+    }
+
+    public Object[] getValues() {
+        return values;
     }
 
     @Override
