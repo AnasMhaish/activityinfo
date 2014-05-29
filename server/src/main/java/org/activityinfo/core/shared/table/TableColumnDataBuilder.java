@@ -61,7 +61,7 @@ public class TableColumnDataBuilder {
                 for (Promise<ArrayColumnView> promise : promises) {
                     tableData.getColumnIdToViewMap().put(promise.get().getColumnId(), promise.get());
                 }
-                return null;
+                return tableData;
             }
         });
     }
