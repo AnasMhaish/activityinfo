@@ -1,4 +1,4 @@
-package org.activityinfo.core.shared.table;
+package org.activityinfo.core.shared.table.provider;
 /*
  * #%L
  * ActivityInfo Server
@@ -21,22 +21,26 @@ package org.activityinfo.core.shared.table;
  * #L%
  */
 
-import com.google.common.collect.Maps;
-import org.activityinfo.core.shared.form.tree.FieldPath;
-
-import java.util.Map;
+import org.activityinfo.core.shared.table.ColumnView;
 
 /**
- * @author yuriyz on 5/28/14.
+ * @author yuriyz on 5/29/14.
  */
-public class TableColumnData {
+class CacheValue {
 
-    private final Map<FieldPath, ColumnView> columnIdToViewMap = Maps.newHashMap();
+    private final ColumnView columnView;
+    private final int cacheId;
 
-    public TableColumnData() {
+    public CacheValue(ColumnView columnView, int cacheId) {
+        this.columnView = columnView;
+        this.cacheId = cacheId;
     }
 
-    public Map<FieldPath, ColumnView> getColumnIdToViewMap() {
-        return columnIdToViewMap;
+    public ColumnView getColumnView() {
+        return columnView;
+    }
+
+    public int getCacheId() {
+        return cacheId;
     }
 }

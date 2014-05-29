@@ -1,4 +1,4 @@
-package org.activityinfo.core.shared.table;
+package org.activityinfo.core.shared.table.provider;
 /*
  * #%L
  * ActivityInfo Server
@@ -21,22 +21,22 @@ package org.activityinfo.core.shared.table;
  * #L%
  */
 
-import com.google.common.collect.Maps;
-import org.activityinfo.core.shared.form.tree.FieldPath;
-
-import java.util.Map;
+import org.activityinfo.core.client.ResourceLocator;
+import org.activityinfo.ui.client.component.table.FieldColumn;
 
 /**
- * @author yuriyz on 5/28/14.
+ * @author yuriyz on 5/29/14.
  */
-public class TableColumnData {
+class ColumnViewProviderBuilder {
 
-    private final Map<FieldPath, ColumnView> columnIdToViewMap = Maps.newHashMap();
+    private final ResourceLocator resourceLocator;
 
-    public TableColumnData() {
+    public ColumnViewProviderBuilder(ResourceLocator resourceLocator) {
+        this.resourceLocator = resourceLocator;
     }
 
-    public Map<FieldPath, ColumnView> getColumnIdToViewMap() {
-        return columnIdToViewMap;
+    public ColumnViewProvider build(FieldColumn column) {
+        boolean isCalculated = column.getNode() != null && column.getNode().getField().isCalculated();
+        return isCalculated ? new CalculatedColumnViewProvider(resourceLocator, column) : new SimpleColumnViewProvider(resourceLocator);
     }
 }

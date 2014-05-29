@@ -49,6 +49,7 @@ public class FormClass implements Resource, FormElementContainer, HasHashCode {
     private Set<Iri> subClasses = Sets.newHashSet();
     private List<FormElement> elements = Lists.newArrayList();
     private HashCode hashCode;
+    private int cacheId;
 
     public FormClass(Cuid id) {
         Preconditions.checkNotNull(id);
@@ -62,6 +63,7 @@ public class FormClass implements Resource, FormElementContainer, HasHashCode {
         copy.getSubClasses().addAll(this.getSubClasses());
         copy.getSuperClasses().addAll(this.getSuperClasses());
         copy.setLabel(this.getLabel());
+        copy.setCacheId(this.getCacheId());
         return copy;
     }
 
@@ -169,6 +171,14 @@ public class FormClass implements Resource, FormElementContainer, HasHashCode {
 
     public void addElement(FormElement element) {
         elements.add(element);
+    }
+
+    public int getCacheId() {
+        return cacheId;
+    }
+
+    public void setCacheId(int cacheId) {
+        this.cacheId = cacheId;
     }
 
     public HashCode getHashCode() {

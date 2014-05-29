@@ -1,25 +1,26 @@
 package org.activityinfo.core.shared.table;
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.core.shared.form.tree.FieldPath;
 
 /**
  * Created by alex on 5/28/14.
  */
 public class ArrayColumnView implements ColumnView {
 
-    private Cuid columnId;
+    private FieldPath id;
+    private int formClassCacheId;
     private final Object[] values;
 
     public ArrayColumnView(Object[] values) {
         this.values = values;
     }
 
-    public Cuid getColumnId() {
-        return columnId;
+    public FieldPath getId() {
+        return id;
     }
 
-    public void setColumnId(Cuid columnId) {
-        this.columnId = columnId;
+    public void setId(FieldPath id) {
+        this.id = id;
     }
 
     public Object[] getValues() {
@@ -54,5 +55,13 @@ public class ArrayColumnView implements ColumnView {
     @Override
     public Object get(int i) {
         return values[i];
+    }
+
+    public int getFormClassCacheId() {
+        return formClassCacheId;
+    }
+
+    public void setFormClassCacheId(int formClassCacheId) {
+        this.formClassCacheId = formClassCacheId;
     }
 }

@@ -1,13 +1,34 @@
 package org.activityinfo.core.shared.table;
 
+import org.activityinfo.core.shared.form.tree.FieldPath;
+
 /**
  * Created by alex on 5/28/14.
  */
 public class DoubleArrayColumnView implements ColumnView {
+
+    private FieldPath id;
+    private int formClassCacheId;;
     private double array[];
 
     public DoubleArrayColumnView(double[] array) {
         this.array = array;
+    }
+
+    public FieldPath getId() {
+        return id;
+    }
+
+    public void setId(FieldPath id) {
+        this.id = id;
+    }
+
+    public int getFormClassCacheId() {
+        return formClassCacheId;
+    }
+
+    public void setFormClassCacheId(int formClassCacheId) {
+        this.formClassCacheId = formClassCacheId;
     }
 
     @Override

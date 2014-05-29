@@ -21,20 +21,14 @@ package org.activityinfo.core.shared.table;
  * #L%
  */
 
-import com.google.common.base.Function;
 import com.google.common.base.Supplier;
 import com.google.common.collect.Lists;
-import org.activityinfo.core.client.InstanceQuery;
-import org.activityinfo.core.client.QueryResult;
 import org.activityinfo.core.client.ResourceLocator;
-import org.activityinfo.core.shared.Cuid;
-import org.activityinfo.core.shared.Projection;
-import org.activityinfo.core.shared.criteria.ClassCriteria;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.core.shared.form.FormClass;
+import org.activityinfo.core.shared.table.provider.MainColumnViewProvider;
 import org.activityinfo.fp.client.Promise;
 import org.activityinfo.ui.client.component.table.FieldColumn;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -48,48 +42,25 @@ public class TableColumnDataBuilder {
         this.resourceLocator = resourceLocator;
     }
 
-    public Promise<TableColumnData> build(TableModel tableModel) {
-        final List<Promise<ArrayColumnView>> promises = Lists.newArrayList();
+    public Promise<TableColumnData> build(final TableModel tableModel) {
+        final Promise<FormClass> formClass = resourceLocator.getFormClass(tableModel.getFormClassId());
+        final MainColumnViewProvider columnViewProvider = new MainColumnViewProvider(resourceLocator);
+        final List<Promise<? extends ColumnView>> promises = Lists.newArrayList();
         for (FieldColumn column : tableModel.getColumns()) {
-            promises.add(fetchColumn(tableModel.getFormClassId(), column));
+            promises.add(columnViewProvider.view(column, formClass.get()));
         }
 
         return Promise.waitAll(promises).then(new Supplier<TableColumnData>() {
             @Override
             public TableColumnData get() {
+                columnViewProvider.toString();
                 TableColumnData tableData = new TableColumnData();
-                for (Promise<ArrayColumnView> promise : promises) {
-                    tableData.getColumnIdToViewMap().put(promise.get().getColumnId(), promise.get());
+                for (Promise<? extends ColumnView> promise : promises) {
+                    tableData.getColumnIdToViewMap().put(promise.get().getId(), promise.get());
                 }
                 return tableData;
             }
         });
-    }
 
-
-    private Promise<ArrayColumnView> fetchColumn(Cuid formClassId, final FieldColumn column) {
-        Promise<QueryResult<Projection>> queryResultPromise = resourceLocator.queryProjection(new InstanceQuery(column.getFieldPaths(),
-                new ClassCriteria(formClassId)));
-
-        return queryResultPromise.then(new Function<QueryResult<Projection>, ArrayColumnView>() {
-            @Nullable
-            @Override
-            public ArrayColumnView apply(@Nullable QueryResult<Projection> queryResult) {
-                List<Projection> rows = queryResult.getProjections();
-
-                Object[] columnArray = new Object[queryResult.getTotalCount()];
-                for (int i = 0; i != queryResult.getTotalCount(); ++i) {
-                    for (FieldPath path : column.getFieldPaths()) {
-                        Object value = rows.get(i).getValue(path);
-                        if (value != null) {
-                            columnArray[i] = value;
-                        }
-                    }
-                }
-                ArrayColumnView columnView = new ArrayColumnView(columnArray);
-                columnView.setColumnId(column.getId());
-                return columnView;
-            }
-        });
     }
 }

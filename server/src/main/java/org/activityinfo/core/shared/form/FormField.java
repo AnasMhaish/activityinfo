@@ -1,6 +1,7 @@
 package org.activityinfo.core.shared.form;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 import org.activityinfo.core.shared.Cuid;
 import org.activityinfo.core.shared.Iri;
@@ -126,6 +127,10 @@ public class FormField implements FormElement {
      */
     public String getCalculation() {
         return calculation;
+    }
+
+    public boolean isCalculated() {
+        return !Strings.isNullOrEmpty(calculation);
     }
 
     public void setCalculation(String calculation) {
