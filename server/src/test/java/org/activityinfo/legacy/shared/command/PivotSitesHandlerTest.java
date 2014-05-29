@@ -34,7 +34,7 @@ import org.activityinfo.core.shared.criteria.ClassCriteria;
 import org.activityinfo.core.shared.cube.*;
 import org.activityinfo.core.shared.form.tree.FieldPath;
 import org.activityinfo.core.shared.table.ArrayColumnView;
-import org.activityinfo.core.shared.table.ColumnView;
+import org.activityinfo.core.shared.table.TableColumnData;
 import org.activityinfo.core.shared.table.TableModel;
 import org.activityinfo.fixtures.InjectionSupport;
 import org.activityinfo.fixtures.Modules;
@@ -247,7 +247,7 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
         cubeModel.getDimensions().add(new DimensionModel(partner.getId()));
         cubeModel.setMeasure(new MeasureModel(AggregationType.SUM, beneficiaries.getId()));
 
-        Map<Cuid, ColumnView> tableData = buildTable(tableModel);
+        TableColumnData tableData = buildTable(tableModel);
 
         List<Bucket> buckets = buildCube(cubeModel, tableData);
 
@@ -265,19 +265,19 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
 
     }
 
-    private List<Bucket> buildCube(CubeModel cubeModel, Map<Cuid, ColumnView> tableData) {
+    private List<Bucket> buildCube(CubeModel cubeModel, TableColumnData tableData) {
 
         Map<BucketKey, Aggregator> aggregators = Maps.newHashMap();
 
         Object[] dimensions = new Object[cubeModel.getDimensions().size()];
 
-        int numRows = tableData.values().iterator().next().numRows();
+        int numRows = tableData.getColumnIdToViewMap().values().iterator().next().numRows();
 
         for(int i=0;i!=numRows;++i) {
 
             for(int j=0;j!=cubeModel.getDimensions().size();++j) {
                 DimensionModel dim = cubeModel.getDimensions().get(j);
-                dimensions[j] = tableData.get(dim.getColumnId()).get(i);
+                dimensions[j] = tableData.getColumnIdToViewMap().get(dim.getColumnId()).get(i);
             }
             BucketKey key = new BucketKey(dimensions);
             Aggregator aggregator = aggregators.get(key);
@@ -286,7 +286,7 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
                 aggregators.put(key, aggregator);
             }
 
-            aggregator.value(tableData.get(cubeModel.getMeasure().getColumnId())
+            aggregator.value(tableData.getColumnIdToViewMap().get(cubeModel.getMeasure().getColumnId())
                                       .getDouble(i));
         }
 
@@ -328,23 +328,23 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
      * @param tableModel
      * @return map from ColumnId -> ColumnView
      */
-    private Map<Cuid, ColumnView> buildTable(TableModel tableModel) {
+    private TableColumnData buildTable(TableModel tableModel) {
 
 //        Multimap<Cuid, FieldPath> paths = HashMultimap.create();
 //        for(FieldColumn column : tableModel.getColumns()) {
 //            paths.putAll(column.getId(), column.getFieldPaths());
 //        }
 
-        Map<Cuid, ColumnView> results = Maps.newHashMap();
+        TableColumnData tableData = new TableColumnData();
 
         for(FieldColumn column : tableModel.getColumns()) {
 
             ArrayColumnView value = fetchColumn(tableModel.getFormClassId(), column);
-            results.put(column.getId(), value);
+            tableData.getColumnIdToViewMap().put(column.getId(), value);
 
         }
 
-        return results;
+        return tableData;
 
     }
 

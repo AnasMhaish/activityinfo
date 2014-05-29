@@ -3530,4 +3530,13 @@ public interface UiConstants extends Constants {
 
     @DefaultStringValue("Parsing rows...")
     String parsingRows();
+
+    @DefaultStringValue("Set expression if you would like to calculate indicator value dynamically (otherwise leave blank)")
+    String calculatedIndicatorExplanation();
+
+    @DefaultStringValue("Expression")
+    String expression();
+
+    @DefaultStringValue("Expression is invalid")
+    String expressionIsInvalid();
 }
