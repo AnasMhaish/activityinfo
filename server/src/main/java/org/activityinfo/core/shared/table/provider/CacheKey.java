@@ -27,7 +27,7 @@ import org.activityinfo.core.shared.form.tree.FieldPath;
 /**
 * @author yuriyz on 5/29/14.
 */
-class CacheKey {
+public class CacheKey {
 
     private final Cuid formClassId;
     private final FieldPath columnPath;

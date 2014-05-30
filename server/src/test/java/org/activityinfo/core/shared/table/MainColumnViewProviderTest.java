@@ -21,9 +21,9 @@ package org.activityinfo.core.shared.table;
  * #L%
  */
 
-import org.activityinfo.core.client.ResourceLocator;
+import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.tree.FieldPath;
-import org.activityinfo.core.shared.table.provider.ColumnViewProvider;
 import org.activityinfo.core.shared.table.provider.MainColumnViewProvider;
 import org.activityinfo.fixtures.InjectionSupport;
 import org.activityinfo.legacy.shared.adapter.CuidAdapter;
@@ -39,19 +39,18 @@ import org.junit.runner.RunWith;
 import java.util.Arrays;
 
 import static org.activityinfo.core.client.PromiseMatchers.assertResolves;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 /**
- * @author yuriyz on 5/29/14.
+ * @author yuriyz on 5/30/14.
  */
 @RunWith(InjectionSupport.class)
 @OnDataSet("/dbunit/sites-simple1.db.xml")
-public class TableColumnDataTest extends CommandTestCase2 {
+public class MainColumnViewProviderTest extends CommandTestCase2 {
 
-    private static final int NFI_FORM_CLASS_ID = 1;
-
-    private ResourceLocator resourceLocator;
-    private ColumnViewProvider columnViewProvider;
+    private ResourceLocatorAdaptor resourceLocator;
+    private MainColumnViewProvider columnViewProvider;
 
     @Before
     public final void setup() {
@@ -60,9 +59,11 @@ public class TableColumnDataTest extends CommandTestCase2 {
     }
 
     @Test
-    public void simplePartnerQuery() {
+    public void columnView() {
+
         TableModel tableModel = new TableModel();
-        tableModel.setFormClassId(CuidAdapter.activityFormClass(NFI_FORM_CLASS_ID));
+        Cuid formClassId = CuidAdapter.activityFormClass(1);
+        tableModel.setFormClassId(formClassId);
         FieldPath path1 = new FieldPath(CuidAdapter.indicatorField(1));
         FieldPath path2 = new FieldPath(CuidAdapter.partnerField(1),
                 CuidAdapter.field(CuidAdapter.partnerFormClass(1), CuidAdapter.NAME_FIELD));
@@ -72,11 +73,18 @@ public class TableColumnDataTest extends CommandTestCase2 {
 
         tableModel.setColumns(Arrays.asList(beneficiaries, partner));
 
-        TableColumnDataBuilder tableColumnDataBuilder = new TableColumnDataBuilder(columnViewProvider, resourceLocator);
-        TableColumnData tableColumnData = assertResolves(tableColumnDataBuilder.build(tableModel));
+        FormClass formClass = assertResolves(resourceLocator.getFormClass(formClassId));
 
-        assertThat(tableColumnData, Matchers.notNullValue());
-        assertThat(tableColumnData.getColumnIdToViewMap().get(path1).numRows(), Matchers.equalTo(3));
-        assertThat(tableColumnData.getColumnIdToViewMap().get(path2).numRows(), Matchers.equalTo(3));
+        ColumnView beneficiariesColumnView = assertResolves(columnViewProvider.view(beneficiaries, formClass));
+        ColumnView partnerColumnView = assertResolves(columnViewProvider.view(partner, formClass));
+
+        assertThat(beneficiariesColumnView.numRows(), Matchers.equalTo(3));
+        assertThat(partnerColumnView.numRows(), Matchers.equalTo(3));
+
+        ColumnView beneficiariesFromCache = assertResolves(columnViewProvider.getCache().view(beneficiaries, formClass));
+        ColumnView partnerFromCache = assertResolves(columnViewProvider.getCache().view(partner, formClass));
+
+        assertEquals(beneficiariesColumnView, beneficiariesFromCache);
+        assertEquals(partnerColumnView, partnerFromCache);
     }
 }

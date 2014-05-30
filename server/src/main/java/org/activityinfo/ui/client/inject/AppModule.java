@@ -28,6 +28,8 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import org.activityinfo.core.client.InMemResourceLocator;
 import org.activityinfo.core.client.ResourceLocator;
+import org.activityinfo.core.shared.table.provider.ColumnViewProvider;
+import org.activityinfo.core.shared.table.provider.MainColumnViewProvider;
 import org.activityinfo.legacy.client.DispatchEventSource;
 import org.activityinfo.legacy.client.Dispatcher;
 import org.activityinfo.legacy.client.remote.MergingDispatcher;
@@ -79,5 +81,10 @@ public class AppModule extends AbstractGinModule {
         } else {
             return new ResourceLocatorAdaptor(dispatcher);
         }
+    }
+
+    @Provides @Singleton
+    public ColumnViewProvider provideColumnViewProvider(ResourceLocator resourceLocator) {
+        return new MainColumnViewProvider(resourceLocator);
     }
 }

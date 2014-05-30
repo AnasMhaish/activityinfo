@@ -33,12 +33,22 @@ import org.activityinfo.ui.client.component.table.FieldColumn;
  */
 public class MainColumnViewProvider implements ColumnViewProvider {
 
+    private final ResourceLocator resourceLocator;
     private final CachedColumnViewProvider cache;
     private final ColumnViewProviderBuilder providerBuilder;
 
     public MainColumnViewProvider(ResourceLocator resourceLocator) {
+        this.resourceLocator = resourceLocator;
         this.cache = new CachedColumnViewProvider(resourceLocator);
         this.providerBuilder = new ColumnViewProviderBuilder(resourceLocator);
+    }
+
+    public CachedColumnViewProvider getCache() {
+        return cache;
+    }
+
+    public ResourceLocator getResourceLocator() {
+        return resourceLocator;
     }
 
     @Override

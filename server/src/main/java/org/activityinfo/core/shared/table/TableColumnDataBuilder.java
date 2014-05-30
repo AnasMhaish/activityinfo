@@ -25,7 +25,7 @@ import com.google.common.base.Supplier;
 import com.google.common.collect.Lists;
 import org.activityinfo.core.client.ResourceLocator;
 import org.activityinfo.core.shared.form.FormClass;
-import org.activityinfo.core.shared.table.provider.MainColumnViewProvider;
+import org.activityinfo.core.shared.table.provider.ColumnViewProvider;
 import org.activityinfo.fp.client.Promise;
 import org.activityinfo.ui.client.component.table.FieldColumn;
 
@@ -36,24 +36,24 @@ import java.util.List;
  */
 public class TableColumnDataBuilder {
 
+    private final ColumnViewProvider viewProvider;
     private final ResourceLocator resourceLocator;
 
-    public TableColumnDataBuilder(ResourceLocator resourceLocator) {
+    public TableColumnDataBuilder(ColumnViewProvider viewProvider, ResourceLocator resourceLocator) {
         this.resourceLocator = resourceLocator;
+        this.viewProvider = viewProvider;
     }
 
     public Promise<TableColumnData> build(final TableModel tableModel) {
         final Promise<FormClass> formClass = resourceLocator.getFormClass(tableModel.getFormClassId());
-        final MainColumnViewProvider columnViewProvider = new MainColumnViewProvider(resourceLocator);
         final List<Promise<? extends ColumnView>> promises = Lists.newArrayList();
         for (FieldColumn column : tableModel.getColumns()) {
-            promises.add(columnViewProvider.view(column, formClass.get()));
+            promises.add(viewProvider.view(column, formClass.get()));
         }
 
         return Promise.waitAll(promises).then(new Supplier<TableColumnData>() {
             @Override
             public TableColumnData get() {
-                columnViewProvider.toString();
                 TableColumnData tableData = new TableColumnData();
                 for (Promise<? extends ColumnView> promise : promises) {
                     tableData.getColumnIdToViewMap().put(promise.get().getId(), promise.get());

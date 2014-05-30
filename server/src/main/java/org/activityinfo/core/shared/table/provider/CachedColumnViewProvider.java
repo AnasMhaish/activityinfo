@@ -37,7 +37,7 @@ import java.util.Set;
 /**
  * @author yuriyz on 5/29/14.
  */
-class CachedColumnViewProvider implements ColumnViewProvider {
+public class CachedColumnViewProvider implements ColumnViewProvider {
 
     public static final int MAX_CACHE_SIZE = 10000;
 

@@ -26,7 +26,7 @@ import org.activityinfo.core.shared.table.ColumnView;
 /**
  * @author yuriyz on 5/29/14.
  */
-class CacheValue {
+public class CacheValue {
 
     private final ColumnView columnView;
     private final int cacheId;

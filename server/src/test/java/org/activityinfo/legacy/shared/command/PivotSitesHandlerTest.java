@@ -32,6 +32,8 @@ import org.activityinfo.core.shared.form.tree.FieldPath;
 import org.activityinfo.core.shared.table.TableColumnData;
 import org.activityinfo.core.shared.table.TableColumnDataBuilder;
 import org.activityinfo.core.shared.table.TableModel;
+import org.activityinfo.core.shared.table.provider.ColumnViewProvider;
+import org.activityinfo.core.shared.table.provider.MainColumnViewProvider;
 import org.activityinfo.fixtures.InjectionSupport;
 import org.activityinfo.fixtures.Modules;
 import org.activityinfo.legacy.shared.adapter.CuidAdapter;
@@ -225,10 +227,8 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
         assertThat().forPartner(2).thereIsOneBucketWithValue(10000)
                 .andItsPartnerLabelIs("Solidarites");
 
-
-        PivotSites query = composeQuery();
-
         ResourceLocator resourceLocator = new ResourceLocatorAdaptor(getDispatcher());
+        ColumnViewProvider columnViewProvider = new MainColumnViewProvider(resourceLocator);
 
         TableModel tableModel = new TableModel();
         tableModel.setFormClassId(CuidAdapter.activityFormClass(1));
@@ -245,7 +245,7 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
         cubeModel.getDimensions().add(new DimensionModel(partner.getId()));
         cubeModel.setMeasure(new MeasureModel(AggregationType.SUM, beneficiaries.getId()));
 
-        TableColumnData tableData = assertResolves(new TableColumnDataBuilder(resourceLocator).build(tableModel));
+        TableColumnData tableData = assertResolves(new TableColumnDataBuilder(columnViewProvider, resourceLocator).build(tableModel));
 
         List<Bucket> buckets = buildCube(cubeModel, tableData);
 
