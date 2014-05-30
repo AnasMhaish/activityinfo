@@ -29,6 +29,7 @@ import com.bedatadriven.rebar.sql.client.query.SqlUpdate;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import org.activityinfo.legacy.shared.command.DeleteSite;
 import org.activityinfo.legacy.shared.command.result.VoidResult;
+import org.activityinfo.legacy.shared.util.CacheKeyUtil;
 
 import java.util.Date;
 
@@ -45,6 +46,8 @@ public class DeleteSiteHandler implements CommandHandlerAsync<DeleteSite, VoidRe
         SqlUpdate.delete(Tables.ATTRIBUTE_VALUE).where("siteId", command.getId()).execute(context.getTransaction());
 
         SqlUpdate.delete(Tables.REPORTING_PERIOD).where("siteId", command.getId()).execute(context.getTransaction());
+
+        CacheKeyUtil.increaseActivityCacheKeyBySiteId(context.getTransaction(), command.getSiteId());
 
         SqlUpdate.update(Tables.SITE)
                  .value("dateDeleted", new Date())

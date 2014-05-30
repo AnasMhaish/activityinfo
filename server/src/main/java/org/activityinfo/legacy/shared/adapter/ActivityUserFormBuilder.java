@@ -29,8 +29,7 @@ public class ActivityUserFormBuilder {
 
         siteForm = new FormClass(classId);
         siteForm.setLabel(new LocalizedString(activity.getName()));
-        // todo cache id on activity
-//        siteForm.setCacheId(activity.getCacheId());
+        siteForm.setCacheId(activity.getCacheKey());
 
         if (!Strings.isNullOrEmpty(activity.getCategory())) {
             siteForm.setParentId(activityCategoryFolderId(activity.getDatabaseId(), activity.getCategory()));

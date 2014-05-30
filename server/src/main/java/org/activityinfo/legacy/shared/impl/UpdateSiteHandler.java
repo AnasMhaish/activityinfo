@@ -35,6 +35,7 @@ import org.activityinfo.legacy.shared.command.result.VoidResult;
 import org.activityinfo.legacy.shared.model.AdminLevelDTO;
 import org.activityinfo.legacy.shared.model.AttributeDTO;
 import org.activityinfo.legacy.shared.model.IndicatorDTO;
+import org.activityinfo.legacy.shared.util.CacheKeyUtil;
 
 import java.util.Date;
 import java.util.Map;
@@ -51,6 +52,7 @@ public class UpdateSiteHandler implements CommandHandlerAsync<UpdateSite, VoidRe
         updateAttributeValues(tx, command.getSiteId(), changes);
         // updateLocation(tx, command.getSiteId(), changes);
         updateReportingPeriod(tx, command.getSiteId(), changes);
+        CacheKeyUtil.increaseActivityCacheKeyBySiteId(tx, command.getSiteId());
 
         callback.onSuccess(new VoidResult());
     }

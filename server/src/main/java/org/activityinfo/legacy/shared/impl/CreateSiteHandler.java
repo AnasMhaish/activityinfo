@@ -35,6 +35,7 @@ import org.activityinfo.legacy.shared.command.result.VoidResult;
 import org.activityinfo.legacy.shared.exception.CommandException;
 import org.activityinfo.legacy.shared.model.AttributeDTO;
 import org.activityinfo.legacy.shared.model.IndicatorDTO;
+import org.activityinfo.legacy.shared.util.CacheKeyUtil;
 
 import java.util.Date;
 import java.util.Map.Entry;
@@ -92,7 +93,9 @@ public class CreateSiteHandler implements CommandHandlerAsync<CreateSite, Create
                  .value("DateCreated", new Date())
                  .value("DateEdited", new Date())
                  .value("timeEdited", new Date().getTime())
-                 .execute(tx);
+                .execute(tx);
+
+        CacheKeyUtil.increaseActivityCacheKey(tx, cmd.getActivityId());
 
         insertAttributeValues(tx, cmd);
     }

@@ -36,4 +36,15 @@
     </addColumn>
   </changeSet>
 
+  <changeSet author="yuriyz" id="022-02">
+    <comment>
+      Activity : added cache key column. Each time any site rows is changed (created/updated/deleted), cache key must be changed.
+    </comment>
+    <addColumn tableName="activity">
+      <column name="cacheKey" type="INT" defaultValue="0">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
 </databaseChangeLog>

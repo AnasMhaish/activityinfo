@@ -413,6 +413,7 @@ public class GetSchemaHandler implements CommandHandlerAsync<GetSchema, SchemaDT
         public Promise<Void> loadActivities() {
             SqlQuery query = SqlQuery.select("activityId",
                     "name",
+                    "cacheKey",
                     "category",
                     "locationTypeId",
                     "reportingFrequency",
@@ -431,6 +432,7 @@ public class GetSchemaHandler implements CommandHandlerAsync<GetSchema, SchemaDT
                     ActivityDTO activity = new ActivityDTO();
                     activity.setId(row.getInt("activityId"));
                     activity.setName(row.getString("name"));
+                    activity.setCacheKey(row.getInt("cacheKey"));
                     activity.setCategory(row.getString("category"));
                     activity.setReportingFrequency(row.getInt("reportingFrequency"));
                     activity.setPublished(row.getInt("published"));
