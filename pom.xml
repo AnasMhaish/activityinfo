@@ -44,6 +44,12 @@
 
     <!-- Allow the build to continue even if there are fixtures failures -->
     <maven.test.failure.ignore>true</maven.test.failure.ignore>
+
+    <gwtVersion>2.6.0-rc3</gwtVersion>
+    <rebarVersion>2.4.1</rebarVersion>
+    <gae.version>1.8.8</gae.version>
+    <jersey.version>1.17</jersey.version>
+    <appengine.export.version>0.1.1</appengine.export.version>
   </properties>
 
 
@@ -120,6 +126,27 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava-gwt</artifactId>
+        <version>15.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>15.0</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>1.6</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <plugins>
