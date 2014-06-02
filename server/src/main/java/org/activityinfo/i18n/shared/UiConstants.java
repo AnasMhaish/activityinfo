@@ -3539,4 +3539,10 @@ public interface UiConstants extends Constants {
 
     @DefaultStringValue("Expression is invalid")
     String expressionIsInvalid();
+
+    @DefaultStringValue("Name in expression")
+    String nameInExpression();
+
+    @DefaultStringValue("Name which is used in expression")
+    String nameInExpressionTooltip();
 }

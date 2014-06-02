@@ -59,7 +59,7 @@ public class MainColumnViewProviderTest extends CommandTestCase2 {
     }
 
     @Test
-    public void columnView() {
+    public void columnViewParserAndCaching() {
 
         TableModel tableModel = new TableModel();
         Cuid formClassId = CuidAdapter.activityFormClass(1);
@@ -84,6 +84,7 @@ public class MainColumnViewProviderTest extends CommandTestCase2 {
         ColumnView beneficiariesFromCache = assertResolves(columnViewProvider.getCache().view(beneficiaries, formClass));
         ColumnView partnerFromCache = assertResolves(columnViewProvider.getCache().view(partner, formClass));
 
+        // check whether column views are cached
         assertEquals(beneficiariesColumnView, beneficiariesFromCache);
         assertEquals(partnerColumnView, partnerFromCache);
     }
