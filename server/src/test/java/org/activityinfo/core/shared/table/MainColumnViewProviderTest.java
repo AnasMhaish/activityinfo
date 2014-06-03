@@ -21,9 +21,11 @@ package org.activityinfo.core.shared.table;
  * #L%
  */
 
+import org.activityinfo.core.client.form.tree.AsyncFormTreeBuilder;
 import org.activityinfo.core.shared.Cuid;
 import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.core.shared.form.tree.FormTree;
 import org.activityinfo.core.shared.table.provider.MainColumnViewProvider;
 import org.activityinfo.fixtures.InjectionSupport;
 import org.activityinfo.legacy.shared.adapter.CuidAdapter;
@@ -41,12 +43,13 @@ import java.util.Arrays;
 import static org.activityinfo.core.client.PromiseMatchers.assertResolves;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author yuriyz on 5/30/14.
  */
 @RunWith(InjectionSupport.class)
-@OnDataSet("/dbunit/sites-simple1.db.xml")
+@OnDataSet("/dbunit/sites-calculated-indicators.db.xml")
 public class MainColumnViewProviderTest extends CommandTestCase2 {
 
     private ResourceLocatorAdaptor resourceLocator;
@@ -87,5 +90,48 @@ public class MainColumnViewProviderTest extends CommandTestCase2 {
         // check whether column views are cached
         assertEquals(beneficiariesColumnView, beneficiariesFromCache);
         assertEquals(partnerColumnView, partnerFromCache);
+    }
+
+    @Test
+    public void calculatedColumnView() {
+        Cuid formClassId = CuidAdapter.activityFormClass(1);
+
+        FieldPath path1 = new FieldPath(CuidAdapter.indicatorField(1));
+        FieldPath path2 = new FieldPath(CuidAdapter.indicatorField(2));
+        FieldPath path3 = new FieldPath(CuidAdapter.indicatorField(12451));
+
+        AsyncFormTreeBuilder formTreeBuilder = new AsyncFormTreeBuilder(resourceLocator);
+
+        FormTree formTree = assertResolves(formTreeBuilder.apply(formClassId));
+
+        FieldColumn column1 = new FieldColumn(formTree.getNodeByPath(path1));
+        FieldColumn column2 = new FieldColumn(formTree.getNodeByPath(path2));
+        FieldColumn calculatedColumn = new FieldColumn(formTree.getNodeByPath(path3));
+
+
+        FormClass formClass = assertResolves(resourceLocator.getFormClass(formClassId));
+
+        // first call callculated column -> make sure that all dependent columns are build independently
+        ColumnView calculatedColumnView = assertResolves(columnViewProvider.view(calculatedColumn, formClass));
+
+        // query dependent column after calculated one is evaluated
+        ColumnView columnView1 = assertResolves(columnViewProvider.view(column1, formClass));
+        ColumnView columnView2 = assertResolves(columnViewProvider.view(column2, formClass));
+
+        ColumnView calculatedColumnFromCache = assertResolves(columnViewProvider.getCache().view(calculatedColumn, formClass));
+
+        // check whether calculated column view is in cache
+        assertEquals(calculatedColumnView, calculatedColumnFromCache);
+
+        // row count check
+        assertThat(columnView1.numRows(), Matchers.equalTo(3));
+        assertThat(columnView2.numRows(), Matchers.equalTo(3));
+        assertThat(calculatedColumnView.numRows(), Matchers.equalTo(3));
+
+        // calculation check
+        for (int row = 0; row != columnView1.numRows(); row++) {
+            double sum = columnView1.getDouble(row) + columnView2.getDouble(row);
+            assertThat(calculatedColumnView.getDouble(row), Matchers.equalTo(sum));
+        }
     }
 }

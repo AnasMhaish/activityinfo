@@ -30,13 +30,15 @@ import org.activityinfo.ui.client.component.table.FieldColumn;
 class ColumnViewProviderBuilder {
 
     private final ResourceLocator resourceLocator;
+    private final ColumnViewProvider columnViewProvider;
 
-    public ColumnViewProviderBuilder(ResourceLocator resourceLocator) {
+    public ColumnViewProviderBuilder(ResourceLocator resourceLocator, ColumnViewProvider columnViewProvider) {
         this.resourceLocator = resourceLocator;
+        this.columnViewProvider = columnViewProvider;
     }
 
     public ColumnViewProvider build(FieldColumn column) {
         boolean isCalculated = column.getNode() != null && column.getNode().getField().isCalculated();
-        return isCalculated ? new CalculatedColumnViewProvider(resourceLocator, column) : new SimpleColumnViewProvider(resourceLocator);
+        return isCalculated ? new CalculatedColumnViewProvider(resourceLocator, columnViewProvider) : new SimpleColumnViewProvider(resourceLocator);
     }
 }
