@@ -8,6 +8,7 @@ import org.activityinfo.core.server.type.converter.JvmConverterFactory;
 import org.activityinfo.core.shared.Cuid;
 import org.activityinfo.core.shared.form.tree.FormTree;
 import org.activityinfo.core.shared.form.tree.FormTreePrettyPrinter;
+import org.activityinfo.core.shared.importing.match.ColumnMappingGuesser;
 import org.activityinfo.core.shared.importing.model.ImportModel;
 import org.activityinfo.core.shared.importing.model.MapExistingAction;
 import org.activityinfo.core.shared.importing.source.SourceColumn;
@@ -24,7 +25,6 @@ import org.activityinfo.legacy.shared.model.SiteDTO;
 import org.activityinfo.server.database.OnDataSet;
 import org.activityinfo.ui.client.component.importDialog.Importer;
 import org.activityinfo.ui.client.component.importDialog.data.PastedTable;
-import org.activityinfo.core.shared.importing.match.ColumnMappingGuesser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -62,6 +62,9 @@ public class ImportSimpleTest extends AbstractImporterTest {
         // Step 1: User pastes in data to import
         PastedTable source = new PastedTable(
                 Resources.toString(getResource("org/activityinfo/core/shared/importing/qis.csv"), Charsets.UTF_8));
+        source.parseAllRows();
+
+        assertThat(source.getRows().size(), equalTo(63));
 
         importModel.setSource(source);
         importer = new Importer(resourceLocator, formTree, FieldImportStrategies.get(JvmConverterFactory.get()));
@@ -107,6 +110,7 @@ public class ImportSimpleTest extends AbstractImporterTest {
         // Step 1: User pastes in data to import
         PastedTable source = new PastedTable(
                 Resources.toString(getResource("org/activityinfo/core/shared/importing/qis.csv"), Charsets.UTF_8));
+        source.parseAllRows();
 
         importModel.setSource(source);
         importer = new Importer(resourceLocator, formTree, FieldImportStrategies.get(JvmConverterFactory.get()));

@@ -7,13 +7,12 @@ import com.google.gwt.core.client.testing.StubScheduler;
 import com.google.gwt.junit.GWTMockUtilities;
 import org.activityinfo.core.client.form.tree.AsyncFormTreeBuilder;
 import org.activityinfo.core.shared.importing.model.ColumnAction;
+import org.activityinfo.core.shared.importing.model.ImportModel;
 import org.activityinfo.core.shared.importing.model.MapExistingAction;
 import org.activityinfo.core.shared.importing.source.SourceColumn;
 import org.activityinfo.core.shared.importing.source.SourceRow;
-import org.activityinfo.core.shared.importing.model.ImportModel;
 import org.activityinfo.core.shared.importing.strategy.FieldImporterColumn;
 import org.activityinfo.core.shared.importing.strategy.ImportTarget;
-import org.activityinfo.core.shared.importing.validation.ValidatedResult;
 import org.activityinfo.core.shared.importing.validation.ValidatedRow;
 import org.activityinfo.core.shared.importing.validation.ValidatedRowTable;
 import org.activityinfo.core.shared.importing.validation.ValidationResult;
@@ -86,6 +85,8 @@ public class AbstractImporterTest extends CommandTestCase2 {
             SourceRow sourceRow = importModel.getSource().getRows().get(i);
             ValidatedRow resultRow = table.getRows().get(i);
 
+            System.out.print(validIcon(resultRow) + " ");
+
             for(int j=0;j!=numColumns;++j) {
                 FieldImporterColumn column = table.getColumns().get(j);
                 String importedValue = Strings.nullToEmpty(column.getAccessor().getValue(sourceRow));
@@ -102,6 +103,10 @@ public class AbstractImporterTest extends CommandTestCase2 {
             }
             System.out.println();
         }
+    }
+
+    private String validIcon(ValidatedRow resultRow) {
+        return resultRow.isValid() ? "\u2714" : "x";
     }
 
     private String rowIcon(SourceRow instance) {
