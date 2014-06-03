@@ -40,7 +40,7 @@ public class MainColumnViewProvider implements ColumnViewProvider {
     public MainColumnViewProvider(ResourceLocator resourceLocator) {
         this.resourceLocator = resourceLocator;
         this.cache = new CachedColumnViewProvider(resourceLocator);
-        this.providerBuilder = new ColumnViewProviderBuilder(resourceLocator);
+        this.providerBuilder = new ColumnViewProviderBuilder(resourceLocator, this);
     }
 
     public CachedColumnViewProvider getCache() {

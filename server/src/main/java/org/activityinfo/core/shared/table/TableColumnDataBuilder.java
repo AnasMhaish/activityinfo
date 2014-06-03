@@ -21,6 +21,7 @@ package org.activityinfo.core.shared.table;
  * #L%
  */
 
+import com.google.common.base.Function;
 import com.google.common.base.Supplier;
 import com.google.common.collect.Lists;
 import org.activityinfo.core.client.ResourceLocator;
@@ -29,6 +30,7 @@ import org.activityinfo.core.shared.table.provider.ColumnViewProvider;
 import org.activityinfo.fp.client.Promise;
 import org.activityinfo.ui.client.component.table.FieldColumn;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -46,21 +48,26 @@ public class TableColumnDataBuilder {
 
     public Promise<TableColumnData> build(final TableModel tableModel) {
         final Promise<FormClass> formClass = resourceLocator.getFormClass(tableModel.getFormClassId());
-        final List<Promise<? extends ColumnView>> promises = Lists.newArrayList();
-        for (FieldColumn column : tableModel.getColumns()) {
-            promises.add(viewProvider.view(column, formClass.get()));
-        }
-
-        return Promise.waitAll(promises).then(new Supplier<TableColumnData>() {
+        return Promise.waitAll(formClass).join(new Function<Void, Promise<TableColumnData>>() {
+            @Nullable
             @Override
-            public TableColumnData get() {
-                TableColumnData tableData = new TableColumnData();
-                for (Promise<? extends ColumnView> promise : promises) {
-                    tableData.getColumnIdToViewMap().put(promise.get().getId(), promise.get());
+            public Promise<TableColumnData> apply(@Nullable Void input) {
+                final List<Promise<? extends ColumnView>> promises = Lists.newArrayList();
+                for (FieldColumn column : tableModel.getColumns()) {
+                    promises.add(viewProvider.view(column, formClass.get()));
                 }
-                return tableData;
+
+                return Promise.waitAll(promises).then(new Supplier<TableColumnData>() {
+                    @Override
+                    public TableColumnData get() {
+                        TableColumnData tableData = new TableColumnData();
+                        for (Promise<? extends ColumnView> promise : promises) {
+                            tableData.getColumnIdToViewMap().put(promise.get().getId(), promise.get());
+                        }
+                        return tableData;
+                    }
+                });
             }
         });
-
     }
 }

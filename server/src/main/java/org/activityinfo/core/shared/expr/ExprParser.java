@@ -14,8 +14,13 @@ public class ExprParser {
     private static final Set<String> INFIX_OPERATORS = Sets.newHashSet("+", "-", "*", "/");
 
     private PeekingIterator<Token> lexer;
+    private PlaceholderExprResolver placeholderExprResolver;
 
     public ExprParser(Iterator<Token> tokens) {
+        this(tokens, null);
+    }
+
+    public ExprParser(Iterator<Token> tokens, PlaceholderExprResolver placeholderExprResolver) {
         this.lexer = Iterators.peekingIterator(Iterators.filter(tokens, new Predicate<Token>() {
 
             @Override
@@ -23,6 +28,7 @@ public class ExprParser {
                 return token.getType() != TokenType.WHITESPACE;
             }
         }));
+        this.placeholderExprResolver = placeholderExprResolver;
     }
 
     public ExprNode parse() {
@@ -48,7 +54,7 @@ public class ExprParser {
 
 
     private boolean isInfixOperator(Token token) {
-        return token.getType() == TokenType.SYMBOL &&
+        return token.getType().isSymbol() &&
                 INFIX_OPERATORS.contains(token.getString());
     }
 
@@ -56,6 +62,9 @@ public class ExprParser {
         Token token = lexer.next();
         if (token.getType() == TokenType.PAREN_START) {
             return parseGroup();
+
+        } else if (token.getType() == TokenType.BRACE_START) {
+            return parsePlaceholder();
 
         } else if (token.getType() == TokenType.NUMBER) {
             return new ConstantExpr(Double.parseDouble(token.getString()));
@@ -69,6 +78,12 @@ public class ExprParser {
         ExprNode expr = parse();
         expectNext(TokenType.PAREN_END, "')'");
         return new GroupExpr(expr);
+    }
+
+    private ExprNode parsePlaceholder() {
+        Token token = lexer.next();
+        expectNext(TokenType.BRACE_END, "'}'");
+        return new PlaceholderExpr(token.getString(), placeholderExprResolver);
     }
 
     /**
