@@ -17,6 +17,7 @@ public class ExprLexer extends UnmodifiableIterator<Token> {
 
 
     private static final String VALID_OPERATORS = "+-/*";
+    private Token previous;
 
     public ExprLexer(String string) {
         this.string = string;
@@ -49,6 +50,7 @@ public class ExprLexer extends UnmodifiableIterator<Token> {
 
     public List<Token> readAll() {
         List<Token> tokens = Lists.newArrayList();
+        previous = null;
         while (!isEndOfInput()) {
             tokens.add(next());
         }
@@ -67,33 +69,40 @@ public class ExprLexer extends UnmodifiableIterator<Token> {
     @Override
     public Token next() {
         char c = nextChar();
+        Token next = null;
         if (c == '(') {
-            return finishToken(TokenType.PAREN_START);
+            next = finishToken(TokenType.PAREN_START);
 
         } else if (c == ')') {
-            return finishToken(TokenType.PAREN_END);
+            next = finishToken(TokenType.PAREN_END);
 
         } else if (c == '{') {
-            return finishToken(TokenType.BRACE_START);
+            next = finishToken(TokenType.BRACE_START);
 
         } else if (c == '}') {
-            return finishToken(TokenType.BRACE_END);
+            next = finishToken(TokenType.BRACE_END);
 
         } else if (StringUtil.isWhitespace(c)) {
-            return readWhitespace();
+            next = readWhitespace();
 
         } else if (isNumberPart(c)) {
-            return readNumber();
+            next = readNumber();
 
         } else if (isOperator(c)) {
-            return finishToken(TokenType.OPERATOR);
+            next = finishToken(TokenType.OPERATOR);
 
         } else if (isSymbolStart(c)) {
-            return readSymbol();
+            // right now we support only functions, maybe later we will need to support also variables.
+            // However we should think twice since technically variable should be reference to indicator and expressed
+            // via reference {i00001}
+            TokenType type = previous != null && previous.getType() == TokenType.BRACE_START ? TokenType.SYMBOL : TokenType.FUNCTION;
+            next = readSymbol(type);
 
         } else {
             throw new RuntimeException("Symbol '" + c + "' is not supported");
         }
+        previous = next;
+        return next;
     }
 
     private boolean isOperator(char c) {
@@ -126,11 +135,11 @@ public class ExprLexer extends UnmodifiableIterator<Token> {
         return finishToken(TokenType.NUMBER);
     }
 
-    private Token readSymbol() {
+    private Token readSymbol(TokenType type) {
         while (!isEndOfInput() && isSymbolChar(peekChar())) {
             consumeChar();
         }
-        return finishToken(TokenType.SYMBOL);
+        return finishToken(type);
     }
 
 }
