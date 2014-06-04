@@ -49,6 +49,7 @@
   <indicator IndicatorId="103" Aggregation="2" Category="outputs" description="Nomber of distributions effectuees" ListHeader="distribs" name="Nb. of distributions" SortOrder="3" Units="distributions" ActivityId="1" mandatory="false" Type="QUANTITY"/>
   <indicator IndicatorId="675" Aggregation="2" Category="outputs" description="Kivu description" ListHeader="distribs" name="A kivu thing" SortOrder="3" Units="distributions" ActivityId="1" mandatory="false" Type="QUANTITY"/>
   <indicator IndicatorId="12451" Aggregation="0" name="calculated" SortOrder="5" Units="calculated" ActivityId="1" mandatory="false" Type="QUANTITY" Expression="{i000001}+{i000002}"/>
+  <indicator IndicatorId="12452" Aggregation="0" name="calculated" SortOrder="5" Units="calculated" ActivityId="1" mandatory="false" Type="QUANTITY" Expression="{i000001}+{i000002}+{i0009lv}"/>
   <indicatorlink/>
   <indicatorvalue IndicatorId="1" ReportingPeriodId="1" Value="1500.0"/>
   <indicatorvalue IndicatorId="1" ReportingPeriodId="2" Value="3600.0"/>
