@@ -1,21 +1,23 @@
 package org.activityinfo.datamodel.rebind;
 
-import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
 import com.google.gwt.core.ext.UnableToCompleteException;
-import com.google.gwt.core.ext.typeinfo.*;
+import com.google.gwt.core.ext.typeinfo.JClassType;
+import com.google.gwt.core.ext.typeinfo.JMethod;
+import com.google.gwt.core.ext.typeinfo.JParameterizedType;
+import com.google.gwt.core.ext.typeinfo.JType;
 import com.google.gwt.thirdparty.guava.common.base.Optional;
 import com.google.gwt.user.rebind.ClassSourceFileComposerFactory;
 import com.google.gwt.user.rebind.SourceWriter;
-import org.activityinfo.datamodel.client.impl.DataRecordJsoImpl;
+import org.activityinfo.datamodel.client.record.impl.RecordJsoImpl;
 import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.datamodel.shared.DataRecordBean;
+import org.activityinfo.datamodel.shared.record.RecordBean;
 
 import java.io.PrintWriter;
 
 /**
- * Creates implementations of subtypes of {@code DataRecordBean}
+ * Creates implementations of subtypes of {@code RecordBean}
  *
  */
 public class BeanClass {
@@ -81,8 +83,8 @@ public class BeanClass {
         ClassSourceFileComposerFactory f = new ClassSourceFileComposerFactory(
                 packageName, generatedSimpleSourceName);
 
-        // Extend DataRecordJsoImpl to implement the getter/setter methods
-        f.setSuperclass(DataRecordJsoImpl.class.getName());
+        // Extend RecordJsoImpl to implement the getter/setter methods
+        f.setSuperclass(RecordJsoImpl.class.getName());
         f.addImplementedInterface(beanInterface.getQualifiedSourceName());
 
         // All source gets written through this Writer
@@ -145,7 +147,7 @@ public class BeanClass {
         JClassType beanInterface = elementType.isInterface();
         if(beanInterface == null || !isDataRecordBean(beanInterface)) {
             logger.log(TreeLogger.Type.ERROR, "List fields must be parametrized with an interface that " +
-                                              "is a subtype of DataRecordBean. Found: " +
+                                              "is a subtype of RecordBean. Found: " +
                                               elementType.getQualifiedSourceName());
             throw new UnableToCompleteException();
         }
@@ -155,7 +157,7 @@ public class BeanClass {
 
     private boolean isDataRecordBean(JClassType interfaceClass) {
         for(JClassType superType : interfaceClass.getImplementedInterfaces()) {
-            if(superType.getQualifiedSourceName().equals(DataRecordBean.class.getName())) {
+            if(superType.getQualifiedSourceName().equals(RecordBean.class.getName())) {
                 return true;
             }
         }

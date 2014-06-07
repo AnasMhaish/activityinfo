@@ -1,32 +1,32 @@
-package org.activityinfo.datamodel.server.impl;
+package org.activityinfo.datamodel.server.record.impl;
 
 
 import com.google.gson.stream.JsonReader;
 import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.datamodel.shared.DataRecord;
-import org.activityinfo.datamodel.shared.DataRecordBean;
+import org.activityinfo.datamodel.shared.record.Record;
+import org.activityinfo.datamodel.shared.record.RecordBean;
 
 import java.beans.IntrospectionException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.lang.reflect.Proxy;
 
-public class DataRecordsImpl {
+public class RecordsImpl {
 
 
-    private DataRecordsImpl() {
+    private RecordsImpl() {
     }
 
-    public static DataRecord create() {
-        return new DataRecordMapImpl();
+    public static Record create() {
+        return new RecordMapImpl();
     }
 
 
-    public static <T extends DataRecordBean> T create(Class<T> beanClass) {
-        return createProxy(beanClass, new DataRecordMapImpl());
+    public static <T extends RecordBean> T create(Class<T> beanClass) {
+        return createProxy(beanClass, new RecordMapImpl());
     }
 
-    public static DataRecord fromJson(String json) {
+    public static Record fromJson(String json) {
         try(JsonReader reader = new JsonReader(new StringReader(json))) {
             return parseRecord(reader);
         } catch (IOException e) {
@@ -34,22 +34,22 @@ public class DataRecordsImpl {
         }
     }
 
-    public static <T extends DataRecordBean> T fromJson(Class<T> beanClass, String json) {
+    public static <T extends RecordBean> T fromJson(Class<T> beanClass, String json) {
         return createProxy(beanClass, fromJson(json));
     }
 
-    public static <T extends DataRecordBean> T createProxy(Class<T> beanClass, DataRecord record) {
+    public static <T extends RecordBean> T createProxy(Class<T> beanClass, Record record) {
         try {
-            return (T) Proxy.newProxyInstance(DataRecordsImpl.class.getClassLoader(),
+            return (T) Proxy.newProxyInstance(RecordsImpl.class.getClassLoader(),
                     new Class[]{beanClass},
-                    new DataRecordBeanProxy(beanClass, record));
+                    new RecordBeanProxy(beanClass, record));
         } catch (IntrospectionException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static DataRecord parseRecord(JsonReader reader) throws IOException {
-        DataRecord record = new DataRecordMapImpl();
+    public static Record parseRecord(JsonReader reader) throws IOException {
+        Record record = new RecordMapImpl();
         reader.beginObject();
         while(reader.hasNext()) {
             Cuid fieldId = Cuid.create(reader.nextName());

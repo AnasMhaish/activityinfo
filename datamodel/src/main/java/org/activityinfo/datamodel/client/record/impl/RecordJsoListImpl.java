@@ -1,4 +1,4 @@
-package org.activityinfo.datamodel.client.impl;
+package org.activityinfo.datamodel.client.record.impl;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
@@ -15,9 +15,9 @@ import java.util.ListIterator;
  *
  * @param <T>
  */
-public final class DataRecordJsoListImpl<T extends JavaScriptObject> extends JavaScriptObject implements List<T>  {
+public final class RecordJsoListImpl<T extends JavaScriptObject> extends JavaScriptObject implements List<T>  {
 
-    protected DataRecordJsoListImpl() {
+    protected RecordJsoListImpl() {
     }
 
     @Override
@@ -53,7 +53,7 @@ public final class DataRecordJsoListImpl<T extends JavaScriptObject> extends Jav
 
             @Override
             public void remove() {
-                DataRecordJsoListImpl.this.remove(--index);
+                RecordJsoListImpl.this.remove(--index);
             }
         };
     }

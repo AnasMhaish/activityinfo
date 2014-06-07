@@ -4,7 +4,7 @@ import com.google.gwt.core.ext.*;
 import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.NotFoundException;
 import com.google.gwt.thirdparty.guava.common.collect.Lists;
-import org.activityinfo.datamodel.shared.DataRecordBean;
+import org.activityinfo.datamodel.shared.record.RecordBean;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * Deferred Binding generator which creates JavaScript overlay objects
  * for interfaces which extend DataRecordBeans.
  */
-public class DataRecordBeanGenerator extends IncrementalGenerator {
+public class RecordBeanGenerator extends IncrementalGenerator {
 
     public static final long VERSION = 2;
 
@@ -38,7 +38,7 @@ public class DataRecordBeanGenerator extends IncrementalGenerator {
         boolean completelyCached = true;
         for(JClassType subType : typedDataRecord.getSubtypes()) {
             TreeLogger subTypeLogger = logger.branch(TreeLogger.Type.DEBUG,
-                    "DataRecordBean: " + subType.getName());
+                    "RecordBean: " + subType.getName());
 
             BeanClass beanClass = new BeanClass(subType);
 
@@ -69,10 +69,10 @@ public class DataRecordBeanGenerator extends IncrementalGenerator {
     private JClassType findRootInterface(TreeLogger logger,
                                          GeneratorContext generatorContext) throws UnableToCompleteException {
         try {
-            return generatorContext.getTypeOracle().getType(DataRecordBean.class.getName());
+            return generatorContext.getTypeOracle().getType(RecordBean.class.getName());
 
         } catch (NotFoundException e) {
-            logger.log(TreeLogger.Type.ERROR, "Can't find " + DataRecordBean.class.getName() +
+            logger.log(TreeLogger.Type.ERROR, "Can't find " + RecordBean.class.getName() +
                 ": Something must be broken in org.activityinfo.datamodel.");
             throw new UnableToCompleteException();
         }

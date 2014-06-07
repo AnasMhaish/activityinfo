@@ -1,22 +1,22 @@
-package org.activityinfo.datamodel.client.impl;
+package org.activityinfo.datamodel.client.record.impl;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.datamodel.shared.DataRecord;
+import org.activityinfo.datamodel.shared.record.Record;
 
 import java.util.List;
 
 /**
- * An implementation of DataRecord that compiles down to
+ * An implementation of Record that compiles down to
  * a pure JavaScript object using JavaScript overlay types.
  */
-public class DataRecordJsoImpl extends JavaScriptObject implements DataRecord {
+public class RecordJsoImpl extends JavaScriptObject implements Record {
 
     static {
         IsArray.ensurePresent();
     }
 
-    protected DataRecordJsoImpl() {
+    protected RecordJsoImpl() {
     }
 
     @Override
@@ -44,7 +44,7 @@ public class DataRecordJsoImpl extends JavaScriptObject implements DataRecord {
     }-*/;
 
     @Override
-    public final native DataRecordJsoImpl getDataRecord(Cuid fieldId) /*-{
+    public final native RecordJsoImpl getDataRecord(Cuid fieldId) /*-{
         var val = this[fieldId];
         if (val === null) {
           return null;
@@ -56,11 +56,11 @@ public class DataRecordJsoImpl extends JavaScriptObject implements DataRecord {
 
     @Override
     @SuppressWarnings("unchecked")
-    public final List<DataRecord> getDataRecordList(Cuid fieldId) {
-        return (List)this.<DataRecordJsoImpl>getList(fieldId.asString());
+    public final List<Record> getDataRecordList(Cuid fieldId) {
+        return (List)this.<RecordJsoImpl>getList(fieldId.asString());
     }
 
-    protected final native <T extends JavaScriptObject> DataRecordJsoListImpl<T> getList(String fieldId) /*-{
+    protected final native <T extends JavaScriptObject> RecordJsoListImpl<T> getList(String fieldId) /*-{
       var val = this[fieldId];
       if ($wnd.Array.isArray(val)) {
         return val;
@@ -69,7 +69,7 @@ public class DataRecordJsoImpl extends JavaScriptObject implements DataRecord {
       }
     }-*/;
 
-//    protected final native <T extends JavaScriptObject> DataRecordJsoListImpl<T> ensureArray(String field) /*-{
+//    protected final native <T extends JavaScriptObject> RecordJsoListImpl<T> ensureArray(String field) /*-{
 //      var val = this[fieldId];
 //      if (!$wnd.Array.isArray(val)) {
 //        val = [];
@@ -94,11 +94,11 @@ public class DataRecordJsoImpl extends JavaScriptObject implements DataRecord {
         this[fieldId] = value;
     }-*/;
 
-    public final void set(Cuid fieldId, DataRecord record) {
-        set(fieldId, (DataRecordJsoImpl)record);
+    public final void set(Cuid fieldId, Record record) {
+        set(fieldId, (RecordJsoImpl)record);
     }
 
-    protected final native void set(Cuid fieldId, DataRecordJsoImpl value) /*-{
+    protected final native void set(Cuid fieldId, RecordJsoImpl value) /*-{
         this[fieldId] = value;
     }-*/;
 

@@ -1,4 +1,4 @@
-package org.activityinfo.datamodel.client.impl;
+package org.activityinfo.datamodel.client.record.impl;
 
 /**
  * Provides an implementation or the browser so that

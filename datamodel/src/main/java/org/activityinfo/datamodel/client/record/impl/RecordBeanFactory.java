@@ -1,14 +1,14 @@
-package org.activityinfo.datamodel.client.impl;
+package org.activityinfo.datamodel.client.record.impl;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import org.activityinfo.datamodel.shared.DataRecordBean;
+import org.activityinfo.datamodel.shared.record.RecordBean;
 
 /**
- * Interface responsible for "creating" DataRecordBeans.
+ * Interface responsible for "creating" RecordBeans.
  *
  * Since we are implementing DataRecordBeans as JavaScriptObjects on the clients,
  * the implementation of this class simply casts the given JavaScriptObject
- * first to the overlay type we generate for the DataRecordBean interfaces, and then
+ * first to the overlay type we generate for the RecordBean interfaces, and then
  * the interface type:
  *
  * <blockquote><pre>
@@ -20,7 +20,7 @@ import org.activityinfo.datamodel.shared.DataRecordBean;
  * </blockquote></pre>
  *
  */
-public interface DataRecordBeanFactory {
+public interface RecordBeanFactory {
 
-    <T extends DataRecordBean> T create(Class<T> beanClass, JavaScriptObject jso);
+    <T extends RecordBean> T create(Class<T> beanClass, JavaScriptObject jso);
 }

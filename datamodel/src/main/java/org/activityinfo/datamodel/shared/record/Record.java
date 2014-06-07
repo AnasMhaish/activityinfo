@@ -1,11 +1,13 @@
-package org.activityinfo.datamodel.shared;
+package org.activityinfo.datamodel.shared.record;
+
+import org.activityinfo.datamodel.shared.Cuid;
 
 import java.util.List;
 
 /**
- * The {@code DataRecord} is the basic unit of (semi)structured storage.
+ * The {@code Record} is the basic unit of (semi)structured storage.
  */
-public interface DataRecord {
+public interface Record {
 
     /**
      * Returns the value of the field if the field has a string value,
@@ -35,15 +37,15 @@ public interface DataRecord {
      */
     Boolean getBoolean(Cuid fieldId);
 
-    DataRecord getDataRecord(Cuid fieldId);
+    Record getDataRecord(Cuid fieldId);
 
-    List<DataRecord> getDataRecordList(Cuid fieldId);
+    List<Record> getDataRecordList(Cuid fieldId);
 
     void set(Cuid fieldId, String value);
 
     void set(Cuid fieldId, double value);
 
-    void set(Cuid fieldId, DataRecord record);
+    void set(Cuid fieldId, Record record);
 
     void set(Cuid fieldId, boolean value);
 }

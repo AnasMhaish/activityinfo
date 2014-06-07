@@ -7,8 +7,8 @@ import com.google.gwt.core.ext.TreeLogger;
 import com.google.gwt.core.ext.UnableToCompleteException;
 import com.google.gwt.user.rebind.ClassSourceFileComposerFactory;
 import com.google.gwt.user.rebind.SourceWriter;
-import org.activityinfo.datamodel.client.impl.DataRecordBeanFactory;
-import org.activityinfo.datamodel.shared.DataRecordBean;
+import org.activityinfo.datamodel.client.record.impl.RecordBeanFactory;
+import org.activityinfo.datamodel.shared.record.RecordBean;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -41,9 +41,9 @@ public class FactoryClass {
         ClassSourceFileComposerFactory f = new ClassSourceFileComposerFactory(
                 PACKAGE, SIMPLE_CLASS_NAME);
 
-        f.addImplementedInterface(DataRecordBeanFactory.class.getName());
+        f.addImplementedInterface(RecordBeanFactory.class.getName());
         f.addImport(JavaScriptObject.class.getName());
-        f.addImport(DataRecordBean.class.getName());
+        f.addImport(RecordBean.class.getName());
 
         SourceWriter sw = f.createSourceWriter(generatorContext, out);
         writeParseFromJson(sw);
@@ -54,7 +54,7 @@ public class FactoryClass {
     private void writeParseFromJson(SourceWriter sw) {
 
         sw.println("@Override");
-        sw.println("public <T extends DataRecordBean> T create(Class<T> beanClass, JavaScriptObject jso) {");
+        sw.println("public <T extends RecordBean> T create(Class<T> beanClass, JavaScriptObject jso) {");
         sw.indent();
 
         for(BeanClass beanClass : beanClasses) {
@@ -64,7 +64,7 @@ public class FactoryClass {
         }
 
         // it should not be possible to reach this point because we have provided
-        // JSO impls for all DataRecordBean subtypes
+        // JSO impls for all RecordBean subtypes
         sw.println("return (T)jso;");
         sw.outdent();
         sw.println("}");

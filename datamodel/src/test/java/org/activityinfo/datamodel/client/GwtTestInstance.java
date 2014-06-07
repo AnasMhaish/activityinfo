@@ -1,11 +1,10 @@
 package org.activityinfo.datamodel.client;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.junit.client.GWTTestCase;
 import org.activityinfo.datamodel.shared.ColumnModel;
 import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.datamodel.shared.DataRecords;
 import org.activityinfo.datamodel.shared.TableModel;
+import org.activityinfo.datamodel.shared.record.Records;
 
 
 public class GwtTestInstance extends GWTTestCase {
@@ -22,12 +21,12 @@ public class GwtTestInstance extends GWTTestCase {
     public void testRecord() {
         String json = "{ \"name\": \"My table model\", \"columns\": [ { \"name\": \"A\"} ] } ";
 
-        TableModel tableModel = DataRecords.fromJson(TableModel.class, json);
+        TableModel tableModel = Records.fromJson(TableModel.class, json);
         assertEquals("My table model", tableModel.getName());
         assertEquals(1, tableModel.getColumns().size());
         assertEquals("A", tableModel.getColumns().get(0).getName());
 
-        ColumnModel b = DataRecords.create(ColumnModel.class);
+        ColumnModel b = Records.create(ColumnModel.class);
         b.set(Cuid.create("name"), "B");
 
         tableModel.getColumns().add(b);

@@ -1,22 +1,22 @@
-package org.activityinfo.datamodel.server.impl;
+package org.activityinfo.datamodel.server.record.impl;
 
 
 import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.datamodel.shared.DataRecord;
-import org.activityinfo.datamodel.shared.DataRecordBean;
+import org.activityinfo.datamodel.shared.record.Record;
+import org.activityinfo.datamodel.shared.record.RecordBean;
 
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * DataRecords are the basic unit of (semi)structured
+ * Records are the basic unit of (semi)structured
  * data in ActivityInfo.
  *
- * On the client, DataRecords are implemented with
+ * On the client, Records are implemented with
  * JavaScriptOverlay types,
  *
  */
-public class DataRecordMapImpl implements DataRecord {
+public class RecordMapImpl implements Record {
 
     private final HashMap<Cuid, Object> propertyMap = new HashMap<>();
 
@@ -84,16 +84,16 @@ public class DataRecordMapImpl implements DataRecord {
     }
 
     @Override
-    public DataRecord getDataRecord(Cuid fieldId) {
+    public Record getDataRecord(Cuid fieldId) {
         Object value = propertyMap.get(fieldId);
-        if(value instanceof DataRecord) {
-            return (DataRecord) value;
+        if(value instanceof Record) {
+            return (Record) value;
         }
         return null;
     }
 
     @Override
-    public List<DataRecord> getDataRecordList(Cuid fieldId) {
+    public List<Record> getDataRecordList(Cuid fieldId) {
         Object value = propertyMap.get(fieldId);
         if(value instanceof List) {
             return (List)value;
@@ -118,7 +118,7 @@ public class DataRecordMapImpl implements DataRecord {
     }
 
     @Override
-    public final void set(Cuid fieldId, DataRecord record) {
+    public final void set(Cuid fieldId, Record record) {
         propertyMap.put(fieldId, record);
     }
 
@@ -127,7 +127,7 @@ public class DataRecordMapImpl implements DataRecord {
         propertyMap.put(fieldId, value);
     }
 
-    public final <T extends DataRecordBean> T as(Class<T> beanClass) {
-        return DataRecordsImpl.createProxy(beanClass, this);
+    public final <T extends RecordBean> T as(Class<T> beanClass) {
+        return RecordsImpl.createProxy(beanClass, this);
     }
 }

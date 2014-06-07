@@ -1,7 +1,9 @@
 package org.activityinfo.datamodel.shared;
 
 
-public interface ColumnModel extends DataRecordBean {
+import org.activityinfo.datamodel.shared.record.RecordBean;
+
+public interface ColumnModel extends RecordBean {
 
     String getName();
 
