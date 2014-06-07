@@ -12,6 +12,7 @@ import java.util.Set;
 public class ExprParser {
 
     private static final Set<String> INFIX_OPERATORS = Sets.newHashSet("+", "-", "*", "/");
+    private static final Set<String> UNARY_FUNCTIONS = Sets.newHashSet("sqrt");
 
     private PeekingIterator<Token> lexer;
     private PlaceholderExprResolver placeholderExprResolver;
@@ -44,6 +45,13 @@ public class ExprParser {
 
             return new FunctionCallNode(function, expr, right);
 
+        } else if (isUnaryFunction(token)) {
+            lexer.next();
+            ExprFunction function = ArithmeticFunctions.getUnaryInfix(token.getString());
+            ExprNode right = parse();
+
+            return new FunctionCallNode(function, expr, right);
+
         } else {
             return expr;
         }
@@ -58,6 +66,10 @@ public class ExprParser {
                 INFIX_OPERATORS.contains(token.getString());
     }
 
+    private boolean isUnaryFunction(Token token) {
+        return token.getType() == TokenType.FUNCTION && UNARY_FUNCTIONS.contains(token.getString());
+    }
+
     public ExprNode parseSimple() {
         Token token = lexer.next();
         if (token.getType() == TokenType.PAREN_START) {
@@ -69,6 +81,10 @@ public class ExprParser {
         } else if (token.getType() == TokenType.NUMBER) {
             return new ConstantExpr(Double.parseDouble(token.getString()));
 
+        } else if (isUnaryFunction(token)) {
+            ExprFunction function = ArithmeticFunctions.getUnaryInfix(token.getString());
+            lexer.next();
+            return new FunctionCallNode(function, parseGroup());
         } else {
             throw new ExprSyntaxException("Unexpected token '" + token.getString() + "' at position " + token.getTokenStart() + "'");
         }

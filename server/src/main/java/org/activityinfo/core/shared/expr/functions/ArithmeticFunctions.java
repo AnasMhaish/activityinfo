@@ -20,6 +20,22 @@ public class ArithmeticFunctions {
         }
     };
 
+    public static final ExprFunction SQUARE_ROOT = new UnaryInfixFunction("sqrt") {
+
+        @Override
+        public double applyReal(double x) {
+            return Math.sqrt(x);
+        }
+    };
+
+    public static ExprFunction getUnaryInfix(String name) {
+        if (name.equalsIgnoreCase("sqrt")) {
+            return SQUARE_ROOT;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
     public static ExprFunction getBinaryInfix(String name) {
         if (name.equals("+")) {
             return BINARY_PLUS;

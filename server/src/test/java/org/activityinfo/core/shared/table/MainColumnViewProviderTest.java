@@ -99,6 +99,7 @@ public class MainColumnViewProviderTest extends CommandTestCase2 {
         FieldPath path1 = new FieldPath(CuidAdapter.indicatorField(1));
         FieldPath path2 = new FieldPath(CuidAdapter.indicatorField(2));
         FieldPath path3 = new FieldPath(CuidAdapter.indicatorField(12451));
+        FieldPath path4 = new FieldPath(CuidAdapter.indicatorField(12452));
 
         AsyncFormTreeBuilder formTreeBuilder = new AsyncFormTreeBuilder(resourceLocator);
 
@@ -108,8 +109,14 @@ public class MainColumnViewProviderTest extends CommandTestCase2 {
         FieldColumn column2 = new FieldColumn(formTree.getNodeByPath(path2));
         FieldColumn calculatedColumn = new FieldColumn(formTree.getNodeByPath(path3));
 
+        // calculated column that depends on another calculated column
+        FieldColumn nestedCalculatedColumn = new FieldColumn(formTree.getNodeByPath(path4));
+
 
         FormClass formClass = assertResolves(resourceLocator.getFormClass(formClassId));
+
+        // first call nested calculated column -> make sure that all dependent columns are build independently
+        ColumnView nestedCalculatedColumnView = assertResolves(columnViewProvider.view(nestedCalculatedColumn, formClass));
 
         // first call callculated column -> make sure that all dependent columns are build independently
         ColumnView calculatedColumnView = assertResolves(columnViewProvider.view(calculatedColumn, formClass));
@@ -132,6 +139,61 @@ public class MainColumnViewProviderTest extends CommandTestCase2 {
         for (int row = 0; row != columnView1.numRows(); row++) {
             double sum = columnView1.getDouble(row) + columnView2.getDouble(row);
             assertThat(calculatedColumnView.getDouble(row), Matchers.equalTo(sum));
+        }
+    }
+
+    @Test
+    public void nestedCalculatedColumnView() {
+        Cuid formClassId = CuidAdapter.activityFormClass(1);
+
+        FieldPath path1 = new FieldPath(CuidAdapter.indicatorField(1));
+        FieldPath path2 = new FieldPath(CuidAdapter.indicatorField(2));
+        FieldPath path3 = new FieldPath(CuidAdapter.indicatorField(12451)); // calculated column
+        FieldPath path4 = new FieldPath(CuidAdapter.indicatorField(12452)); // nested calculated column
+
+        AsyncFormTreeBuilder formTreeBuilder = new AsyncFormTreeBuilder(resourceLocator);
+
+        FormTree formTree = assertResolves(formTreeBuilder.apply(formClassId));
+
+        FieldColumn column1 = new FieldColumn(formTree.getNodeByPath(path1));
+        FieldColumn column2 = new FieldColumn(formTree.getNodeByPath(path2));
+        FieldColumn calculatedColumn = new FieldColumn(formTree.getNodeByPath(path3));
+
+        // calculated column that depends on another calculated column
+        FieldColumn nestedCalculatedColumn = new FieldColumn(formTree.getNodeByPath(path4));
+
+        FormClass formClass = assertResolves(resourceLocator.getFormClass(formClassId));
+
+        // first call nested calculated column -> make sure that all dependent columns are build independently
+        ColumnView nestedCalculatedColumnView = assertResolves(columnViewProvider.view(nestedCalculatedColumn, formClass));
+
+        // first call callculated column -> make sure that all dependent columns are build independently
+        ColumnView calculatedColumnView = assertResolves(columnViewProvider.view(calculatedColumn, formClass));
+
+        // query dependent column after calculated one is evaluated
+        ColumnView columnView1 = assertResolves(columnViewProvider.view(column1, formClass));
+        ColumnView columnView2 = assertResolves(columnViewProvider.view(column2, formClass));
+
+        ColumnView calculatedColumnFromCache = assertResolves(columnViewProvider.getCache().view(calculatedColumn, formClass));
+        ColumnView nestedCalculatedColumnFromCache = assertResolves(columnViewProvider.getCache().view(nestedCalculatedColumn, formClass));
+
+        // check whether calculated column views are in cache
+        assertEquals(nestedCalculatedColumnView, nestedCalculatedColumnFromCache);
+        assertEquals(calculatedColumnView, calculatedColumnFromCache);
+
+        // row count check
+        assertThat(columnView1.numRows(), Matchers.equalTo(3));
+        assertThat(columnView2.numRows(), Matchers.equalTo(3));
+        assertThat(calculatedColumnView.numRows(), Matchers.equalTo(3));
+        assertThat(nestedCalculatedColumnView.numRows(), Matchers.equalTo(3));
+
+        // calculation check
+        for (int row = 0; row != columnView1.numRows(); row++) {
+            double sum = columnView1.getDouble(row) + columnView2.getDouble(row);
+            double calculatedValue = calculatedColumnView.getDouble(row);
+
+            assertThat(calculatedValue, Matchers.equalTo(sum));
+            assertThat(nestedCalculatedColumnView.getDouble(row), Matchers.equalTo(calculatedValue + sum));
         }
     }
 }

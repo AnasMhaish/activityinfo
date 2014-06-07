@@ -43,6 +43,47 @@ public class ExprParserTest {
     }
 
     @Test
+    public void functionaTokenizing() {
+        expect("sqrt(2)",
+                new Token(TokenType.FUNCTION, 0, "sqrt"),
+                new Token(TokenType.PAREN_START, 5, "("),
+                new Token(TokenType.NUMBER, 6, "2"),
+                new Token(TokenType.PAREN_END, 7, ")")
+        );
+        expect("sqrt(sqrt(2))",
+                new Token(TokenType.FUNCTION, 0, "sqrt"),
+                new Token(TokenType.PAREN_START, 5, "("),
+                new Token(TokenType.FUNCTION, 10, "sqrt"),
+                new Token(TokenType.PAREN_START, 11, "("),
+                new Token(TokenType.NUMBER, 12, "2"),
+                new Token(TokenType.PAREN_END, 13, ")"),
+                new Token(TokenType.PAREN_END, 14, ")")
+        );
+        expect("sqrt(2)+3",
+                new Token(TokenType.FUNCTION, 0, "sqrt"),
+                new Token(TokenType.PAREN_START, 5, "("),
+                new Token(TokenType.NUMBER, 6, "2"),
+                new Token(TokenType.PAREN_END, 7, ")"),
+                new Token(TokenType.OPERATOR, 8, "+"),
+                new Token(TokenType.NUMBER, 9, "3")
+        );
+        expect("sqrt({i1}+{i2})+3",
+                new Token(TokenType.FUNCTION, 0, "sqrt"),
+                new Token(TokenType.PAREN_START, 5, "("),
+                new Token(TokenType.BRACE_START, 6, "{"),
+                new Token(TokenType.SYMBOL, 7, "i1"),
+                new Token(TokenType.BRACE_END, 9, "}"),
+                new Token(TokenType.OPERATOR, 10, "+"),
+                new Token(TokenType.BRACE_START, 11, "{"),
+                new Token(TokenType.SYMBOL, 12, "i2"),
+                new Token(TokenType.BRACE_END, 14, "}"),
+                new Token(TokenType.PAREN_END, 15, ")"),
+                new Token(TokenType.OPERATOR, 16, "+"),
+                new Token(TokenType.NUMBER, 17, "3")
+        );
+    }
+
+    @Test
     public void placeholderTokenizing() {
         expect("{i1}+{i2}",
                 new Token(TokenType.BRACE_START, 0, "{"),
@@ -132,10 +173,40 @@ public class ExprParserTest {
     }
 
     @Test
+    public void parseFunctions() {
+        expect("sqrt(9)",
+                new FunctionCallNode(ArithmeticFunctions.SQUARE_ROOT,
+                        new GroupExpr(new ConstantExpr(9)))
+        );
+        expect("sqrt(sqrt(9))",
+                new FunctionCallNode(ArithmeticFunctions.SQUARE_ROOT,
+                        new GroupExpr(new FunctionCallNode(ArithmeticFunctions.SQUARE_ROOT,
+                                new GroupExpr(new ConstantExpr(9))
+                        ))));
+        expect("sqrt(9)+3",
+                new FunctionCallNode(ArithmeticFunctions.BINARY_PLUS,
+                        new FunctionCallNode(ArithmeticFunctions.SQUARE_ROOT,
+                                new GroupExpr(new ConstantExpr(9))),
+                        new ConstantExpr(3)));
+
+        expect("sqrt({i1}+{i2})+3",
+                new FunctionCallNode(ArithmeticFunctions.BINARY_PLUS,
+                        new FunctionCallNode(ArithmeticFunctions.SQUARE_ROOT,
+                                new GroupExpr(new FunctionCallNode(ArithmeticFunctions.BINARY_PLUS,
+                                        new PlaceholderExpr("i1"),
+                                        new PlaceholderExpr("i2")))),
+                new ConstantExpr(3)));
+    }
+
+    @Test
     public void evaluateExpr() {
         evaluate("1", 1);
         evaluate("1+1", 2);
         evaluate("(5+5)/2", 5);
+        evaluate("sqrt(9)", 3);
+        evaluate("sqrt(9) + 1", 4);
+        evaluate("sqrt(sqrt(16))", 2);
+        evaluate("sqrt(7+1+1)", 3);
     }
 
     private void expect(String string, Token... tokens) {
