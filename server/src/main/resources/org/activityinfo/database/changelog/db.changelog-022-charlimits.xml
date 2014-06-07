@@ -31,8 +31,8 @@
     </comment>
     <modifyDataType tableName="activity" columnName="name" newDataType="varchar(1000)"/>
     <modifyDataType tableName="activity" columnName="category" newDataType="varchar(1000)"/>
-    <modifyDataType tableName="database" columnName="name" newDataType="varchar(100)"/>
-    <modifyDataType tableName="database" columnName="fullName" newDataType="longtext"/>
+    <modifyDataType tableName="userdatabase" columnName="name" newDataType="varchar(100)"/>
+    <modifyDataType tableName="userdatabase" columnName="fullName" newDataType="longtext"/>
     <modifyDataType tableName="project" columnName="name" newDataType="varchar(1000)"/>
     <modifyDataType tableName="attributegroup" columnName="name" newDataType="varchar(1000)"/>
     <modifyDataType tableName="attributegroup" columnName="category" newDataType="varchar(1000)"/>
