@@ -59,9 +59,13 @@ public class SiteRendererTest {
         SiteDTO site = new SiteDTO();
         site.setIndicatorValue(1, 1000d);
         site.setIndicatorValue(2, 2000d);
-        site.setIndicatorValue(3, "Some help but not a huge amount");
+        site.setIndicatorValue(3, "Some help but not a huge amount.\nHowever there was " +
+                                  "some other information that I'd like to present in " +
+                                  "second paragraph.");
 
-        String html = siteRenderer.renderSite(site, activity, false, true);
+        String html = siteRenderer.renderSite(site, activity, true);
+
+        System.out.println(html);
 
         assertTrue(html.contains(indicator1.getName()));
         assertTrue(html.contains(indicator2.getName()));
