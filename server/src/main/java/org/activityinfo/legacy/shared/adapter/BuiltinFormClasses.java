@@ -1,11 +1,10 @@
 package org.activityinfo.legacy.shared.adapter;
 
 import com.google.common.base.Function;
-import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.core.shared.LocalizedString;
 import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.FormField;
 import org.activityinfo.core.shared.form.FormFieldType;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.i18n.shared.I18N;
 import org.activityinfo.legacy.shared.model.ActivityDTO;
 
@@ -27,11 +26,11 @@ public class BuiltinFormClasses {
 
         Cuid classId = CuidAdapter.projectFormClass(databaseId);
         FormClass formClass = new FormClass(classId);
-        formClass.setLabel(new LocalizedString(I18N.CONSTANTS.project()));
+        formClass.setLabel(I18N.CONSTANTS.project());
 
         // add the project's name
         FormField nameField = new FormField(CuidAdapter.field(classId, CuidAdapter.NAME_FIELD));
-        nameField.setLabel(new LocalizedString(I18N.CONSTANTS.name()));
+        nameField.setLabel(I18N.CONSTANTS.name());
         nameField.setType(FormFieldType.FREE_TEXT);
         nameField.setRequired(true);
         formClass.addElement(nameField);

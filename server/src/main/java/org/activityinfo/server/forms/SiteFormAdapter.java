@@ -1,9 +1,8 @@
 package org.activityinfo.server.forms;
 
 import com.google.common.base.Strings;
-import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.core.shared.LocalizedString;
 import org.activityinfo.core.shared.form.*;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.i18n.shared.I18N;
 import org.activityinfo.legacy.shared.adapter.CuidAdapter;
 import org.activityinfo.legacy.shared.model.IndicatorDTO;
@@ -34,7 +33,7 @@ public class SiteFormAdapter extends FormClassAdapter {
 
         Cuid classId = CuidAdapter.activityFormClass(activityId);
         siteForm = new FormClass(classId);
-        siteForm.setLabel(new LocalizedString(activity.getName()));
+        siteForm.setLabel(activity.getName());
 
         if (!Strings.isNullOrEmpty(activity.getCategory())) {
             siteForm.setParentId(activityCategoryFolderId(activity.getDatabase().getId(), activity.getCategory()));
@@ -43,7 +42,7 @@ public class SiteFormAdapter extends FormClassAdapter {
         }
 
         FormField partnerField = new FormField(CuidAdapter.field(classId, CuidAdapter.PARTNER_FIELD));
-        partnerField.setLabel(new LocalizedString(I18N.CONSTANTS.partner()));
+        partnerField.setLabel(I18N.CONSTANTS.partner());
         partnerField.setRange(CuidAdapter.partnerFormClass(activity.getDatabase().getId()));
         partnerField.setType(FormFieldType.REFERENCE);
         partnerField.setCardinality(FormFieldCardinality.SINGLE);
@@ -51,27 +50,27 @@ public class SiteFormAdapter extends FormClassAdapter {
         siteForm.addElement(partnerField);
 
         FormField projectField = new FormField(CuidAdapter.field(classId, CuidAdapter.PROJECT_FIELD));
-        projectField.setLabel(new LocalizedString(I18N.CONSTANTS.project()));
+        projectField.setLabel(I18N.CONSTANTS.project());
         projectField.setRange(CuidAdapter.projectFormClass(activity.getDatabase().getId()));
         projectField.setType(FormFieldType.REFERENCE);
         projectField.setCardinality(FormFieldCardinality.SINGLE);
         siteForm.addElement(projectField);
 
         FormField endDateField = new FormField(CuidAdapter.field(classId, CuidAdapter.END_DATE_FIELD));
-        endDateField.setLabel(new LocalizedString(I18N.CONSTANTS.endDate()));
+        endDateField.setLabel(I18N.CONSTANTS.endDate());
         endDateField.setType(FormFieldType.LOCAL_DATE);
         endDateField.setRequired(true);
         siteForm.addElement(endDateField);
 
         FormField startDateField = new FormField(CuidAdapter.field(classId, CuidAdapter.START_DATE_FIELD));
-        startDateField.setLabel(new LocalizedString(I18N.CONSTANTS.startDate()));
+        startDateField.setLabel(I18N.CONSTANTS.startDate());
         startDateField.setType(FormFieldType.LOCAL_DATE);
         startDateField.setRequired(true);
         siteForm.addElement(startDateField);
 
 
         FormField locationField = new FormField(CuidAdapter.locationField(activity.getId()));
-        locationField.setLabel(new LocalizedString(activity.getLocationType().getName()));
+        locationField.setLabel(activity.getLocationType().getName());
         locationField.setRange(locationClass(activity.getLocationType()));
         locationField.setType(FormFieldType.REFERENCE);
         locationField.setRequired(true);
@@ -80,7 +79,7 @@ public class SiteFormAdapter extends FormClassAdapter {
 
         for (AttributeGroup group : activity.getAttributeGroups()) {
             FormField attributeField = new FormField(attributeGroupField(activity.getId(), group.getId()));
-            attributeField.setLabel(new LocalizedString(group.getName()));
+            attributeField.setLabel(group.getName());
             attributeField.setRange(CuidAdapter.attributeGroupFormClass(group.getId()));
             attributeField.setType(FormFieldType.REFERENCE);
             attributeField.setRequired(group.isMandatory());
@@ -108,7 +107,7 @@ public class SiteFormAdapter extends FormClassAdapter {
 
         FormField commentsField = new FormField(CuidAdapter.commentsField(activity.getId()));
         commentsField.setType(FormFieldType.NARRATIVE);
-        commentsField.setLabel(new LocalizedString(I18N.CONSTANTS.comments()));
+        commentsField.setLabel(I18N.CONSTANTS.comments());
         siteForm.addElement(commentsField);
 
         return siteForm;
@@ -126,10 +125,10 @@ public class SiteFormAdapter extends FormClassAdapter {
     private static void addIndicators(FormElementContainer container, IndicatorGroup group) {
         for (IndicatorDTO indicator : group.getIndicators()) {
             FormField field = new FormField(CuidAdapter.indicatorField(indicator.getId()));
-            field.setLabel(new LocalizedString(indicator.getName()));
-            field.setDescription(new LocalizedString(indicator.getDescription()));
+            field.setLabel(indicator.getName());
+            field.setDescription(indicator.getDescription());
             field.setType(FormFieldType.QUANTITY);
-            field.setUnit(new LocalizedString(indicator.getUnits()));
+            field.setUnit(indicator.getUnits());
             container.addElement(field);
         }
     }

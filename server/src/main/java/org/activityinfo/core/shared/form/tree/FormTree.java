@@ -4,12 +4,11 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.core.shared.LocalizedString;
 import org.activityinfo.core.shared.criteria.Criteria;
 import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.FormField;
 import org.activityinfo.core.shared.form.FormFieldType;
+import org.activityinfo.datamodel.shared.Cuid;
 
 import java.util.Collection;
 import java.util.List;
@@ -120,12 +119,12 @@ public class FormTree {
             return toString(field.getLabel(), this.getDefiningFormClass()) + ":" + field.getType().name();
         }
 
-        private String toString(LocalizedString label, FormClass definingFormClass) {
+        private String toString(String label, FormClass definingFormClass) {
             String field = "[";
             if(definingFormClass != null && definingFormClass.getLabel() != null)  {
-                field += definingFormClass.getLabel().getValue() + ":";
+                field += definingFormClass.getLabel() + ":";
             }
-            field += label.getValue();
+            field += label;
             field += "]";
 
             return field;

@@ -1,10 +1,9 @@
 package org.activityinfo.legacy.shared.adapter;
 
-import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.core.shared.LocalizedString;
 import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.FormField;
 import org.activityinfo.core.shared.form.FormFieldType;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.i18n.shared.I18N;
 
 
@@ -27,18 +26,18 @@ public class PartnerClassAdapter {
 
         Cuid classId = CuidAdapter.partnerFormClass(databaseId);
         FormClass formClass = new FormClass(classId);
-        formClass.setLabel(new LocalizedString(I18N.CONSTANTS.partner()));
+        formClass.setLabel(I18N.CONSTANTS.partner());
 
         // add the partner's name
         FormField nameField = new FormField(getNameField(classId));
-        nameField.setLabel(new LocalizedString(I18N.CONSTANTS.name()));
+        nameField.setLabel(I18N.CONSTANTS.name());
         nameField.setType(FormFieldType.FREE_TEXT);
         nameField.setRequired(true);
         formClass.addElement(nameField);
 
         // partner full name
         FormField fullNameField = new FormField(getFullNameField(classId));
-        fullNameField.setLabel(new LocalizedString(I18N.CONSTANTS.fullName()));
+        fullNameField.setLabel(I18N.CONSTANTS.fullName());
         fullNameField.setType(FormFieldType.FREE_TEXT);
         formClass.addElement(fullNameField);
 

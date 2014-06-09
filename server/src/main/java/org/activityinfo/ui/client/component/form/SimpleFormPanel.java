@@ -8,9 +8,9 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
-import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.form.*;
 import org.activityinfo.core.shared.form.tree.FormTree;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.fp.client.Promise;
 import org.activityinfo.i18n.shared.I18N;
 import org.activityinfo.ui.client.component.form.field.FormFieldWidget;
@@ -133,7 +133,7 @@ public class SimpleFormPanel implements DisplayWidget<FormViewModel> {
         StringBuilder html = new StringBuilder();
         String hn = "h" + (3+depth);
         html.append("<").append(hn).append(">")
-            .append(SafeHtmlUtils.htmlEscape(section.getLabel().getValue()))
+            .append(SafeHtmlUtils.htmlEscape(section.getLabel()))
             .append("</").append(hn).append(">");
         return new HTML(html.toString());
     }

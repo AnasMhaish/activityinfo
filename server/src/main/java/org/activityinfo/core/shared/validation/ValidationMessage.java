@@ -21,38 +21,33 @@ package org.activityinfo.core.shared.validation;
  * #L%
  */
 
-import org.activityinfo.core.shared.LocalizedString;
 
 /**
  * @author yuriyz on 3/11/14.
  */
 public class ValidationMessage {
 
-    private LocalizedString message;
+    private String message;
     private ValidationSeverity severity;
 
     public ValidationMessage() {
-        this(LocalizedString.EMPTY);
+        this("");
     }
 
     public ValidationMessage(String message) {
-        this(new LocalizedString(message), ValidationSeverity.ERROR);
-    }
-
-    public ValidationMessage(LocalizedString message) {
         this(message, ValidationSeverity.ERROR);
     }
 
-    public ValidationMessage(LocalizedString message, ValidationSeverity severity) {
+    public ValidationMessage(String message, ValidationSeverity severity) {
         this.message = message;
         this.severity = severity;
     }
 
-    public LocalizedString getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(LocalizedString message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 

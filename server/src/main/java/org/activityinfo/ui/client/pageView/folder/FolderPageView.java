@@ -3,7 +3,6 @@ package org.activityinfo.ui.client.pageView.folder;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -15,7 +14,6 @@ import org.activityinfo.core.client.CuidGenerator;
 import org.activityinfo.core.client.InstanceQuery;
 import org.activityinfo.core.client.ResourceLocator;
 import org.activityinfo.core.client.Resources;
-import org.activityinfo.core.shared.LocalizedString;
 import org.activityinfo.core.shared.Projection;
 import org.activityinfo.core.shared.application.ApplicationProperties;
 import org.activityinfo.core.shared.application.FolderClass;
@@ -100,7 +98,7 @@ public class FolderPageView implements InstancePageView {
     @UiHandler("newFormButton")
     public void onNewFormButton(ClickEvent event) {
         final FormClass formClass = new FormClass(CuidGenerator.INSTANCE.nextCuid());
-        formClass.setLabel(new LocalizedString("New Form"));
+        formClass.setLabel("New Form");
         formClass.setParentId(instance.getId());
         resources.resourceLocator.persist(formClass).then(new AsyncCallback<Void>() {
             @Override

@@ -3,11 +3,11 @@ package org.activityinfo.ui.client.component.table;
 import com.google.common.collect.Lists;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.user.cellview.client.Column;
-import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Projection;
 import org.activityinfo.core.shared.criteria.Criteria;
 import org.activityinfo.core.shared.form.tree.FieldPath;
 import org.activityinfo.core.shared.form.tree.FormTree;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.legacy.shared.adapter.CuidAdapter;
 import org.activityinfo.ui.client.component.table.renderer.RendererFactory;
 import org.activityinfo.ui.client.component.table.renderer.ValueRenderer;
@@ -77,9 +77,9 @@ public class FieldColumn extends Column<Projection, String> {
 
     private String composeHeader(FormTree.Node node) {
         if (node.getPath().isNested()) {
-            return node.getDefiningFormClass().getLabel().getValue() + " " + node.getField().getLabel().getValue();
+            return node.getDefiningFormClass().getLabel() + " " + node.getField().getLabel();
         } else {
-            return node.getField().getLabel().getValue();
+            return node.getField().getLabel();
         }
     }
 

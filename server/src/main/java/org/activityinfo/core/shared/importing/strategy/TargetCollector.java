@@ -25,10 +25,10 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
-import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.form.FormFieldType;
 import org.activityinfo.core.shared.form.tree.FieldPath;
 import org.activityinfo.core.shared.form.tree.FormTree;
+import org.activityinfo.datamodel.shared.Cuid;
 
 import java.util.HashMap;
 import java.util.List;
@@ -89,8 +89,8 @@ public class TargetCollector {
     }
 
     private String label(FormTree.Node fieldNode) {
-        return fieldNode.getDefiningFormClass().getLabel().getValue() + " " +
-                fieldNode.getField().getLabel().getValue();
+        return fieldNode.getDefiningFormClass().getLabel() + " " +
+               fieldNode.getField().getLabel();
     }
 
     public Map<FieldPath, Integer> getPathMap(Map<TargetSiteId, ColumnAccessor> mappings, List<ColumnAccessor> sourceColumns) {

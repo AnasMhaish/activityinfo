@@ -1,11 +1,11 @@
 package org.activityinfo.ui.client.component.form.field.hierarchy;
 
 import com.google.common.collect.Lists;
-import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.application.ApplicationProperties;
 import org.activityinfo.core.shared.criteria.FormClassSet;
 import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.FormField;
+import org.activityinfo.datamodel.shared.Cuid;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class Level {
     }
 
     public String getLabel() {
-        return formClass.getLabel().getValue();
+        return formClass.getLabel();
     }
 
     public FormClass getFormClass() {

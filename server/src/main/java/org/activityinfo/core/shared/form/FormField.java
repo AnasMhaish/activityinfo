@@ -3,10 +3,9 @@ package org.activityinfo.core.shared.form;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
-import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.core.shared.LocalizedString;
 import org.activityinfo.core.shared.criteria.ClassCriteria;
 import org.activityinfo.core.shared.criteria.Criteria;
+import org.activityinfo.datamodel.shared.Cuid;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
@@ -19,9 +18,9 @@ import java.util.Set;
 public class FormField implements FormElement {
 
     private final Cuid id;
-    private LocalizedString label;
-    private LocalizedString description;
-    private LocalizedString unit;
+    private String label;
+    private String description;
+    private String unit;
     private FormFieldType type;
     private Criteria range;
     private String calculation;
@@ -49,11 +48,11 @@ public class FormField implements FormElement {
     }
 
     @NotNull
-    public LocalizedString getLabel() {
-        return LocalizedString.nullToEmpty(label);
+    public String getLabel() {
+        return label;
     }
 
-    public void setLabel(LocalizedString label) {
+    public void setLabel(String label) {
         this.label = label;
     }
 
@@ -62,20 +61,20 @@ public class FormField implements FormElement {
      * presented to the user during data entry
      */
     @NotNull
-    public LocalizedString getDescription() {
-        return LocalizedString.nullToEmpty(description);
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescription(LocalizedString description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
     @NotNull
-    public LocalizedString getUnit() {
-        return LocalizedString.nullToEmpty(unit);
+    public String getUnit() {
+        return unit;
     }
 
-    public void setUnit(LocalizedString unit) {
+    public void setUnit(String unit) {
         this.unit = unit;
     }
 

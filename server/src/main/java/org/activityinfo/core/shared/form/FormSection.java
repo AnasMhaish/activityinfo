@@ -3,7 +3,6 @@ package org.activityinfo.core.shared.form;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.core.shared.LocalizedString;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -15,7 +14,7 @@ public class FormSection implements FormElement, FormElementContainer {
 
 
     private final Cuid id;
-    private LocalizedString label;
+    private String label;
     private final List<FormElement> elements = Lists.newArrayList();
 
     public FormSection(Cuid id) {
@@ -28,11 +27,11 @@ public class FormSection implements FormElement, FormElementContainer {
     }
 
     @NotNull
-    public LocalizedString getLabel() {
-        return LocalizedString.nullToEmpty(label);
+    public String getLabel() {
+        return label;
     }
 
-    public void setLabel(LocalizedString label) {
+    public void setLabel(String label) {
         this.label = label;
     }
 
