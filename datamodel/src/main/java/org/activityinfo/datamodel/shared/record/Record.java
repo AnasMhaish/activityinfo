@@ -2,8 +2,6 @@ package org.activityinfo.datamodel.shared.record;
 
 import org.activityinfo.datamodel.shared.Cuid;
 
-import java.util.List;
-
 /**
  * The {@code Record} is the basic unit of (semi)structured storage.
  */
@@ -64,9 +62,7 @@ public interface Record {
      */
     Boolean getBoolean(Cuid fieldId);
 
-    Record getDataRecord(Cuid fieldId);
-
-    List<Record> getDataRecordList(Cuid fieldId);
+    Record getRecord(Cuid fieldId);
 
     void set(Cuid fieldId, String value);
 

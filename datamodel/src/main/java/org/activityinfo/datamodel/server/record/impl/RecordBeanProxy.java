@@ -1,18 +1,19 @@
 package org.activityinfo.datamodel.server.record.impl;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.datamodel.shared.record.Record;
+import org.activityinfo.datamodel.shared.record.RecordArray;
 import org.activityinfo.datamodel.shared.record.RecordBean;
 
-import javax.annotation.Nullable;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.*;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class RecordBeanProxy implements InvocationHandler {
             } else if(type.equals(int.class)) {
                 methods.put(readMethod, new IntGetter(fieldId));
 
-            } else if(List.class.isAssignableFrom(type)) {
+            } else if(RecordArray.class.isAssignableFrom(type)) {
                 // ensure that we have a value
                 methods.put(readMethod, new ListGetter(fieldId,
                         readMethod.getGenericReturnType()));
@@ -106,18 +107,12 @@ public class RecordBeanProxy implements InvocationHandler {
 
         @Override
         public Object invoke(Object[] args) {
-            List<Record> value = record.getDataRecordList(fieldId);
-            if(value == null) {
+            List<Object> value = (List<Object>) record.get(fieldId);
+            if(value instanceof List) {
+                return new RecordBeanArrayImpl(value, elementType);
+            } else {
                 return null;
             }
-            return Lists.transform(value, new Function<Object, Object>() {
-
-                @Nullable
-                @Override
-                public Object apply(@Nullable Object input) {
-                    return RecordsImpl.createProxy(elementType, (Record) input);
-                }
-            });
         }
     }
 }

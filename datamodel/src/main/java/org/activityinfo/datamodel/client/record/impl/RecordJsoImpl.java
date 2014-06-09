@@ -5,8 +5,6 @@ import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.datamodel.shared.record.FieldType;
 import org.activityinfo.datamodel.shared.record.Record;
 
-import java.util.List;
-
 /**
  * An implementation of Record that compiles down to
  * a pure JavaScript object using JavaScript overlay types.
@@ -48,7 +46,10 @@ public class RecordJsoImpl extends JavaScriptObject implements Record {
     }-*/;
 
     public final native String getString(String fieldId) /*-{
-        return this[fieldId];
+        var val = this[fieldId];
+        if(typeof val === "string") {
+            return this[fieldId];
+        }
     }-*/;
 
     public final native Double getDouble(Cuid fieldId) /*-{
@@ -74,7 +75,7 @@ public class RecordJsoImpl extends JavaScriptObject implements Record {
     }-*/;
 
     @Override
-    public final native RecordJsoImpl getDataRecord(Cuid fieldId) /*-{
+    public final native RecordJsoImpl getRecord(Cuid fieldId) /*-{
         var val = this[fieldId];
         if (val === null) {
           return null;
@@ -84,13 +85,7 @@ public class RecordJsoImpl extends JavaScriptObject implements Record {
         }
     }-*/;
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public final List<Record> getDataRecordList(Cuid fieldId) {
-        return (List)this.<RecordJsoImpl>getList(fieldId.asString());
-    }
-
-    protected final native <T extends JavaScriptObject> RecordJsoListImpl<T> getList(String fieldId) /*-{
+    protected final native <T extends Record> RecordArrayJsoImpl<T> getArray(String fieldId) /*-{
       var val = this[fieldId];
       if ($wnd.Array.isArray(val)) {
         return val;
@@ -98,15 +93,6 @@ public class RecordJsoImpl extends JavaScriptObject implements Record {
         return [];
       }
     }-*/;
-
-//    protected final native <T extends JavaScriptObject> RecordJsoListImpl<T> ensureArray(String field) /*-{
-//      var val = this[fieldId];
-//      if (!$wnd.Array.isArray(val)) {
-//        val = [];
-//        this[fieldId] = val;
-//      }
-//      return val;
-//    }-*/;
 
     public final native boolean has(Cuid fieldId) /*-{
       return this.hasOwnProperty(fieldId);
@@ -139,6 +125,4 @@ public class RecordJsoImpl extends JavaScriptObject implements Record {
     public final native void set(Cuid fieldId, boolean value) /*-{
         this[fieldId] = value;
     }-*/;
-
-
 }

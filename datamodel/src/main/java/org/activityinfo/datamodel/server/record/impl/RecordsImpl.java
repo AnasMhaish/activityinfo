@@ -28,7 +28,7 @@ public class RecordsImpl {
         return createProxy(beanClass, new RecordMapImpl());
     }
 
-    public static Record fromJson(String json) {
+    public static RecordMapImpl fromJson(String json) {
         try(JsonReader reader = new JsonReader(new StringReader(json))) {
             return parseRecord(reader);
         } catch (IOException e) {
@@ -40,7 +40,7 @@ public class RecordsImpl {
         return createProxy(beanClass, fromJson(json));
     }
 
-    public static <T extends RecordBean> T createProxy(Class<T> beanClass, Record record) {
+    public static <T extends RecordBean> T createProxy(Class<T> beanClass, RecordMapImpl record) {
         try {
             return (T) Proxy.newProxyInstance(RecordsImpl.class.getClassLoader(),
                     new Class[]{beanClass},
@@ -50,7 +50,7 @@ public class RecordsImpl {
         }
     }
 
-    public static Record parseRecord(JsonReader reader) throws IOException {
+    public static RecordMapImpl parseRecord(JsonReader reader) throws IOException {
         RecordMapImpl record = new RecordMapImpl();
         reader.beginObject();
         while(reader.hasNext()) {

@@ -1,9 +1,8 @@
 package org.activityinfo.datamodel.shared;
 
 
+import org.activityinfo.datamodel.shared.record.RecordArray;
 import org.activityinfo.datamodel.shared.record.RecordBean;
-
-import java.util.List;
 
 /**
  * The TableModel defines a projection from a set of FormModels
@@ -13,6 +12,6 @@ public interface TableModel extends RecordBean {
 
     public String getName();
 
-    public List<ColumnModel> getColumns();
+    public RecordArray<ColumnModel> getColumns();
 
 }

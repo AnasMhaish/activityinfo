@@ -9,6 +9,7 @@ import com.google.gwt.user.rebind.ClassSourceFileComposerFactory;
 import com.google.gwt.user.rebind.SourceWriter;
 import org.activityinfo.datamodel.client.record.impl.RecordJsoImpl;
 import org.activityinfo.datamodel.shared.Cuid;
+import org.activityinfo.datamodel.shared.record.RecordArray;
 import org.activityinfo.datamodel.shared.record.RecordBean;
 
 import java.io.PrintWriter;
@@ -128,9 +129,11 @@ public class BeanClass {
         } else if(returnType == JPrimitiveType.BOOLEAN) {
             sw.println("return getBoolean(\"%s\", 0);", fieldId);
 
-        } else if(isList(returnType)) {
-            sw.println("return (java.util.List)super.<%s>getList(\"%s\");",
-                    getListElementType(logger, returnType), fieldId);
+        } else if(isArray(returnType)) {
+            sw.println("return (%s)super.<%s>getArray(\"%s\");",
+                    RecordArray.class.getName(),
+                    getListElementType(logger, returnType) + IMPL_SUFFIX,
+                    fieldId);
 
         } else {
             logger.log(TreeLogger.Type.ERROR, "Unsupported return type: " + returnType);
@@ -138,8 +141,8 @@ public class BeanClass {
         }
     }
 
-    private boolean isList(JType returnType) {
-        return returnType.getQualifiedSourceName().equals("java.util.List");
+    private boolean isArray(JType returnType) {
+        return returnType.getQualifiedSourceName().equals(RecordArray.class.getName());
     }
 
     private String getListElementType(TreeLogger logger, JType listType) throws UnableToCompleteException {
@@ -159,7 +162,7 @@ public class BeanClass {
             throw new UnableToCompleteException();
         }
 
-        return beanInterface.getQualifiedSourceName() + IMPL_SUFFIX;
+        return beanInterface.getQualifiedSourceName();
     }
 
     private boolean isDataRecordBean(JClassType interfaceClass) {
