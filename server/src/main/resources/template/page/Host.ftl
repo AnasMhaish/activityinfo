@@ -66,7 +66,7 @@
             vertical-align: top;
         }
 
-        #loading-msg {
+        #loading-message {
             font: normal 10px tahoma, arial, sans-serif;
         }
 
@@ -119,7 +119,7 @@
         <div class="loading-indicator">
             <img src="ActivityInfo/gxt231/images/default/shared/large-loading.gif" alt=""/>
         ${domain.title} $[display.version]<br/>
-            <span id="loading-msg">${label.loading}</span>
+            <span id="loading-message">${label.loading}</span>
 
         </div>
     </div>

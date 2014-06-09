@@ -60,6 +60,7 @@ public class ActivityPolicy implements EntityPolicy<Activity> {
         activity.setDatabase(database);
         activity.setSortOrder(calculateNextSortOrderIndex(database.getId()));
         activity.setLocationType(getLocationType(properties));
+        activity.setSchemaVersion(1);
 
         applyProperties(activity, properties);
 
@@ -75,6 +76,8 @@ public class ActivityPolicy implements EntityPolicy<Activity> {
         PermissionOracle.using(em).assertDesignPrivileges(activity.getDatabase(), user);
 
         applyProperties(activity, changes);
+
+        activity.setSchemaVersion(activity.getSchemaVersion() + 1);
     }
 
     private UserDatabase getDatabase(PropertyMap properties) {

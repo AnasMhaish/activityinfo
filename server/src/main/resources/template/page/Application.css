@@ -66,7 +66,8 @@
     padding-top: 5px;
 }
 
-.details p {
+.details p,
+.details li {
     margin-top: 5px;
     font-size: 11px;
 }
@@ -108,6 +109,16 @@
 
 .details p.comments {
     margin-top: 10px;
+}
+
+.details .timeline-message {
+    color: #15428B;
+    font-weight: bold;
+}
+
+.details .timeline-details {
+    margin:0px 0px 10px 20px;
+    font-size: 11px;
 }
 
 .gallery {

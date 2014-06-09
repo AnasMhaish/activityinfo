@@ -1,4 +1,4 @@
-package org.activityinfo.legacy.shared.command.result;
+package org.activityinfo.server.forms.timeline;
 
 /*
  * #%L
@@ -22,29 +22,37 @@ package org.activityinfo.legacy.shared.command.result;
  * #L%
  */
 
-public class XmlResult implements SingleResult<String> {
+import org.activityinfo.core.shared.form.FormField;
 
-    private String xml;
+public class FieldChange {
+    private FormField field;
+    private Object oldValue;
+    private Object newValue;
 
-    public XmlResult() {
-
+    public FieldChange(FormField field, Object oldValue, Object newValue) {
+        this.field = field;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
     }
 
-    public XmlResult(String xml) {
-        this.xml = xml;
+    public FormField getField() {
+        return field;
     }
 
-    public String getValue() {
-        return xml;
+    public Object getOldValue() {
+        return oldValue;
     }
 
-    public void setXml(String xml) {
-        this.xml = xml;
+    public Object getNewValue() {
+        return newValue;
+    }
+
+    public String getFieldLabel() {
+        return field.getLabel();
     }
 
     @Override
-    public String getResult() {
-        return getValue();
+    public String toString() {
+        return field.getLabel() + ": " + oldValue + " -> " + newValue;
     }
-
 }

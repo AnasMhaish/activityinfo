@@ -8,6 +8,7 @@ import org.activityinfo.core.shared.Resource;
 import org.activityinfo.datamodel.shared.Cuid;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 
 /**

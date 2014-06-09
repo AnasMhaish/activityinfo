@@ -126,4 +126,18 @@ public class PermissionOracle {
         return new PermissionOracle(Providers.of(em));
     }
 
+    public boolean isVisible(Site site, User user) {
+        UserPermission permission = getPermissionByUser(site.getActivity().getDatabase(), user);
+
+        if (permission.isAllowViewAll()) {
+            return true;
+        }
+
+        if (permission.isAllowView()) {
+            // without AllowViewAll, edit permission is contingent on the site's partner
+            return site.getPartner().getId() == permission.getPartner().getId();
+        }
+
+        return false;
+    }
 }

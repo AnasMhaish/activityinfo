@@ -23,27 +23,25 @@ package org.activityinfo.ui.client.page.entry.sitehistory;
  */
 
 import com.extjs.gxt.ui.client.Style.Scroll;
+import com.extjs.gxt.ui.client.event.ComponentEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.widget.Html;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import org.activityinfo.i18n.shared.I18N;
 import org.activityinfo.legacy.client.Dispatcher;
-import org.activityinfo.legacy.shared.command.GetLocations;
-import org.activityinfo.legacy.shared.command.GetSchema;
 import org.activityinfo.legacy.shared.command.GetSiteHistory;
-import org.activityinfo.legacy.shared.command.GetSiteHistory.GetSiteHistoryResult;
-import org.activityinfo.legacy.shared.command.result.LocationResult;
-import org.activityinfo.legacy.shared.model.LocationDTO;
-import org.activityinfo.legacy.shared.model.SchemaDTO;
+import org.activityinfo.legacy.shared.command.result.HtmlResult;
 import org.activityinfo.legacy.shared.model.SiteDTO;
-import org.activityinfo.legacy.shared.model.SiteHistoryDTO;
 
-import java.util.List;
 
 public class SiteHistoryTab extends TabItem {
 
     private final Html content;
     private final Dispatcher dispatcher;
+    private SiteDTO selectedSite;
+    private boolean deferredLoad;
 
     public SiteHistoryTab(Dispatcher dispatcher) {
         this.dispatcher = dispatcher;
@@ -55,65 +53,49 @@ public class SiteHistoryTab extends TabItem {
         content = new Html();
         content.setStyleName("details");
         add(content);
-    }
 
-    // retrieve all needed data: sitehistoryresult, schema, and locations
-    public void setSite(final SiteDTO site) {
-        renderLoading();
-
-        dispatcher.execute(new GetSiteHistory(site.getId()), new AsyncCallback<GetSiteHistoryResult>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                renderNotAvailable(site);
-            }
+        addListener(Events.Select, new Listener<ComponentEvent>() {
 
             @Override
-            public void onSuccess(final GetSiteHistoryResult historyResult) {
-                if (historyResult.hasHistories()) {
-                    dispatcher.execute(new GetLocations(historyResult.collectLocationIds()),
-                            new AsyncCallback<LocationResult>() {
-                                @Override
-                                public void onFailure(Throwable caught) {
-                                    renderNotAvailable(site);
-                                }
-
-                                @Override
-                                public void onSuccess(final LocationResult locationsResult) {
-                                    dispatcher.execute(new GetSchema(), new AsyncCallback<SchemaDTO>() {
-                                        @Override
-                                        public void onFailure(Throwable caught) {
-                                            renderNotAvailable(site);
-                                        }
-
-                                        @Override
-                                        public void onSuccess(SchemaDTO schema) {
-                                            render(schema,
-                                                    locationsResult.getData(),
-                                                    site,
-                                                    historyResult.getSiteHistories());
-                                        }
-                                    });
-                                }
-                            });
-                } else {
-                    renderNotAvailable(site);
+            public void handleEvent(ComponentEvent componentEvent) {
+                if(deferredLoad) {
+                    maybeLoadHistory();
                 }
             }
         });
     }
 
-    private void render(final SchemaDTO schema,
-                        final List<LocationDTO> locations,
-                        final SiteDTO site,
-                        final List<SiteHistoryDTO> histories) {
-        content.setHtml(new SiteHistoryRenderer().render(schema, locations, site, histories));
+    public void setSelectedSite(final SiteDTO selectedSite) {
+        this.selectedSite = selectedSite;
+        renderLoading();
+        maybeLoadHistory();
     }
 
-    private void renderNotAvailable(final SiteDTO site) {
-        content.setHtml(new SiteHistoryRenderer().renderNotAvailable(site));
+    private void maybeLoadHistory() {
+        if(getTabPanel().getSelectedItem() == this) {
+            loadHistory();
+        } else {
+            deferredLoad = true;
+        }
     }
+
+    private void loadHistory() {
+        deferredLoad = false;
+        dispatcher.execute(new GetSiteHistory(selectedSite.getId()), new AsyncCallback<HtmlResult>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                content.setHtml("Site history not available");
+            }
+
+            @Override
+            public void onSuccess(final HtmlResult historyResult) {
+                content.setHtml(historyResult.getHtml());
+            }
+        });
+    }
+
 
     private void renderLoading() {
-        content.setHtml(new SiteHistoryRenderer().renderLoading());
+        content.setHtml(I18N.CONSTANTS.loading());
     }
 }

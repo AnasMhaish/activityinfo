@@ -22,6 +22,8 @@ package org.activityinfo.server.command;
  * #L%
  */
 
+import com.google.appengine.tools.development.testing.LocalMemcacheServiceTestConfig;
+import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -39,6 +41,8 @@ import org.activityinfo.server.database.hibernate.entity.User;
 import org.activityinfo.server.endpoint.gwtrpc.CommandServlet2;
 import org.activityinfo.server.endpoint.gwtrpc.GwtRpcModule;
 import org.activityinfo.server.endpoint.gwtrpc.RemoteExecutionContext;
+import org.activityinfo.server.util.MemcacheModule;
+import org.activityinfo.server.util.MemcacheStubModule;
 import org.activityinfo.server.util.TemplateModule;
 import org.activityinfo.server.util.blob.BlobServiceModuleStub;
 import org.activityinfo.server.util.config.ConfigModuleStub;
@@ -58,6 +62,7 @@ import javax.persistence.EntityManager;
         GwtRpcModule.class,
         AuthenticationModuleStub.class,
         BlobServiceModuleStub.class,
+        MemcacheStubModule.class,
         ConfigModuleStub.class
 })
 public class CommandTestCase2 {
@@ -93,7 +98,6 @@ public class CommandTestCase2 {
             user.setLocale("en");
         }
 
-        assert user != null;
         LocaleProxy.setLocale(user.getLocaleObject());
 
         RemoteExecutionContext context = new RemoteExecutionContext(injector);

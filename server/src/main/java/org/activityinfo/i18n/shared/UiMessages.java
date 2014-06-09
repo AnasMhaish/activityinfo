@@ -234,11 +234,23 @@ public interface UiMessages extends com.google.gwt.i18n.client.Messages {
     @DefaultMessage("{0,date,dd-MM-yyyy - HH:mm} {1} ({2}) updated the site:")
     String siteHistoryUpdated(Date date, String userName, String userEmail);
 
+    @DefaultMessage("{0,date,dd-MM-yyyy - HH:mm} {1} ({2}) submitted results for {3,date,MMM yyyy}.")
+    String siteHistoryNewMonthlyReport(Date date, String userName, String userEmail, Date month);
+
+    @DefaultMessage("{0,date,dd-MM-yyyy - HH:mm} {1} ({2}) updated the results for {3,date,MMM yyyy}:")
+    String siteHistoryUpdatedMonthlyReport(Date date, String userName, String userEmail, Date month);
+
     @DefaultMessage("No history is available for this site.")
     String siteHistoryNotAvailable();
 
-    @DefaultMessage("History on sites is only available from {0,date,dd MMMM yyyy} onward.")
+    @DefaultMessage("This site was created on {0,date,dd MMMM yyyy} and last edited on {1,date,dd MMMM yyyy}.")
+    String siteHistoryUnavailable(Date creationDate, Date editedDate);
+
+    @DefaultMessage("Detailed change history is only available from {0,date,dd MMMM yyyy} onward.")
     String siteHistoryAvailableFrom(Date date);
+
+    @DefaultMessage("This site was created on {0,date,dd MMMM yyyy}.")
+    String siteHistoryCreationDate(Date date);
 
     @DefaultMessage("was: {0}")
     String siteHistoryOldValue(Object oldValue);

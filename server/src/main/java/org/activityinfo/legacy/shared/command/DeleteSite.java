@@ -25,7 +25,7 @@ package org.activityinfo.legacy.shared.command;
 import com.extjs.gxt.ui.client.data.RpcMap;
 import org.activityinfo.legacy.shared.command.result.VoidResult;
 
-public class DeleteSite implements MutatingCommand<VoidResult>, SiteCommand {
+public class DeleteSite implements MutatingCommand<VoidResult>, SiteCommand<VoidResult> {
     private int id;
 
     public DeleteSite(int id) {

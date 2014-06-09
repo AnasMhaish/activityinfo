@@ -46,6 +46,7 @@ import java.util.Set;
 public class Activity implements Serializable, Deleteable, Orderable {
 
     private int id;
+    private int schemaVersion;
     private LocationType locationType;
 
     private UserDatabase database;
@@ -76,7 +77,6 @@ public class Activity implements Serializable, Deleteable, Orderable {
     public Activity(int id, String name) {
         this.id = id;
         this.name = name;
-
     }
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name = "ActivityId", unique = true, nullable = false)
@@ -86,6 +86,19 @@ public class Activity implements Serializable, Deleteable, Orderable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     *
+     * @return sequential version number that is incremented each time the
+     * activity definition itself, or that of any of its indicators or attributes is changed
+     */
+    public int getSchemaVersion() {
+        return schemaVersion;
+    }
+
+    public void setSchemaVersion(int schemaVersion) {
+        this.schemaVersion = schemaVersion;
     }
 
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "LocationTypeId", nullable = false)

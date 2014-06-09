@@ -208,7 +208,8 @@ public class DataEntryPage extends LayoutContainer implements Page, ActionListen
         if (se.getSelection().isEmpty()) {
             onNoSelection();
         } else {
-            dispatcher.execute(new GetSchema(), new AsyncCallback<SchemaDTO>() {
+            dispatcher.execute(new GetFormViewModel(se.getSelectedItem().getActivityId()),
+                    new AsyncCallback<ActivityDTO>() {
 
                 @Override
                 public void onFailure(Throwable caught) {
@@ -217,9 +218,8 @@ public class DataEntryPage extends LayoutContainer implements Page, ActionListen
                 }
 
                 @Override
-                public void onSuccess(SchemaDTO schema) {
+                public void onSuccess(ActivityDTO activity) {
                     SiteDTO site = se.getSelectedItem();
-                    ActivityDTO activity = schema.getActivityById(site.getActivityId());
                     updateSelection(activity, site);
                 }
             });
@@ -245,7 +245,7 @@ public class DataEntryPage extends LayoutContainer implements Page, ActionListen
                 tabPanel.setSelection(detailTab);
             }
         }
-        siteHistoryTab.setSite(site);
+        siteHistoryTab.setSelectedSite(site);
     }
 
     private void onNoSelection() {

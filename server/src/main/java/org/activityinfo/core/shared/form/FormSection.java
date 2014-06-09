@@ -12,6 +12,8 @@ import java.util.List;
  */
 public class FormSection implements FormElement, FormElementContainer {
 
+    public static final Cuid CLASS_ID = Cuid.create("_form_section");
+
 
     private final Cuid id;
     private String label;

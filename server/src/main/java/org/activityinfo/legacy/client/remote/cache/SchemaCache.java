@@ -137,12 +137,14 @@ public class SchemaCache implements DispatchListener {
         public CacheResult maybeExecute(GetFormViewModel command) {
             int activityId = command.getActivityId();
             if(schema != null) {
-                return new CacheResult<>(schema.getActivityById(activityId));
+                ActivityDTO activity = schema.getActivityById(activityId);
+                if(activity != null) {
+                    return new CacheResult<>(activity);
+                }
             } else if(activityMap.containsKey(activityId)) {
                 return new CacheResult<>(activityMap.get(activityId));
-            } else {
-                return CacheResult.couldNotExecute();
             }
+            return CacheResult.couldNotExecute();
         }
 
         @Override
