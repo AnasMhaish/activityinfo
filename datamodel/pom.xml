@@ -67,6 +67,15 @@
           <port>9090</port>
           <workDir>${project.build.directory}/gwt-work</workDir>
         </configuration>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <goals>
+              <goal>resources</goal>
+            </goals>
+            <phase>generate-resources</phase>
+          </execution>
+        </executions>
       </plugin>
 
       <!-- Use the maven antrun plugin to launch junit manually as
