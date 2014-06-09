@@ -22,7 +22,7 @@ package org.activityinfo.ui.client.component.table.dialog;
  */
 
 import com.google.common.collect.Sets;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Projection;
 import org.activityinfo.fp.client.Promise;
 import org.activityinfo.i18n.shared.I18N;

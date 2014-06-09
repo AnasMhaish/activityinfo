@@ -1,6 +1,6 @@
 package org.activityinfo.legacy.shared.adapter;
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.LocalizedString;
 import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.FormField;

@@ -1,7 +1,7 @@
 package org.activityinfo.core.client;
 
 import com.google.common.collect.Lists;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.criteria.Criteria;
 import org.activityinfo.core.shared.criteria.NullCriteria;
 import org.activityinfo.core.shared.form.tree.FieldPath;

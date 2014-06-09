@@ -1,7 +1,7 @@
 package org.activityinfo.core.shared.criteria;
 
 import com.google.common.collect.Sets;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 
 import java.util.Set;
 

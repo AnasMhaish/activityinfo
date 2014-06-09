@@ -22,7 +22,7 @@ package org.activityinfo.ui.client.page.entry.place;
  */
 
 import com.google.common.base.Strings;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Cuids;
 import org.activityinfo.ui.client.page.PageStateParser;
 
@@ -64,8 +64,8 @@ public class UserFormPlaceParser implements PageStateParser {
 
             final String[] parts = token.split("\\/");
             if (parts.length == 2) {
-                place.setUserFormId(new Cuid(parts[0]));
-                place.setUserFormInstanceId(new Cuid(parts[1]));
+                place.setUserFormId(Cuid.create(parts[0]));
+                place.setUserFormInstanceId(Cuid.create(parts[1]));
             }
         }
         return place;

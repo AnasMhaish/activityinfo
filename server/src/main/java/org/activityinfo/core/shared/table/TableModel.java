@@ -1,6 +1,6 @@
 package org.activityinfo.core.shared.table;
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.criteria.Criteria;
 import org.activityinfo.ui.client.component.table.FieldColumn;
 

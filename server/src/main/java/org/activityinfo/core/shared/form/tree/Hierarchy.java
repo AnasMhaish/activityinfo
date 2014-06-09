@@ -2,7 +2,7 @@ package org.activityinfo.core.shared.form.tree;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.form.FormClass;
 
 import java.util.*;

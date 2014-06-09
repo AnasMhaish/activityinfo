@@ -25,9 +25,10 @@ import com.bedatadriven.rebar.time.calendar.LocalDate;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Resource;
 import org.activityinfo.core.shared.model.AiLatLng;
+import org.activityinfo.datamodel.shared.record.Record;
 import org.activityinfo.legacy.shared.model.DTO;
 
 import javax.annotation.Nonnull;
@@ -85,6 +86,10 @@ public class FormInstance implements Resource {
         for (Cuid fieldId : fieldIds) {
             valueMap.remove(fieldId);
         }
+    }
+
+    public boolean has(Cuid fieldId) {
+        return valueMap.containsKey(fieldId);
     }
 
     public void set(@NotNull Cuid fieldId, Object fieldValue) {

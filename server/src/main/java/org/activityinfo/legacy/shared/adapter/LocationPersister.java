@@ -3,7 +3,7 @@ package org.activityinfo.legacy.shared.adapter;
 import com.google.common.base.Functions;
 import com.google.common.collect.Maps;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.form.FormInstance;
 import org.activityinfo.core.shared.model.AiLatLng;
 import org.activityinfo.fp.client.Promise;

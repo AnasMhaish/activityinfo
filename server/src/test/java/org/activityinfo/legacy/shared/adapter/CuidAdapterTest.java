@@ -21,9 +21,8 @@ package org.activityinfo.legacy.shared.adapter;
  * #L%
  */
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Cuids;
-import org.activityinfo.core.shared.Iri;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -55,11 +54,10 @@ public class CuidAdapterTest {
     @Test
     public void cuidConversion() {
         int groupId = 1262;
-        final Iri iri = CuidAdapter.attributeGroupFormClass(groupId).asIri();
-        correct(groupId, iri);
+        correct(groupId, CuidAdapter.attributeGroupFormClass(groupId));
     }
 
-    public static void correct(int expectedValue, Iri iri) {
-        Assert.assertEquals(expectedValue, CuidAdapter.getLegacyIdFromCuidIri(iri));
+    public static void correct(int expectedValue, Cuid cuid) {
+        Assert.assertEquals(expectedValue, CuidAdapter.getLegacyIdFromCuid(cuid));
     }
 }

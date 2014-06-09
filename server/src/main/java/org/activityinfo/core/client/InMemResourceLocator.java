@@ -2,7 +2,7 @@ package org.activityinfo.core.client;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Projection;
 import org.activityinfo.core.shared.Resource;
 import org.activityinfo.core.shared.application.ApplicationProperties;
@@ -26,7 +26,7 @@ public class InMemResourceLocator implements ResourceLocator {
     private Map<Cuid, FormClass> formClasses = Maps.newHashMap();
 
     public InMemResourceLocator() {
-        FormInstance rootFolder = new FormInstance(new Cuid("home"), FolderClass.CLASS_ID);
+        FormInstance rootFolder = new FormInstance(Cuid.create("home"), FolderClass.CLASS_ID);
         rootFolder.set(FolderClass.LABEL_FIELD_ID, "Home");
         persist(rootFolder);
     }

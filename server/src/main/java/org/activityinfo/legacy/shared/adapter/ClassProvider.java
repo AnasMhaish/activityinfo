@@ -2,7 +2,7 @@ package org.activityinfo.legacy.shared.adapter;
 
 import com.google.common.base.Function;
 import org.activityinfo.core.client.NotFoundException;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.application.ApplicationClassProvider;
 import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.fp.client.Promise;
@@ -55,7 +55,7 @@ public class ClassProvider implements Function<Cuid, Promise<FormClass>> {
 
 
             default:
-                return Promise.rejected(new NotFoundException(classId.asIri()));
+                return Promise.rejected(new NotFoundException(classId.asString()));
         }
     }
 

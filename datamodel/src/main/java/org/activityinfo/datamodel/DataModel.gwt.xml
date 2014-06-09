@@ -31,10 +31,6 @@
 
   <super-source path="emul" />
 
-  <replace-with class="org.activityinfo.datamodel.client.record.impl.CuidJsoImpl">
-    <when-type-is class="org.activityinfo.datamodel.shared.Cuid"/>
-  </replace-with>
-
   <generate-with class="org.activityinfo.datamodel.rebind.RecordBeanGenerator">
     <when-type-assignable class="org.activityinfo.datamodel.client.record.impl.RecordBeanFactory" />
   </generate-with>

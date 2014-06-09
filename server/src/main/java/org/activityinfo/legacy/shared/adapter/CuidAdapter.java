@@ -2,17 +2,13 @@ package org.activityinfo.legacy.shared.adapter;
 
 import com.google.common.base.Strings;
 import org.activityinfo.core.client.CuidGenerator;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Cuids;
-import org.activityinfo.core.shared.Iri;
 import org.activityinfo.core.shared.form.FormInstance;
 import org.activityinfo.legacy.client.KeyGenerator;
 import org.activityinfo.legacy.shared.model.ActivityDTO;
 import org.activityinfo.legacy.shared.model.AttributeGroupDTO;
 import org.activityinfo.legacy.shared.model.EntityDTO;
-import org.activityinfo.legacy.shared.model.UserDatabaseDTO;
-
-import javax.annotation.Nonnull;
 
 /**
  * Provides an adapter between legacy ids, which are either random or sequential 32-bit integers but only
@@ -105,24 +101,12 @@ public class CuidAdapter {
         return CuidAdapter.field(formInstance.getClassId(), NAME_FIELD);
     }
 
-    public static int getLegacyIdFromCuidIri(@Nonnull Iri iri) {
-        String iriAsString = iri.asString();
-        if (iriAsString.startsWith(Cuids.IRI_PREFIX)) {
-            iriAsString = iriAsString.substring(Cuids.IRI_PREFIX.length());
-        }
-        return Integer.parseInt(iriAsString.substring(1), Cuids.RADIX);
-    }
-
     public static final int getLegacyIdFromCuid(String cuid) {
         return Integer.parseInt(cuid.substring(1), Cuids.RADIX);
     }
 
     public static final Cuid cuid(char domain, int id) {
-        return new Cuid(domain + block(id));
-    }
-
-    public static final Iri iri(char domain, int id) {
-        return cuid(domain, id).asIri();
+        return Cuid.create(domain + block(id));
     }
 
     public static int getLegacyIdFromCuid(Cuid id) {
@@ -181,14 +165,14 @@ public class CuidAdapter {
      * @return
      */
     public static Cuid field(Cuid classId, int fieldIndex) {
-        return new Cuid(classId.asString() + block(fieldIndex));
+        return Cuid.create(classId.asString() + block(fieldIndex));
     }
 
     /**
      * @return the {@code FormClass} Cuid for a given Activity
      */
     public static Cuid activityFormClass(int activityId) {
-        return new Cuid(ACTIVITY_DOMAIN + block(activityId));
+        return Cuid.create(ACTIVITY_DOMAIN + block(activityId));
     }
 
 
@@ -221,8 +205,8 @@ public class CuidAdapter {
      * references the given AttributeGroup FormClass
      */
     public static Cuid attributeGroupField(ActivityDTO activity, AttributeGroupDTO group) {
-        return new Cuid(ACTIVITY_DOMAIN + block(activity) + "a" +
-                        Integer.toString(group.getId(), Cuids.RADIX));
+        return Cuid.create(ACTIVITY_DOMAIN + block(activity) + "a" +
+                           Integer.toString(group.getId(), Cuids.RADIX));
     }
 
     /**
@@ -230,12 +214,12 @@ public class CuidAdapter {
      * references the given AttributeGroup FormClass
      */
     public static Cuid attributeGroupField(int activityId, int attributeGroupId) {
-        return new Cuid(ACTIVITY_DOMAIN + block(activityId) + "a" +
-                        Integer.toString(attributeGroupId, Cuids.RADIX));
+        return Cuid.create(ACTIVITY_DOMAIN + block(activityId) + "a" +
+                           Integer.toString(attributeGroupId, Cuids.RADIX));
     }
 
     public static Cuid activityCategoryFolderId(int dbId, String category) {
-        return new Cuid(ACTIVITY_CATEGORY_DOMAIN + block(dbId) + block(category.hashCode()));
+        return Cuid.create(ACTIVITY_CATEGORY_DOMAIN + block(dbId) + block(category.hashCode()));
     }
 
     /**
@@ -274,7 +258,7 @@ public class CuidAdapter {
      * Activity {@code FormClass}
      */
     public static Cuid activityFormSection(int id, String name) {
-        return new Cuid(ACTIVITY_DOMAIN + block(id) + block(name.hashCode()));
+        return Cuid.create(ACTIVITY_DOMAIN + block(id) + block(name.hashCode()));
     }
 
     private static String block(int id) {

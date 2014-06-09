@@ -2,7 +2,7 @@ package org.activityinfo.core.shared.importing.strategy;
 
 import org.activityinfo.core.client.ResourceLocator;
 import org.activityinfo.core.client.type.converter.JsCoordinateNumberFormatter;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.form.FormInstance;
 import org.activityinfo.core.shared.importing.source.SourceRow;
 import org.activityinfo.core.shared.importing.validation.ValidationResult;

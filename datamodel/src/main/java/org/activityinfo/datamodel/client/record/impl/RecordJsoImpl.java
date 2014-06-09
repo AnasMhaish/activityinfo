@@ -2,6 +2,7 @@ package org.activityinfo.datamodel.client.record.impl;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import org.activityinfo.datamodel.shared.Cuid;
+import org.activityinfo.datamodel.shared.record.FieldType;
 import org.activityinfo.datamodel.shared.record.Record;
 
 import java.util.List;
@@ -24,6 +25,24 @@ public class RecordJsoImpl extends JavaScriptObject implements Record {
         return getString(fieldId.asString());
     }
 
+    @Override
+    public final native FieldType getFieldType(Cuid fieldId) /*-{
+        if(this.hasOwnProperty(fieldId)) {
+          var value = this[fieldId];
+          if(typeof value === "number") {
+            return @org.activityinfo.datamodel.shared.record.FieldType::NUMBER;
+          } else if(typeof value == "string") {
+            return @org.activityinfo.datamodel.shared.record.FieldType::STRING;
+          } else if(value instanceof Array) {
+            return @org.activityinfo.datamodel.shared.record.FieldType::ARRAY;
+          } else {
+            return @org.activityinfo.datamodel.shared.record.FieldType::RECORD;
+          }
+        } else {
+          return null;
+        }
+    }-*/;
+
     protected final native JavaScriptObject get(String fieldId) /*-{
         return this[fieldId];
     }-*/;
@@ -32,11 +51,22 @@ public class RecordJsoImpl extends JavaScriptObject implements Record {
         return this[fieldId];
     }-*/;
 
-    
-    public final native Double getNumber(Cuid fieldId) /*-{
-        // todo: special strings?
+    public final native Double getDouble(Cuid fieldId) /*-{
         return +this[fieldId];
     }-*/;
+
+    public final native int getInt(String fieldId, int defaultValue) /*-{
+        return +this[fieldId] || defaultValue;
+    }-*/;
+
+    public final native int getDouble(String fieldId, int defaultValue) /*-{
+      return +this[fieldId] || defaultValue;
+    }-*/;
+
+    public final native boolean getBoolean(String fieldId, boolean defaultValue) /*-{
+      return !!this[fieldId] || defaultValue;
+    }-*/;
+
 
     @Override
     public final native Boolean getBoolean(Cuid fieldId) /*-{
@@ -79,12 +109,15 @@ public class RecordJsoImpl extends JavaScriptObject implements Record {
 //    }-*/;
 
     public final native boolean has(Cuid fieldId) /*-{
-        var val = this[fieldId];
-        var type = typeof val;
-        return type === 'object' || type == 'number' || type == 'string';
+      return this.hasOwnProperty(fieldId);
     }-*/;
 
-    
+    @Override
+    public final native Object get(Cuid fieldId) /*-{
+        return this[fieldId];
+    }-*/;
+
+
     public native final void set(Cuid fieldId, String value) /*-{
         this[fieldId] = value;
     }-*/;

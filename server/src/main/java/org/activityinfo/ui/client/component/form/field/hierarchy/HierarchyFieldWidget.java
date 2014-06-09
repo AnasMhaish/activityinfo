@@ -4,7 +4,7 @@ import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import org.activityinfo.core.client.ResourceLocator;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.ui.client.component.form.field.ReferenceFieldWidget;
 import org.activityinfo.ui.client.component.form.model.HierarchyViewModel;
 

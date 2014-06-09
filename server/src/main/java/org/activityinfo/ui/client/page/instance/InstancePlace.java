@@ -3,7 +3,7 @@ package org.activityinfo.ui.client.page.instance;
 import com.google.common.collect.Lists;
 import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.gwt.safehtml.shared.UriUtils;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.ui.client.page.PageId;
 import org.activityinfo.ui.client.page.PageState;
 import org.activityinfo.ui.client.page.PageStateParser;
@@ -66,9 +66,9 @@ public class InstancePlace implements PageState {
         public PageState parse(String token) {
             String parts[] = token.split("/");
             if(parts.length == 1) {
-                return new InstancePlace(new Cuid(parts[0]));
+                return new InstancePlace(Cuid.create(parts[0]));
             } else {
-                return new InstancePlace(new Cuid(parts[0]), parts[1]);
+                return new InstancePlace(Cuid.create(parts[0]), parts[1]);
             }
         }
     }

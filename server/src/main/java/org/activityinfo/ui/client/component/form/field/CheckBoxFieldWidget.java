@@ -29,7 +29,7 @@ import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.form.FormFieldCardinality;
 import org.activityinfo.core.shared.form.FormInstance;
 import org.activityinfo.core.shared.form.FormInstanceLabeler;
@@ -91,7 +91,7 @@ public class CheckBoxFieldWidget implements ReferenceFieldWidget {
         final Set<Cuid> value = Sets.newHashSet();
         for (CheckBox control : controls) {
             if(control.getValue()) {
-                value.add(new Cuid(control.getFormValue()));
+                value.add(Cuid.create(control.getFormValue()));
             }
         }
         return value;
@@ -100,7 +100,7 @@ public class CheckBoxFieldWidget implements ReferenceFieldWidget {
     @Override
     public void setValue(Set<Cuid> value) {
         for (CheckBox entry : controls) {
-            Cuid cuid = new Cuid(entry.getFormValue());
+            Cuid cuid = Cuid.create(entry.getFormValue());
             entry.setValue(value.contains(cuid));
         }
     }

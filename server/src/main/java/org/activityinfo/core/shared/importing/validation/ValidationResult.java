@@ -1,6 +1,6 @@
 package org.activityinfo.core.shared.importing.validation;
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Pair;
 import org.activityinfo.core.shared.importing.strategy.InstanceScorer;
 

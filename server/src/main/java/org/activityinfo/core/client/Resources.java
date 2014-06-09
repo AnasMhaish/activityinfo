@@ -1,13 +1,11 @@
 package org.activityinfo.core.client;
 
 import com.google.common.base.Function;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Projection;
-import org.activityinfo.core.shared.criteria.Criteria;
 import org.activityinfo.core.shared.form.FormInstance;
 import org.activityinfo.fp.client.Promise;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**

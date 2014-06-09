@@ -140,7 +140,6 @@ public class SiteRenderer {
                          .append("</td><td class='indicatorUnits'>")
                          .append(indicator.getUnits())
                          .append("</td></tr>");
-                empty = false;
             }
         }
         if (showEmptyRows || !empty) {

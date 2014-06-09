@@ -1,6 +1,6 @@
 package org.activityinfo.legacy.shared.adapter.bindings;
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.form.FormInstance;
 import org.activityinfo.legacy.shared.adapter.CuidAdapter;
 import org.activityinfo.legacy.shared.model.ActivityDTO;

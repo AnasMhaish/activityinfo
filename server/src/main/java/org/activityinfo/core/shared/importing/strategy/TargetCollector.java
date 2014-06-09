@@ -25,7 +25,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.form.FormFieldType;
 import org.activityinfo.core.shared.form.tree.FieldPath;
 import org.activityinfo.core.shared.form.tree.FormTree;
@@ -107,7 +107,7 @@ public class TargetCollector {
 
             sourceColumns.add(entry.getValue());
 
-            Cuid fieldId = new Cuid(entry.getKey().asString());
+            Cuid fieldId = Cuid.create(entry.getKey().asString());
             for (FieldPath path : getFieldPathMap().get(fieldId)) {
                 referenceValues.put(path, columnIndex);
             }

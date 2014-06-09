@@ -4,6 +4,10 @@ package org.activityinfo.datamodel.shared;
 /**
  * Collision-Resistant Unique ID.
  *
+ * Note that this type will disappear when compiled to Javascript:
+ * it is replaced at compile time by a simple string value
+ *
+ *
  */
 public final class Cuid {
     private final String text;
@@ -20,6 +24,10 @@ public final class Cuid {
         return this.text;
     }
 
+    public char getDomain() {
+        return text.charAt(0);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -30,12 +38,7 @@ public final class Cuid {
         }
 
         Cuid cuid = (Cuid) o;
-
-        if (!text.equals(cuid.text)) {
-            return false;
-        }
-
-        return true;
+        return text.equals(cuid.text);
     }
 
     @Override

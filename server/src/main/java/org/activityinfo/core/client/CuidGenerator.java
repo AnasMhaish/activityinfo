@@ -1,7 +1,7 @@
 package org.activityinfo.core.client;
 
 import com.google.gwt.user.client.Random;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Cuids;
 
 import java.util.Date;
@@ -70,7 +70,7 @@ public class CuidGenerator {
 
         c++; // this is not subliminal
 
-        return new Cuid(letter + timestamp + counter + fingerprint + random);
+        return Cuid.create(letter + timestamp + counter + fingerprint + random);
     }
 
     private static native int browserFingerPrint() /*-{

@@ -1,6 +1,6 @@
 package org.activityinfo.core.shared.importing.strategy;
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.form.FormField;
 
 /**

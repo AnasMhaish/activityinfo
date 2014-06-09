@@ -26,7 +26,7 @@ import com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import org.activityinfo.core.client.InstanceQuery;
 import org.activityinfo.core.server.type.converter.JvmConverterFactory;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Projection;
 import org.activityinfo.core.shared.criteria.ClassCriteria;
 import org.activityinfo.core.shared.form.tree.FieldPath;
@@ -60,7 +60,7 @@ import static org.junit.Assert.assertThat;
 @OnDataSet("/dbunit/nfi-import.db.xml")
 public class InstanceScoreTest extends AbstractImporterTest {
 
-    private static final Cuid ADMINISTRATIVE_UNIT_FIELD = new Cuid("L000002000006");
+    private static final Cuid ADMINISTRATIVE_UNIT_FIELD = Cuid.create("L000002000006");
 
     @Test
     public void adminEntityScoring() throws IOException {

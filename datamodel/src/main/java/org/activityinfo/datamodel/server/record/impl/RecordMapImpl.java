@@ -2,6 +2,7 @@ package org.activityinfo.datamodel.server.record.impl;
 
 
 import org.activityinfo.datamodel.shared.Cuid;
+import org.activityinfo.datamodel.shared.record.FieldType;
 import org.activityinfo.datamodel.shared.record.Record;
 import org.activityinfo.datamodel.shared.record.RecordBean;
 
@@ -20,6 +21,36 @@ public class RecordMapImpl implements Record {
 
     private final HashMap<Cuid, Object> propertyMap = new HashMap<>();
 
+
+    @Override
+    public boolean has(Cuid fieldId) {
+        return propertyMap.get(fieldId) != null;
+    }
+
+    @Override
+    public FieldType getFieldType(Cuid fieldId) {
+        Object value = propertyMap.get(fieldId);
+        if(value == null) {
+            return null;
+        } else if(value instanceof String) {
+            return FieldType.STRING;
+        } else if(value instanceof Number) {
+            return FieldType.NUMBER;
+        } else if(value instanceof Boolean) {
+            return FieldType.BOOLEAN;
+        } else if(value instanceof Record) {
+            return FieldType.RECORD;
+        } else if(value instanceof List) {
+            return FieldType.ARRAY;
+        } else {
+            throw new IllegalStateException("Unexpected field value type: " + value.getClass().getName());
+        }
+    }
+
+    @Override
+    public Object get(Cuid fieldId) {
+        return propertyMap.get(fieldId);
+    }
 
     /**
      * Returns the value for the field with the given {@code fieldId}
@@ -48,26 +79,10 @@ public class RecordMapImpl implements Record {
      * @return
      */
     @Override
-    public final Double getNumber(Cuid fieldId) {
+    public final Double getDouble(Cuid fieldId) {
         Object value = propertyMap.get(fieldId);
         if(value instanceof Number) {
             return ((Number) value).doubleValue();
-        } else if(value instanceof String) {
-            String stringValue = (String)value;
-            switch (stringValue) {
-                case "NaN":
-                    return Double.NaN;
-                case "Inf":
-                    return Double.POSITIVE_INFINITY;
-                case "-Inf":
-                    return Double.NEGATIVE_INFINITY;
-                default:
-                    try {
-                        return Double.parseDouble(stringValue);
-                    } catch (NumberFormatException e) {
-                        return null;
-                    }
-            }
         }
         return null;
     }
@@ -124,6 +139,10 @@ public class RecordMapImpl implements Record {
 
     @Override
     public void set(Cuid fieldId, boolean value) {
+        propertyMap.put(fieldId, value);
+    }
+
+    public void set(Cuid fieldId, List value) {
         propertyMap.put(fieldId, value);
     }
 

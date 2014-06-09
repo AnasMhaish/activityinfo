@@ -1,7 +1,6 @@
 package org.activityinfo.core.shared.cube;
 
-import org.activityinfo.core.shared.Cuid;
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.Cuid;
 
 /**
  * Created by alex on 5/28/14.

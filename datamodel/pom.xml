@@ -87,7 +87,7 @@
                 <property name="test_classpath" refid="maven.test.classpath" />
                 <java classname="junit.textui.TestRunner" fork="true" maxmemory="1024m">
                   <sysproperty key="gwt.args" value="
-                        -out target/test-out
+                        -war target/test-out
                         -gen target/test-gen
                         -style PRETTY
                         -port 40100

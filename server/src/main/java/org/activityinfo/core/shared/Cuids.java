@@ -1,5 +1,7 @@
 package org.activityinfo.core.shared;
 
+import org.activityinfo.datamodel.shared.Cuid;
+
 /**
  * Functions that operator on Collision-resistant Universal ids (CUID)
  */
@@ -12,15 +14,6 @@ public class Cuids {
     public static final int RADIX = Character.MAX_RADIX;
 
     /**
-     * Constructs an IRI from a given CUID
-     * @param cuid a collision resistant universal id (Cuid)
-     * @return an IRI with the cuid: scheme
-     */
-    public static Iri toIri(String cuid) {
-        return new Iri(IRI_PREFIX + cuid);
-    }
-
-    /**
      * Constructs an IRI from a legacy id.
      *
      * @param cuidDomain a single char which provides a namespace for the ID
@@ -28,7 +21,7 @@ public class Cuids {
      * @return an IRI with the cuid: scheme
      */
     public static Cuid toIri(char cuidDomain, int id) {
-        return new Cuid(cuidDomain + Integer.toString(id, RADIX));
+        return Cuid.create(cuidDomain + Integer.toString(id, RADIX));
     }
 
 }

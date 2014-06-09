@@ -1,9 +1,6 @@
 package org.activityinfo.ui.client.component.form.field;
 
-import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.IsWidget;
-import org.activityinfo.core.shared.Cuid;
-import org.activityinfo.ui.client.component.form.field.FormFieldWidget;
+import org.activityinfo.datamodel.shared.Cuid;
 
 import java.util.Set;
 

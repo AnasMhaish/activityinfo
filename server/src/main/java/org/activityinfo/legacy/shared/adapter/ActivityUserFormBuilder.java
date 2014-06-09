@@ -1,7 +1,7 @@
 package org.activityinfo.legacy.shared.adapter;
 
 import com.google.common.base.Strings;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.LocalizedString;
 import org.activityinfo.core.shared.form.*;
 import org.activityinfo.i18n.shared.I18N;

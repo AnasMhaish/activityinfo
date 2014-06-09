@@ -31,7 +31,7 @@ import com.google.common.io.Resources;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import org.activityinfo.core.client.InstanceQuery;
 import org.activityinfo.core.client.ResourceLocator;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Projection;
 import org.activityinfo.core.shared.application.ApplicationProperties;
 import org.activityinfo.core.shared.application.FolderClass;
@@ -315,7 +315,7 @@ public class GetSchemaTest extends CommandTestCase2 {
         ResourceLocator locator = new ResourceLocatorAdaptor(getDispatcher());
         List<FormInstance> folders = assertResolves(locator.queryInstances(
                 new CriteriaIntersection(
-                    ParentCriteria.isChildOf(new Cuid("home")),
+                    ParentCriteria.isChildOf(Cuid.create("home")),
                     new ClassCriteria(FolderClass.CLASS_ID))));
 
         for(FormInstance folder : folders) {

@@ -3,10 +3,7 @@ package org.activityinfo.datamodel.rebind;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
 import com.google.gwt.core.ext.UnableToCompleteException;
-import com.google.gwt.core.ext.typeinfo.JClassType;
-import com.google.gwt.core.ext.typeinfo.JMethod;
-import com.google.gwt.core.ext.typeinfo.JParameterizedType;
-import com.google.gwt.core.ext.typeinfo.JType;
+import com.google.gwt.core.ext.typeinfo.*;
 import com.google.gwt.thirdparty.guava.common.base.Optional;
 import com.google.gwt.user.rebind.ClassSourceFileComposerFactory;
 import com.google.gwt.user.rebind.SourceWriter;
@@ -122,11 +119,21 @@ public class BeanClass {
 
             sw.println("return getString(\"%s\");", fieldId);
 
+        } else if(returnType == JPrimitiveType.INT) {
+            sw.println("return getInt(\"%s\", 0);", fieldId);
+
+        } else if(returnType == JPrimitiveType.DOUBLE) {
+            sw.println("return getDouble(\"%s\", 0);", fieldId);
+
+        } else if(returnType == JPrimitiveType.BOOLEAN) {
+            sw.println("return getBoolean(\"%s\", 0);", fieldId);
+
         } else if(isList(returnType)) {
             sw.println("return (java.util.List)super.<%s>getList(\"%s\");",
                     getListElementType(logger, returnType), fieldId);
 
         } else {
+            logger.log(TreeLogger.Type.ERROR, "Unsupported return type: " + returnType);
             throw new UnableToCompleteException();
         }
     }

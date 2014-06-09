@@ -1,7 +1,7 @@
 package org.activityinfo.core.client;
 
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Projection;
 import org.activityinfo.core.shared.Resource;
 import org.activityinfo.core.shared.criteria.Criteria;

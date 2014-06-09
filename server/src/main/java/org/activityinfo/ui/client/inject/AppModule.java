@@ -76,11 +76,7 @@ public class AppModule extends AbstractGinModule {
 
     @Provides @Singleton
     public ResourceLocator provideResourceLocator(Dispatcher dispatcher) {
-        if (FeatureSwitch.useInMemStore()) {
-            return new InMemResourceLocator();
-        } else {
-            return new ResourceLocatorAdaptor(dispatcher);
-        }
+        return new ResourceLocatorAdaptor(dispatcher);
     }
 
     @Provides @Singleton

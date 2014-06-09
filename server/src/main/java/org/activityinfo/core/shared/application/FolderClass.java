@@ -1,6 +1,6 @@
 package org.activityinfo.core.shared.application;
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.FormField;
 
@@ -9,11 +9,11 @@ import org.activityinfo.core.shared.form.FormField;
  */
 public class FolderClass {
 
-    public static final Cuid CLASS_ID = new Cuid("_folder");
+    public static final Cuid CLASS_ID = Cuid.create("_folder");
 
-    public static final Cuid LABEL_FIELD_ID = new Cuid("_folder_label");
+    public static final Cuid LABEL_FIELD_ID = Cuid.create("_folder_label");
 
-    public static final Cuid DESCRIPTION_FIELD_ID = new Cuid("_folder_description");
+    public static final Cuid DESCRIPTION_FIELD_ID = Cuid.create("_folder_description");
 
     public static final FormClass get() {
 

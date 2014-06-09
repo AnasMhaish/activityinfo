@@ -21,7 +21,7 @@ package org.activityinfo.core.shared.expr;
  * #L%
  */
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 
 /**
  * @author yuriyz on 6/3/14.
@@ -36,7 +36,7 @@ public class Placeholder {
         this.placeholder = placeholder;
         this.isRowLevel = !placeholder.contains("_");
         if (isRowLevel) {
-            fieldId = new Cuid(placeholder);
+            fieldId = Cuid.create(placeholder);
         } else {
             throw new UnsupportedOperationException();
         }

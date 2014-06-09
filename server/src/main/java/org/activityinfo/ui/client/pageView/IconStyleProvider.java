@@ -1,6 +1,6 @@
 package org.activityinfo.ui.client.pageView;
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.application.FolderClass;
 import org.activityinfo.legacy.shared.adapter.CuidAdapter;
 import org.activityinfo.ui.client.style.Icons;

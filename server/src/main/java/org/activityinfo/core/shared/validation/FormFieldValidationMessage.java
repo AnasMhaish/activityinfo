@@ -1,6 +1,6 @@
 package org.activityinfo.core.shared.validation;
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 
 /**
  * Validation Error bound to form field.

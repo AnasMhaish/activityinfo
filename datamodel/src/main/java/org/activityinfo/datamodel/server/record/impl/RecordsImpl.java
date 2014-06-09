@@ -1,6 +1,7 @@
 package org.activityinfo.datamodel.server.record.impl;
 
 
+import com.google.common.collect.Lists;
 import com.google.gson.stream.JsonReader;
 import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.datamodel.shared.record.Record;
@@ -10,6 +11,7 @@ import java.beans.IntrospectionException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.lang.reflect.Proxy;
+import java.util.List;
 
 public class RecordsImpl {
 
@@ -49,7 +51,7 @@ public class RecordsImpl {
     }
 
     public static Record parseRecord(JsonReader reader) throws IOException {
-        Record record = new RecordMapImpl();
+        RecordMapImpl record = new RecordMapImpl();
         reader.beginObject();
         while(reader.hasNext()) {
             Cuid fieldId = Cuid.create(reader.nextName());
@@ -68,12 +70,45 @@ public class RecordsImpl {
                 case BEGIN_OBJECT:
                     record.set(fieldId, parseRecord(reader));
                     break;
+                case BEGIN_ARRAY:
+                    record.set(fieldId, parseArray(reader));
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected token " + reader.peek().name());
             }
         }
         reader.endObject();
         return record;
+    }
+
+    private static List<Object> parseArray(JsonReader reader) throws IOException {
+        List<Object> objects = Lists.newArrayList();
+        reader.beginArray();
+        while(reader.hasNext()) {
+            switch(reader.peek()) {
+                case STRING:
+                    objects.add(reader.nextString());
+                    break;
+                case NUMBER:
+                    objects.add(reader.nextDouble());
+                    break;
+                case BOOLEAN:
+                    objects.add(reader.nextBoolean());
+                    break;
+                case NULL:
+                    objects.add(null);
+                    break;
+                case BEGIN_OBJECT:
+                    objects.add(parseRecord(reader));
+                    break;
+                case BEGIN_ARRAY:
+                    objects.add(parseArray(reader));
+                default:
+                    throw new IllegalStateException("Unexpected token " + reader.peek().name());
+            }
+        }
+        reader.endArray();
+        return objects;
     }
 
 }

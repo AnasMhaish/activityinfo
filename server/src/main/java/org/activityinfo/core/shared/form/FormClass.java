@@ -4,15 +4,12 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import org.activityinfo.core.shared.Cuid;
-import org.activityinfo.core.shared.Iri;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.LocalizedString;
 import org.activityinfo.core.shared.Resource;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The basic unit of data collection and storage. A form is similar to a Table
@@ -28,14 +25,14 @@ public class FormClass implements Resource, FormElementContainer {
     /**
      * Because FormClasses are themselves FormInstances, they have a class id of their own
      */
-    public static final Cuid CLASS_ID = new Cuid("_class");
+    public static final Cuid CLASS_ID = Cuid.create("_class");
 
     /**
      * Instances of FormClass have one FormField: a label, which has its own
      * FormField id. It is defined at the application level to be a subproperty of
      * {@code _label}
      */
-    public static final Cuid LABEL_FIELD_ID = new Cuid("_class_label");
+    public static final Cuid LABEL_FIELD_ID = Cuid.create("_class_label");
 
 
     @NotNull
@@ -43,8 +40,6 @@ public class FormClass implements Resource, FormElementContainer {
     private Cuid parentId;
 
     private LocalizedString label;
-    private Set<Iri> superClasses = Sets.newHashSet();
-    private Set<Iri> subClasses = Sets.newHashSet();
     private List<FormElement> elements = Lists.newArrayList();
     private int cacheId;
 
@@ -57,8 +52,6 @@ public class FormClass implements Resource, FormElementContainer {
         final FormClass copy = new FormClass(this.getId());
         copy.setParentId(this.getParentId());
         copy.getElements().addAll(this.getElements());
-        copy.getSubClasses().addAll(this.getSubClasses());
-        copy.getSuperClasses().addAll(this.getSuperClasses());
         copy.setLabel(this.getLabel());
         copy.setCacheId(this.getCacheId());
         return copy;
@@ -123,22 +116,6 @@ public class FormClass implements Resource, FormElementContainer {
 
     public void setLabel(LocalizedString label) {
         this.label = label;
-    }
-
-    public Set<Iri> getSuperClasses() {
-        return superClasses;
-    }
-
-    public void setSuperClasses(Set<Iri> superClasses) {
-        this.superClasses = superClasses;
-    }
-
-    public Set<Iri> getSubClasses() {
-        return subClasses;
-    }
-
-    public void setSubClasses(Set<Iri> subClasses) {
-        this.subClasses = subClasses;
     }
 
     public List<FormElement> getElements() {

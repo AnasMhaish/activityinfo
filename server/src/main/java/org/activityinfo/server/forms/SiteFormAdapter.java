@@ -1,22 +1,19 @@
 package org.activityinfo.server.forms;
 
 import com.google.common.base.Strings;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.LocalizedString;
 import org.activityinfo.core.shared.form.*;
 import org.activityinfo.i18n.shared.I18N;
 import org.activityinfo.legacy.shared.adapter.CuidAdapter;
-import org.activityinfo.legacy.shared.model.AttributeGroupDTO;
 import org.activityinfo.legacy.shared.model.IndicatorDTO;
 import org.activityinfo.legacy.shared.model.IndicatorGroup;
-import org.activityinfo.legacy.shared.model.LocationTypeDTO;
 import org.activityinfo.server.database.hibernate.entity.Activity;
 import org.activityinfo.server.database.hibernate.entity.AttributeGroup;
 import org.activityinfo.server.database.hibernate.entity.LocationType;
 
 import javax.inject.Provider;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 import static org.activityinfo.legacy.shared.adapter.CuidAdapter.activityCategoryFolderId;
 import static org.activityinfo.legacy.shared.adapter.CuidAdapter.attributeGroupField;

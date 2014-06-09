@@ -27,7 +27,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.form.FormInstance;
 import org.activityinfo.core.shared.form.FormInstanceLabeler;
 import org.activityinfo.ui.client.component.form.model.SimpleListViewModel;
@@ -67,7 +67,7 @@ public class ComboBoxFieldWidget implements ReferenceFieldWidget {
         Set<Cuid> value = Sets.newHashSet();
         int selectedIndex = dropBox.getSelectedIndex();
         if(selectedIndex != -1) {
-            value.add(new Cuid(dropBox.getValue(selectedIndex)));
+            value.add(Cuid.create(dropBox.getValue(selectedIndex)));
         }
         return value;
     }
@@ -75,7 +75,7 @@ public class ComboBoxFieldWidget implements ReferenceFieldWidget {
     @Override
     public void setValue(Set<Cuid> value) {
         for(int i=0;i!=dropBox.getSelectedIndex();++i) {
-            Cuid id = new Cuid(dropBox.getValue(i));
+            Cuid id = Cuid.create(dropBox.getValue(i));
             if(value.contains(id)) {
                 dropBox.setSelectedIndex(i);
                 break;

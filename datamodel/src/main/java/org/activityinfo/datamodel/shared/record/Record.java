@@ -10,6 +10,33 @@ import java.util.List;
 public interface Record {
 
     /**
+     * Returns true if this Record has a value for this
+     * field.
+     */
+    boolean has(Cuid fieldId);
+
+    /**
+     *
+     * @return the {@code FieldType} of the given field.
+     */
+    FieldType getFieldType(Cuid fieldId);
+
+    /**
+     * Returns the value of the field in this {@code Record} as a Java object
+     * of one of the following classes:
+     * <ul>
+     *     <li>{@code java.lang.String}</li>
+     *     <li>{@code java.lang.Double}</li>
+     *     <li>{@code java.lang.Boolean}</li>
+     *     <li>{@code org.activityinfo.datamodel.shared.record.Record}</li>
+     * </ul>
+     *
+     * or {@code null} if this field has no value in this {@code Record}
+     *
+     */
+    Object get(Cuid fieldId);
+
+    /**
      * Returns the value of the field if the field has a string value,
      * otherwise {@code null}
      */
@@ -24,7 +51,7 @@ public interface Record {
      *     <li>otherwise {@code null}</li>
      * </ul>
      */
-    Double getNumber(Cuid fieldId);
+    Double getDouble(Cuid fieldId);
 
     /**
      * Returns:

@@ -1,15 +1,18 @@
 package org.activityinfo.datamodel.server.record.impl;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.datamodel.shared.record.Record;
+import org.activityinfo.datamodel.shared.record.RecordBean;
 
+import javax.annotation.Nullable;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.util.List;
 import java.util.Map;
 
@@ -23,11 +26,23 @@ public class RecordBeanProxy implements InvocationHandler {
 
         BeanInfo descriptor = Introspector.getBeanInfo(beanClass);
         for(PropertyDescriptor property : descriptor.getPropertyDescriptors()) {
-            if(property.getPropertyType().equals(String.class)) {
-                methods.put(property.getReadMethod(), new StringGetter(Cuid.create(property.getName())));
-            } else {
+            Cuid fieldId = Cuid.create(property.getName());
+            Class<?> type = property.getPropertyType();
+            Method readMethod = property.getReadMethod();
+
+            if(type.equals(String.class)) {
+                methods.put(readMethod, new StringGetter(fieldId));
+
+            } else if(type.equals(int.class)) {
+                methods.put(readMethod, new IntGetter(fieldId));
+
+            } else if(List.class.isAssignableFrom(type)) {
                 // ensure that we have a value
-                methods.put(property.getReadMethod(), new ListGetter(Cuid.create(property.getName())));
+                methods.put(readMethod, new ListGetter(fieldId,
+                        readMethod.getGenericReturnType()));
+
+            } else {
+                throw new UnsupportedOperationException("returnType: " + readMethod.getReturnType());
             }
         }
     }
@@ -55,12 +70,38 @@ public class RecordBeanProxy implements InvocationHandler {
         }
     }
 
-    private class ListGetter implements MethodImpl {
+
+    private class IntGetter implements MethodImpl {
 
         private final Cuid fieldId;
 
-        private ListGetter(Cuid fieldId) {
+        private IntGetter(Cuid fieldId) {
             this.fieldId = fieldId;
+        }
+
+        @Override
+        public Object invoke(Object[] args) {
+            Number value = record.getDouble(fieldId);
+            if(value == null) {
+                return 0;
+            } else {
+                return value.intValue();
+            }
+        }
+    }
+
+    private class ListGetter implements MethodImpl {
+
+        private final Cuid fieldId;
+        private final Class elementType;
+
+        private ListGetter(Cuid fieldId, Type type) {
+            this.fieldId = fieldId;
+            ParameterizedType listType = (ParameterizedType) type;
+            elementType = (Class) listType.getActualTypeArguments()[0];
+            if(!RecordBean.class.isAssignableFrom(elementType)) {
+                throw new UnsupportedOperationException("elementType: " + elementType);
+            }
         }
 
         @Override
@@ -69,7 +110,14 @@ public class RecordBeanProxy implements InvocationHandler {
             if(value == null) {
                 return null;
             }
-            return value;
+            return Lists.transform(value, new Function<Object, Object>() {
+
+                @Nullable
+                @Override
+                public Object apply(@Nullable Object input) {
+                    return RecordsImpl.createProxy(elementType, (Record) input);
+                }
+            });
         }
     }
 }

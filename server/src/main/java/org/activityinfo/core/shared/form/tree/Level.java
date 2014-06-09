@@ -1,7 +1,7 @@
 package org.activityinfo.core.shared.form.tree;
 
 import com.google.common.collect.Lists;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.application.ApplicationProperties;
 import org.activityinfo.core.shared.criteria.FormClassSet;
 import org.activityinfo.core.shared.form.FormClass;

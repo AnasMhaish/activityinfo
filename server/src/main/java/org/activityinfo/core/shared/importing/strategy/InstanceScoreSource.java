@@ -21,7 +21,7 @@ package org.activityinfo.core.shared.importing.strategy;
  * #L%
  */
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 
 import java.util.List;
 

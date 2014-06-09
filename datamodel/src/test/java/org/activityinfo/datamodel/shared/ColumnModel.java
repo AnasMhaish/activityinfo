@@ -9,5 +9,7 @@ public interface ColumnModel extends RecordBean {
 
     String getType();
 
+    int getWidth();
+
 
 }

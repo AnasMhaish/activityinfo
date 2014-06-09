@@ -93,6 +93,7 @@
 
   <modules>
     <module>geoadmin</module>
+    <module>datamodel</module>
     <module>server</module>
   </modules>
 

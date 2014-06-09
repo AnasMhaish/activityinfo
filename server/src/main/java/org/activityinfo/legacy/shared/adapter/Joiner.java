@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Supplier;
 import com.google.common.collect.*;
 import org.activityinfo.core.client.InstanceQuery;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Projection;
 import org.activityinfo.core.shared.application.ApplicationProperties;
 import org.activityinfo.core.shared.criteria.Criteria;
@@ -215,6 +215,11 @@ class Joiner implements Function<InstanceQuery, Promise<List<Projection>>> {
                     projection.setValue(classPath, instance.getClassId());
                 }
 
+                for (Cuid fieldId : map.keySet()) {
+                    if(instance.has(fieldId)) {
+
+                    }
+                }
                 for (Map.Entry<Cuid, Object> entry : instance.getValueMap().entrySet()) {
                     for (FieldPath targetPath : map.get(entry.getKey())) {
                         projection.setValue(targetPath, entry.getValue());

@@ -22,7 +22,7 @@ package org.activityinfo.legacy.shared.adapter;
  */
 
 import com.google.common.collect.Lists;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.fp.client.Promise;
 import org.activityinfo.legacy.client.Dispatcher;
 import org.activityinfo.legacy.shared.command.BatchCommand;

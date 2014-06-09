@@ -1,7 +1,7 @@
 package org.activityinfo.ui.client.component.form.model;
 
 
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 
 /**
  * Marker interface for view models of fields. The view

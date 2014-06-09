@@ -2,7 +2,7 @@ package org.activityinfo.core.shared.form;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.LocalizedString;
 
 import javax.validation.constraints.NotNull;

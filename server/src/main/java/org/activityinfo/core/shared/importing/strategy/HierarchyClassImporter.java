@@ -27,7 +27,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.activityinfo.core.client.InstanceQuery;
 import org.activityinfo.core.client.ResourceLocator;
-import org.activityinfo.core.shared.Cuid;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Pair;
 import org.activityinfo.core.shared.Projection;
 import org.activityinfo.core.shared.criteria.ClassCriteria;
@@ -97,7 +97,7 @@ public class HierarchyClassImporter implements FieldImporter {
             ColumnAccessor columnAccessor = sourceColumns.get(i);
             if (!columnAccessor.isMissing(row)) {
                 FieldImporterColumn importedColumn = getImportedColumn(columnAccessor);
-                Cuid targetSiteId = new Cuid(importedColumn.getTarget().getSite().asString());
+                Cuid targetSiteId = Cuid.create(importedColumn.getTarget().getSite().asString());
                 if (targetSiteId.getDomain() == CuidAdapter.ADMIN_LEVEL_DOMAIN) {
                     final int levelId = CuidAdapter.getBlock(targetSiteId, 0);
                     // todo : recreation of admin level cuid seems to be error prone, check later !
