@@ -1,7 +1,10 @@
 package org.activityinfo.datamodel.client;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.junit.client.GWTTestCase;
 import org.activityinfo.datamodel.shared.*;
+import org.activityinfo.datamodel.shared.form.FieldPathRecord;
 import org.activityinfo.datamodel.shared.record.FieldType;
 import org.activityinfo.datamodel.shared.record.Records;
 
@@ -20,9 +23,17 @@ public class GwtTestInstance extends GWTTestCase {
     }
 
     public void testReferenceRecord() {
-        Reference tableModel = Records.fromJson(Reference.class, "{\"id\":\"cuid1\"}");
-        assertEquals("cuid1", tableModel.getId().asString());
+        Reference reference = Records.fromJson(Reference.class, "{\"id\":\"cuid1\"}");
+        assertEquals("cuid1", reference.getId().asString());
     }
+
+    public void testFieldPathRecord() {
+//        FieldPathRecordImpl fieldPathImpl = RecordsImpl.fromJson("{\"path\":[{\"id\":\"cuid2\"}]}");
+        FieldPathRecord fieldPathImpl = JsonUtils.unsafeEval("{\"path\":[{\"id\":\"cuid2\"}, {\"id\":\"cuid3\"}]}");
+        assertEquals("cuid2", fieldPathImpl.getPath().get(0).getId().asString());
+        GWT.log(fieldPathImpl.getPath().get(0).getId().asString());
+    }
+
 
     public void testTableRecord() {
 
