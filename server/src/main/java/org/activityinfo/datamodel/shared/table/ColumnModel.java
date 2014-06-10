@@ -12,8 +12,6 @@ public interface ColumnModel extends RecordBean {
 
     RecordArray<Cuid> getFormClasses();
 
-    Criteria getCriteria();
-
     String getHeader();
 
     Cuid getId();
