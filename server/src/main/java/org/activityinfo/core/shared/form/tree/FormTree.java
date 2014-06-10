@@ -46,7 +46,7 @@ public class FormTree {
             FormTree.Node childNode = new FormTree.Node();
             childNode.parent = this;
             childNode.field = field;
-            childNode.path = new FieldPath(this.path, field);
+            childNode.path = FieldPathFactory.create(this.path, field);
             childNode.formClass = declaringClass;
             children.add(childNode);
             nodeMap.put(childNode.path, childNode);
@@ -175,7 +175,7 @@ public class FormTree {
         Node node = new Node();
         node.formClass = declaringClass;
         node.field = field;
-        node.path = new FieldPath(field);
+        node.path = FieldPathFactory.create(field);
         rootFields.add(node);
         nodeMap.put(node.path, node);
         return node;
