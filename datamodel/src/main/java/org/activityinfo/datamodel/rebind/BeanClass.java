@@ -115,12 +115,15 @@ public class BeanClass {
     }
 
     private void writeGetterBody(TreeLogger logger, SourceWriter sw, String fieldId, JType returnType) throws UnableToCompleteException {
-        if(returnType.getQualifiedSourceName().equals(Cuid.class.getName()) ||
-           returnType.getQualifiedSourceName().equals(String.class.getName())) {
+        if (returnType.getQualifiedSourceName().equals(Cuid.class.getName())) {
+            sw.println("return org.activityinfo.datamodel.shared.Cuid.create(getString(\"%s\"));", fieldId);
+
+        } else if (returnType.getQualifiedSourceName().equals(Cuid.class.getName()) ||
+                returnType.getQualifiedSourceName().equals(String.class.getName())) {
 
             sw.println("return getString(\"%s\");", fieldId);
 
-        } else if(returnType == JPrimitiveType.INT) {
+        } else if (returnType == JPrimitiveType.INT) {
             sw.println("return getInt(\"%s\", 0);", fieldId);
 
         } else if(returnType == JPrimitiveType.DOUBLE) {

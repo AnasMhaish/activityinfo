@@ -9,6 +9,7 @@ import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.FormField;
 import org.activityinfo.core.shared.form.FormFieldType;
 import org.activityinfo.datamodel.shared.Cuid;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 
 import java.util.Collection;
 import java.util.List;

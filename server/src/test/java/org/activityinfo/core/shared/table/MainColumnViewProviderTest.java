@@ -24,7 +24,7 @@ package org.activityinfo.core.shared.table;
 import org.activityinfo.core.client.form.tree.AsyncFormTreeBuilder;
 import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.form.FormClass;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 import org.activityinfo.core.shared.form.tree.FormTree;
 import org.activityinfo.core.shared.table.provider.MainColumnViewProvider;
 import org.activityinfo.datamodel.shared.table.DefaultTableModel;

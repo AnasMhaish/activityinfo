@@ -1,9 +1,8 @@
-package org.activityinfo.core.shared.form.tree;
+package org.activityinfo.datamodel.shared.form;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.core.shared.form.FormField;
 
 import java.util.Iterator;
 import java.util.List;
@@ -11,22 +10,14 @@ import java.util.List;
 /**
  * Describes a path of nested fields
  */
-public class FieldPath {
+public class FieldPath  {
 
     private final List<Cuid> path;
 
     /**
      * The name of the field component
      */
-    private String component;
-
-    public FieldPath(List<FormField> prefix, FormField field) {
-        path = Lists.newArrayList();
-        for(FormField prefixField : prefix) {
-            path.add(prefixField.getId());
-        }
-        path.add(field.getId());
-    }
+    private String componentName;
 
     public FieldPath(Cuid rootFieldId, FieldPath relativePath) {
         path = Lists.newArrayList(rootFieldId);
@@ -42,27 +33,10 @@ public class FieldPath {
         path.add(key);
     }
 
-    public FieldPath(FormField... fields) {
-        path = Lists.newArrayList();
-        for(FormField field : fields) {
-            path.add(field.getId());
-        }
-    }
-
-
     public FieldPath(FieldPath parent, FieldPath relativePath) {
         this.path = Lists.newArrayList();
         this.path.addAll(parent.path);
         this.path.addAll(relativePath.path);
-    }
-
-    public FieldPath(FieldPath parent, FormField field) {
-        path = Lists.newArrayList();
-
-        if (parent != null) {
-            path.addAll(parent.path);
-        }
-        path.add(field.getId());
     }
 
     public FieldPath(List<Cuid> fieldIds) {
@@ -108,13 +82,17 @@ public class FieldPath {
         return path.get(0).equals(fieldId);
     }
 
-    public FieldPath child(FormField field) {
-        return new FieldPath(this, field);
-    }
-
     public FieldPath component(String componentName) {
         FieldPath path = new FieldPath(this.path);
-        path.component = componentName;
+        path.componentName = componentName;
+        return path;
+    }
+
+    public String getComponentName() {
+        return componentName;
+    }
+
+    public List<Cuid> getPath() {
         return path;
     }
 

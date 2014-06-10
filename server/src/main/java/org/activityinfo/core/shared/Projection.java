@@ -2,7 +2,7 @@ package org.activityinfo.core.shared;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 import org.activityinfo.datamodel.shared.Cuid;
 
 import java.util.Collections;

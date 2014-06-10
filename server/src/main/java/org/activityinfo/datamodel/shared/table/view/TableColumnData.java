@@ -22,7 +22,7 @@ package org.activityinfo.datamodel.shared.table.view;
  */
 
 import com.google.common.collect.Maps;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 
 import java.util.Map;
 

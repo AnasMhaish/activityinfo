@@ -27,7 +27,7 @@ import com.google.common.collect.Sets;
 import org.activityinfo.core.client.ResourceLocator;
 import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.form.FormClass;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 import org.activityinfo.datamodel.shared.table.view.ColumnView;
 import org.activityinfo.fp.client.Promise;
 import org.activityinfo.datamodel.shared.table.FieldColumn;

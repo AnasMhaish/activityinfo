@@ -28,7 +28,7 @@ import org.activityinfo.core.client.ResourceLocator;
 import org.activityinfo.core.shared.Projection;
 import org.activityinfo.core.shared.criteria.ClassCriteria;
 import org.activityinfo.core.shared.form.FormClass;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 import org.activityinfo.datamodel.shared.table.view.ArrayColumnView;
 import org.activityinfo.datamodel.shared.table.view.ColumnView;
 import org.activityinfo.fp.client.Promise;

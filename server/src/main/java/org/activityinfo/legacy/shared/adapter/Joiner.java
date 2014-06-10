@@ -12,7 +12,7 @@ import org.activityinfo.core.shared.criteria.IdCriteria;
 import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.FormField;
 import org.activityinfo.core.shared.form.FormInstance;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 import org.activityinfo.fp.client.Promise;
 import org.activityinfo.fp.shared.BiFunction;
 import org.activityinfo.legacy.client.Dispatcher;

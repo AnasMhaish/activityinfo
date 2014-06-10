@@ -22,7 +22,7 @@ package org.activityinfo.core.shared.table.provider;
  */
 
 import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 
 /**
 * @author yuriyz on 5/29/14.

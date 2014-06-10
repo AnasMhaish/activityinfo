@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Projection;
 import org.activityinfo.core.shared.criteria.Criteria;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 import org.activityinfo.legacy.shared.adapter.CuidAdapter;
 import org.activityinfo.legacy.shared.command.result.ListResult;
 import org.activityinfo.legacy.shared.model.LocationDTO;

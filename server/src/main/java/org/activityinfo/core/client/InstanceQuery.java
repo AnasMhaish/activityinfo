@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.criteria.Criteria;
 import org.activityinfo.core.shared.criteria.NullCriteria;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 
 import java.util.List;
 

@@ -14,6 +14,7 @@ import org.activityinfo.core.shared.form.tree.*;
 import org.activityinfo.core.shared.importing.model.ImportModel;
 import org.activityinfo.core.shared.importing.strategy.FieldImportStrategies;
 import org.activityinfo.core.shared.importing.validation.ValidatedRowTable;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 import org.activityinfo.fixtures.InjectionSupport;
 import org.activityinfo.legacy.shared.adapter.CuidAdapter;
 import org.activityinfo.legacy.shared.adapter.LocationClassAdapter;

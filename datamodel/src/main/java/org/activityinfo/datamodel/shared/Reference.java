@@ -1,4 +1,4 @@
-package org.activityinfo.legacy.shared.adapter.projection;
+package org.activityinfo.datamodel.shared;
 /*
  * #%L
  * ActivityInfo Server
@@ -21,23 +21,11 @@ package org.activityinfo.legacy.shared.adapter.projection;
  * #L%
  */
 
-import org.activityinfo.core.shared.Projection;
-import org.activityinfo.datamodel.shared.form.FieldPath;
-import org.activityinfo.legacy.shared.model.AttributeDTO;
+import org.activityinfo.datamodel.shared.record.RecordBean;
 
 /**
- * @author yuriyz on 5/6/14.
+ * @author yuriyz on 6/10/14.
  */
-public class AttributeProjectionUpdater implements ProjectionUpdater<AttributeDTO> {
-
-    private FieldPath path;
-
-    public AttributeProjectionUpdater(FieldPath path) {
-        this.path = path;
-    }
-
-    @Override
-    public void update(Projection projection, AttributeDTO value) {
-        projection.setValue(path, value.getName());
-    }
+public interface Reference extends RecordBean {
+    Cuid getId();
 }

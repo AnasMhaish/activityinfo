@@ -29,7 +29,7 @@ import org.activityinfo.core.server.type.converter.JvmConverterFactory;
 import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Projection;
 import org.activityinfo.core.shared.criteria.ClassCriteria;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 import org.activityinfo.core.shared.form.tree.FormTree;
 import org.activityinfo.core.shared.form.tree.FormTreePrettyPrinter;
 import org.activityinfo.core.shared.importing.model.ImportModel;

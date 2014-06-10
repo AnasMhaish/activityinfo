@@ -24,7 +24,7 @@ package org.activityinfo.core.shared.importing.strategy;
 import com.google.common.collect.Lists;
 import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.Projection;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 
 import java.util.List;
 import java.util.Map;

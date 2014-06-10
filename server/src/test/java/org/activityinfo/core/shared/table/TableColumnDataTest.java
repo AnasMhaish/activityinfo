@@ -22,7 +22,7 @@ package org.activityinfo.core.shared.table;
  */
 
 import org.activityinfo.core.client.ResourceLocator;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 import org.activityinfo.core.shared.table.provider.ColumnViewProvider;
 import org.activityinfo.core.shared.table.provider.MainColumnViewProvider;
 import org.activityinfo.datamodel.shared.table.DefaultTableModel;

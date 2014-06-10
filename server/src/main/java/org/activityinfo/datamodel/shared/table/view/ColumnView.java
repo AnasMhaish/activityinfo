@@ -1,6 +1,6 @@
 package org.activityinfo.datamodel.shared.table.view;
 
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 
 /**
  * Created by alex on 5/28/14.

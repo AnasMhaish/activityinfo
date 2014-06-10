@@ -33,7 +33,7 @@ import org.activityinfo.core.shared.Projection;
 import org.activityinfo.core.shared.criteria.ClassCriteria;
 import org.activityinfo.core.shared.criteria.FormClassSet;
 import org.activityinfo.core.shared.form.FormInstance;
-import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.form.FieldPath;
 import org.activityinfo.core.shared.form.tree.FormTree;
 import org.activityinfo.core.shared.importing.source.SourceRow;
 import org.activityinfo.core.shared.importing.validation.ValidationResult;
