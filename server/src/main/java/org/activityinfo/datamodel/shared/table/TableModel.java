@@ -22,12 +22,11 @@ package org.activityinfo.datamodel.shared.table;
  */
 
 import org.activityinfo.core.shared.form.FormClass;
+import org.activityinfo.datamodel.shared.record.RecordArray;
 import org.activityinfo.datamodel.shared.record.RecordBean;
 
-import java.util.Set;
-
 public interface TableModel extends RecordBean {
-    Set<ColumnModel> getColumns();
+    RecordArray<ColumnModel> getColumns();
 
-    Set<FormClass> getFormClasses();
+    RecordArray<FormClass> getFormClasses();
 }
