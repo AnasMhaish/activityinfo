@@ -29,6 +29,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.AbstractCellTable;
 import com.google.gwt.user.cellview.client.AbstractHeaderOrFooterBuilder;
 import org.activityinfo.core.shared.Projection;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 import org.activityinfo.ui.client.component.table.action.ButtonActionCell;
 import org.activityinfo.ui.client.component.table.action.TableHeaderAction;
 import org.activityinfo.ui.client.widget.CellTableAffixer;

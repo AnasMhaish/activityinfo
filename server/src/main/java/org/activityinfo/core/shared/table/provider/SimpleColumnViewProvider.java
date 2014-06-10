@@ -30,9 +30,9 @@ import org.activityinfo.core.shared.criteria.ClassCriteria;
 import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.tree.FieldPath;
 import org.activityinfo.core.shared.table.ArrayColumnView;
-import org.activityinfo.core.shared.table.ColumnView;
+import org.activityinfo.datamodel.shared.table.view.ColumnView;
 import org.activityinfo.fp.client.Promise;
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 
 import javax.annotation.Nullable;
 import java.util.List;

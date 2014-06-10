@@ -22,9 +22,9 @@ package org.activityinfo.core.shared.table.provider;
  */
 
 import org.activityinfo.core.shared.form.FormClass;
-import org.activityinfo.core.shared.table.ColumnView;
+import org.activityinfo.datamodel.shared.table.view.ColumnView;
 import org.activityinfo.fp.client.Promise;
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 
 /**
  * @author yuriyz on 5/29/14.

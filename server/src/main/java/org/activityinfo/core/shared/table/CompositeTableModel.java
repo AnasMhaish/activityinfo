@@ -1,5 +1,7 @@
 package org.activityinfo.core.shared.table;
 
+import org.activityinfo.datamodel.shared.table.DefaultTableModel;
+
 import java.util.List;
 
 /**
@@ -8,5 +10,5 @@ import java.util.List;
 public class CompositeTableModel {
 
     // must have same number of columns
-    List<TableModel> tables;
+    List<DefaultTableModel> tables;
 }

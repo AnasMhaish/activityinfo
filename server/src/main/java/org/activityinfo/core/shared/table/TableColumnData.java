@@ -23,6 +23,7 @@ package org.activityinfo.core.shared.table;
 
 import com.google.common.collect.Maps;
 import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.table.view.ColumnView;
 
 import java.util.Map;
 

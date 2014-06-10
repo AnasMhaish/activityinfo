@@ -47,7 +47,7 @@ import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SimpleKeyProvider;
 import org.activityinfo.i18n.shared.I18N;
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 import org.activityinfo.ui.client.component.table.InstanceTableStyle;
 import org.activityinfo.ui.client.component.table.InstanceTableView;
 import org.activityinfo.ui.client.style.table.DataGridResources;

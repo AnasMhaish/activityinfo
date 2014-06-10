@@ -1,6 +1,7 @@
 package org.activityinfo.core.shared.table;
 
 import org.activityinfo.core.shared.form.tree.FieldPath;
+import org.activityinfo.datamodel.shared.table.view.ColumnView;
 
 /**
  * Created by alex on 5/28/14.

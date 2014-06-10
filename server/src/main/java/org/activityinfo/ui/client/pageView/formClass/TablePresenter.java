@@ -10,7 +10,7 @@ import org.activityinfo.core.shared.criteria.ClassCriteria;
 import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.tree.FormTree;
 import org.activityinfo.fp.client.Promise;
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 import org.activityinfo.ui.client.component.table.InstanceTableView;
 import org.activityinfo.ui.client.widget.DisplayWidget;
 

@@ -1,13 +1,12 @@
-package org.activityinfo.core.shared.table;
+package org.activityinfo.datamodel.shared.table;
 
-import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.core.shared.criteria.Criteria;
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.Cuid;
 
 import java.util.List;
 
 
-public class TableModel {
+public class DefaultTableModel {
 
     private Cuid formClassId;
     private List<FieldColumn> columns;

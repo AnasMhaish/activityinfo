@@ -22,7 +22,7 @@ package org.activityinfo.ui.client.component.table.filter;
  */
 
 import com.google.gwt.user.cellview.client.Header;
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 
 /**
  * @author yuriyz on 4/2/14.

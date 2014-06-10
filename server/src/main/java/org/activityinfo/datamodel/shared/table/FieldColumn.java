@@ -1,4 +1,4 @@
-package org.activityinfo.ui.client.component.table;
+package org.activityinfo.datamodel.shared.table;
 
 import com.google.common.collect.Lists;
 import com.google.gwt.cell.client.TextCell;

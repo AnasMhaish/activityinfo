@@ -27,12 +27,14 @@ import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.tree.FieldPath;
 import org.activityinfo.core.shared.form.tree.FormTree;
 import org.activityinfo.core.shared.table.provider.MainColumnViewProvider;
+import org.activityinfo.datamodel.shared.table.DefaultTableModel;
+import org.activityinfo.datamodel.shared.table.view.ColumnView;
 import org.activityinfo.fixtures.InjectionSupport;
 import org.activityinfo.legacy.shared.adapter.CuidAdapter;
 import org.activityinfo.legacy.shared.adapter.ResourceLocatorAdaptor;
 import org.activityinfo.server.command.CommandTestCase2;
 import org.activityinfo.server.database.OnDataSet;
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -64,7 +66,7 @@ public class MainColumnViewProviderTest extends CommandTestCase2 {
     @Test
     public void columnViewParserAndCaching() {
 
-        TableModel tableModel = new TableModel();
+        DefaultTableModel tableModel = new DefaultTableModel();
         Cuid formClassId = CuidAdapter.activityFormClass(1);
         tableModel.setFormClassId(formClassId);
         FieldPath path1 = new FieldPath(CuidAdapter.indicatorField(1));

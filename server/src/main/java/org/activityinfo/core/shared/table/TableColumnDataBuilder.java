@@ -27,8 +27,10 @@ import com.google.common.collect.Lists;
 import org.activityinfo.core.client.ResourceLocator;
 import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.table.provider.ColumnViewProvider;
+import org.activityinfo.datamodel.shared.table.DefaultTableModel;
+import org.activityinfo.datamodel.shared.table.view.ColumnView;
 import org.activityinfo.fp.client.Promise;
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -46,7 +48,7 @@ public class TableColumnDataBuilder {
         this.viewProvider = viewProvider;
     }
 
-    public Promise<TableColumnData> build(final TableModel tableModel) {
+    public Promise<TableColumnData> build(final DefaultTableModel tableModel) {
         final Promise<FormClass> formClass = resourceLocator.getFormClass(tableModel.getFormClassId());
         return Promise.waitAll(formClass).join(new Function<Void, Promise<TableColumnData>>() {
             @Nullable

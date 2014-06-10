@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.*;
 import org.activityinfo.core.client.ResourceLocator;
 import org.activityinfo.core.shared.criteria.Criteria;
 import org.activityinfo.core.shared.form.FormClass;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 import org.activityinfo.i18n.shared.I18N;
 import org.activityinfo.ui.client.widget.AlertPanel;
 import org.activityinfo.ui.client.widget.Templates;

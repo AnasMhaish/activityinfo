@@ -22,7 +22,7 @@ package org.activityinfo.core.shared.table.provider;
  */
 
 import org.activityinfo.core.client.ResourceLocator;
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 
 /**
  * @author yuriyz on 5/29/14.

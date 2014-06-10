@@ -1,4 +1,4 @@
-package org.activityinfo.core.shared.table.provider;
+package org.activityinfo.datamodel.shared.table;
 /*
  * #%L
  * ActivityInfo Server
@@ -21,26 +21,10 @@ package org.activityinfo.core.shared.table.provider;
  * #L%
  */
 
-import org.activityinfo.datamodel.shared.table.view.ColumnView;
+import org.activityinfo.datamodel.shared.record.RecordBean;
 
-/**
- * @author yuriyz on 5/29/14.
- */
-public class CacheValue {
+import java.util.Set;
 
-    private final ColumnView columnView;
-    private final int cacheId;
-
-    public CacheValue(ColumnView columnView, int cacheId) {
-        this.columnView = columnView;
-        this.cacheId = cacheId;
-    }
-
-    public ColumnView getColumnView() {
-        return columnView;
-    }
-
-    public int getCacheId() {
-        return cacheId;
-    }
+public interface TableModel extends RecordBean {
+    Set<ColumnModel> getColumns();
 }

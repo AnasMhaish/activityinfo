@@ -32,7 +32,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import org.activityinfo.core.shared.criteria.Criteria;
 import org.activityinfo.core.shared.criteria.HasCriteria;
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 import org.activityinfo.ui.client.component.table.InstanceTable;
 
 /**

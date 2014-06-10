@@ -27,7 +27,7 @@ import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.dom.client.TableSectionElement;
 import com.google.gwt.user.client.ui.PopupPanel;
 import org.activityinfo.core.shared.Projection;
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 import org.activityinfo.ui.client.component.table.InstanceTable;
 import org.activityinfo.ui.client.widget.CellTable;
 

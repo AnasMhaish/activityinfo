@@ -31,7 +31,7 @@ import org.activityinfo.core.shared.cube.*;
 import org.activityinfo.core.shared.form.tree.FieldPath;
 import org.activityinfo.core.shared.table.TableColumnData;
 import org.activityinfo.core.shared.table.TableColumnDataBuilder;
-import org.activityinfo.core.shared.table.TableModel;
+import org.activityinfo.datamodel.shared.table.DefaultTableModel;
 import org.activityinfo.core.shared.table.provider.ColumnViewProvider;
 import org.activityinfo.core.shared.table.provider.MainColumnViewProvider;
 import org.activityinfo.fixtures.InjectionSupport;
@@ -47,7 +47,7 @@ import org.activityinfo.server.command.CommandTestCase2;
 import org.activityinfo.server.database.OnDataSet;
 import org.activityinfo.server.database.TestDatabaseModule;
 import org.activityinfo.server.report.util.DateUtilCalendarImpl;
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -230,7 +230,7 @@ public class PivotSitesHandlerTest extends CommandTestCase2 {
         ResourceLocator resourceLocator = new ResourceLocatorAdaptor(getDispatcher());
         ColumnViewProvider columnViewProvider = new MainColumnViewProvider(resourceLocator);
 
-        TableModel tableModel = new TableModel();
+        DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.setFormClassId(CuidAdapter.activityFormClass(1));
         FieldPath path1 = new FieldPath(CuidAdapter.indicatorField(1));
         FieldPath path2 = new FieldPath(CuidAdapter.partnerField(1),

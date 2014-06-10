@@ -21,7 +21,7 @@ package org.activityinfo.ui.client.component.table.filter;
  * #L%
  */
 
-import org.activityinfo.ui.client.component.table.FieldColumn;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 import org.activityinfo.ui.client.component.table.InstanceTable;
 
 /**

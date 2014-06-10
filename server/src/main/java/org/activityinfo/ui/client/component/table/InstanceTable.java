@@ -14,6 +14,7 @@ import org.activityinfo.core.shared.Projection;
 import org.activityinfo.core.shared.criteria.Criteria;
 import org.activityinfo.core.shared.criteria.CriteriaIntersection;
 import org.activityinfo.core.shared.form.FormClass;
+import org.activityinfo.datamodel.shared.table.FieldColumn;
 import org.activityinfo.ui.client.component.table.action.*;
 import org.activityinfo.ui.client.component.table.filter.FilterCellAction;
 import org.activityinfo.ui.client.component.table.filter.FilterHeader;

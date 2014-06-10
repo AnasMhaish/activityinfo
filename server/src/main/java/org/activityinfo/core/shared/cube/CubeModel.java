@@ -1,7 +1,7 @@
 package org.activityinfo.core.shared.cube;
 
 import com.google.common.collect.Lists;
-import org.activityinfo.core.shared.table.TableModel;
+import org.activityinfo.datamodel.shared.table.DefaultTableModel;
 
 import java.util.List;
 
@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class CubeModel {
 
-    private TableModel tableModel;
+    private DefaultTableModel tableModel;
     private List<DimensionModel> dimensions = Lists.newArrayList();
     private MeasureModel measure;
 
-    public CubeModel(TableModel tableModel) {
+    public CubeModel(DefaultTableModel tableModel) {
         this.tableModel = tableModel;
     }
 
-    public TableModel getTableModel() {
+    public DefaultTableModel getTableModel() {
         return tableModel;
     }
 
