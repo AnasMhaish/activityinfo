@@ -1,10 +1,7 @@
 package org.activityinfo.datamodel.client;
 
 import com.google.gwt.junit.client.GWTTestCase;
-import org.activityinfo.datamodel.shared.ColumnModel;
-import org.activityinfo.datamodel.shared.Cuid;
-import org.activityinfo.datamodel.shared.TableModel;
-import org.activityinfo.datamodel.shared.TableModelJson;
+import org.activityinfo.datamodel.shared.*;
 import org.activityinfo.datamodel.shared.record.FieldType;
 import org.activityinfo.datamodel.shared.record.Records;
 
@@ -22,7 +19,12 @@ public class GwtTestInstance extends GWTTestCase {
         assertEquals("xyz123", cuid.asString());
     }
 
-    public void testRecord() {
+    public void testReferenceRecord() {
+        Reference tableModel = Records.fromJson(Reference.class, "{\"id\":\"cuid1\"}");
+        assertEquals("cuid1", tableModel.getId().asString());
+    }
+
+    public void testTableRecord() {
 
         TableModel tableModel = Records.fromJson(TableModel.class, TableModelJson.SIMPLE);
         assertEquals("My table model", tableModel.getName());
