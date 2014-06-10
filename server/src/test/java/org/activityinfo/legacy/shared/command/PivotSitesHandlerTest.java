@@ -29,7 +29,7 @@ import com.google.inject.Inject;
 import org.activityinfo.core.client.ResourceLocator;
 import org.activityinfo.core.shared.cube.*;
 import org.activityinfo.core.shared.form.tree.FieldPath;
-import org.activityinfo.core.shared.table.TableColumnData;
+import org.activityinfo.datamodel.shared.table.view.TableColumnData;
 import org.activityinfo.core.shared.table.TableColumnDataBuilder;
 import org.activityinfo.datamodel.shared.table.DefaultTableModel;
 import org.activityinfo.core.shared.table.provider.ColumnViewProvider;

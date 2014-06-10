@@ -26,6 +26,7 @@ import org.activityinfo.core.shared.form.tree.FieldPath;
 import org.activityinfo.core.shared.table.provider.ColumnViewProvider;
 import org.activityinfo.core.shared.table.provider.MainColumnViewProvider;
 import org.activityinfo.datamodel.shared.table.DefaultTableModel;
+import org.activityinfo.datamodel.shared.table.view.TableColumnData;
 import org.activityinfo.fixtures.InjectionSupport;
 import org.activityinfo.legacy.shared.adapter.CuidAdapter;
 import org.activityinfo.legacy.shared.adapter.ResourceLocatorAdaptor;

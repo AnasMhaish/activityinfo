@@ -29,6 +29,7 @@ import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.table.provider.ColumnViewProvider;
 import org.activityinfo.datamodel.shared.table.DefaultTableModel;
 import org.activityinfo.datamodel.shared.table.view.ColumnView;
+import org.activityinfo.datamodel.shared.table.view.TableColumnData;
 import org.activityinfo.fp.client.Promise;
 import org.activityinfo.datamodel.shared.table.FieldColumn;
 

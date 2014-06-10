@@ -36,7 +36,7 @@ import org.activityinfo.core.shared.criteria.ClassCriteria;
 import org.activityinfo.core.shared.expr.*;
 import org.activityinfo.core.shared.form.FormClass;
 import org.activityinfo.core.shared.form.tree.FormTree;
-import org.activityinfo.core.shared.table.ArrayColumnView;
+import org.activityinfo.datamodel.shared.table.view.ArrayColumnView;
 import org.activityinfo.datamodel.shared.table.view.ColumnView;
 import org.activityinfo.fp.client.Promise;
 import org.activityinfo.datamodel.shared.table.FieldColumn;

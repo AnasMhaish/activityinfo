@@ -1,4 +1,4 @@
-package org.activityinfo.core.shared.table;
+package org.activityinfo.datamodel.shared.table.view;
 
 import org.activityinfo.datamodel.shared.table.DefaultTableModel;
 
