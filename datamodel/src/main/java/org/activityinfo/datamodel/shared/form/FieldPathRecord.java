@@ -21,20 +21,22 @@ package org.activityinfo.datamodel.shared.form;
  * #L%
  */
 
-import org.activityinfo.datamodel.client.record.impl.RecordJsoImpl;
+import org.activityinfo.datamodel.server.record.impl.RecordMapImpl;
+import org.activityinfo.datamodel.shared.Cuid;
 import org.activityinfo.datamodel.shared.Reference;
 import org.activityinfo.datamodel.shared.record.RecordArray;
+import org.activityinfo.datamodel.shared.record.RecordBean;
 
 /**
  * @author yuriyz on 6/10/14.
  */
-public class FieldPathRecord extends RecordJsoImpl {
+public class FieldPathRecord extends RecordMapImpl implements RecordBean {
 
     protected FieldPathRecord() {
     }
 
     public final RecordArray<Reference> getPath() {
-        return getArray("path");
+        return (RecordArray<Reference>) get(Cuid.create("path"));
     }
 
     public final boolean isNested() {

@@ -1,8 +1,7 @@
 package org.activityinfo.datamodel.client;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.junit.client.GWTTestCase;
+import org.activityinfo.datamodel.server.record.impl.RecordsImpl;
 import org.activityinfo.datamodel.shared.*;
 import org.activityinfo.datamodel.shared.form.FieldPathRecord;
 import org.activityinfo.datamodel.shared.record.FieldType;
@@ -28,10 +27,11 @@ public class GwtTestInstance extends GWTTestCase {
     }
 
     public void testFieldPathRecord() {
-//        FieldPathRecordImpl fieldPathImpl = RecordsImpl.fromJson("{\"path\":[{\"id\":\"cuid2\"}]}");
-        FieldPathRecord fieldPathImpl = JsonUtils.unsafeEval("{\"path\":[{\"id\":\"cuid2\"}, {\"id\":\"cuid3\"}]}");
+        FieldPathRecord fieldPathImpl = RecordsImpl.fromJson(FieldPathRecord.class, "{\"path\":[{\"id\":\"cuid2\"}]}");
+//        FieldPathRecord fieldPathImpl = JsonUtils.unsafeEval("{\"path\":[{\"id\":\"cuid2\"}, {\"id\":\"cuid3\"}]}");
+//        fieldPathImpl.get(Cuid.create("path"));
         assertEquals("cuid2", fieldPathImpl.getPath().get(0).getId().asString());
-        GWT.log(fieldPathImpl.getPath().get(0).getId().asString());
+//        GWT.log(fieldPathImpl.getPath().get(0).getId().asString());
     }
 
 

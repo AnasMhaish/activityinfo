@@ -21,6 +21,9 @@ public class RecordMapImpl implements Record {
 
     private final HashMap<Cuid, Object> propertyMap = new HashMap<>();
 
+    protected RecordMapImpl() {
+    }
+
     @Override
     public boolean has(Cuid fieldId) {
         return propertyMap.get(fieldId) != null;
@@ -98,7 +101,7 @@ public class RecordMapImpl implements Record {
     }
 
     @Override
-    public Record getRecord(Cuid fieldId) {
+    public final Record getRecord(Cuid fieldId) {
         Object value = propertyMap.get(fieldId);
         if(value instanceof Record) {
             return (Record) value;
