@@ -25,8 +25,8 @@ import com.google.web.bindery.autobean.shared.AutoBean;
 import com.google.web.bindery.autobean.shared.AutoBeanCodex;
 import com.google.web.bindery.autobean.shared.AutoBeanUtils;
 import junit.framework.Assert;
+import org.activityinfo.datamodel.client.autobean.AutoFactory;
 import org.activityinfo.datamodel.client.autobean.Cuid;
-import org.activityinfo.datamodel.client.autobean.CuidAutoFactory;
 import org.activityinfo.datamodel.client.autobean.FieldPath;
 import org.activityinfo.datamodel.shared.autobean.AutoBeanFactoryCreator;
 
@@ -44,7 +44,7 @@ public abstract class AutoTest {
     }
 
     public void testCuid() {
-        CuidAutoFactory factory = creator().create(CuidAutoFactory.class);
+        AutoFactory factory = creator().create(AutoFactory.class);
         Cuid cuid = factory.cuid().as();
         cuid.setCuid("xyz123");
 
@@ -58,7 +58,7 @@ public abstract class AutoTest {
     }
 
     public void testFieldPath() {
-        CuidAutoFactory factory = creator().create(CuidAutoFactory.class);
+        AutoFactory factory = creator().create(AutoFactory.class);
         Cuid cuid = factory.cuid().as();
         cuid.setCuid("cuid2");
 

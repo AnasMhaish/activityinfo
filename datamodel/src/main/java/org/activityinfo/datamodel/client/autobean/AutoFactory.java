@@ -27,9 +27,16 @@ import com.google.web.bindery.autobean.shared.AutoBeanFactory;
 /**
  * @author yuriyz on 6/11/14.
  */
-@AutoBeanFactory.Category(FieldPathCategory.class)
-public interface FieldPathAutoFactory extends AutoBeanFactory {
-    AutoBean<FieldPath> instance();
+@AutoBeanFactory.Category({CuidCategory.class, FieldPathCategory.class})
+public interface AutoFactory extends AutoBeanFactory {
 
-    AutoBean<FieldPath> instance(FieldPath bean);
+    AutoBean<Cuid> cuid();
+
+    AutoBean<Cuid> cuid(Cuid bean);
+
+    AutoBean<FieldPath> fieldPath();
+
+    AutoBean<FieldPath> fieldPath(FieldPath bean);
+
+
 }
