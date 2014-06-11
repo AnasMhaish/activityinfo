@@ -21,26 +21,11 @@ package org.activityinfo.datamodel.client.autobean;
  * #L%
  */
 
-import com.google.web.bindery.autobean.shared.AutoBean;
-import com.google.web.bindery.autobean.shared.AutoBeanFactory;
-
 /**
  * @author yuriyz on 6/11/14.
  */
-@AutoBeanFactory.Category({CuidCategory.class, FieldPathCategory.class})
-public interface AutoFactory extends AutoBeanFactory {
+public interface ExtendedCuid extends Cuid {
+    String getExtendedCuid();
 
-    AutoBean<Cuid> cuid();
-
-    AutoBean<Cuid> cuid(Cuid bean);
-
-    AutoBean<ExtendedCuid> extendedCuid();
-
-    AutoBean<ExtendedCuid> extendedCuid(ExtendedCuid bean);
-
-    AutoBean<FieldPath> fieldPath();
-
-    AutoBean<FieldPath> fieldPath(FieldPath bean);
-
-
+    void setExtendedCuid(String cuid);
 }

@@ -40,12 +40,27 @@ public abstract class AutoTest {
 
     public void test() {
         testCuid();
+        testExtendedCuid();
         testFieldPath();
     }
 
     public void testCuid() {
         AutoFactory factory = creator().create(AutoFactory.class);
         Cuid cuid = factory.cuid().as();
+        cuid.setCuid("xyz123");
+
+        AutoBean<Cuid> cuidAutoBean = AutoBeanUtils.getAutoBean(cuid);
+
+        String json = AutoBeanCodex.encode(cuidAutoBean).getPayload();
+
+        AutoBean<Cuid> decodedAutoBean = AutoBeanCodex.decode(factory, Cuid.class, json);
+        Assert.assertEquals(decodedAutoBean.as().getCuid(), "xyz123");
+        Assert.assertTrue(AutoBeanUtils.deepEquals(cuidAutoBean, decodedAutoBean));
+    }
+
+    public void testExtendedCuid() {
+        AutoFactory factory = creator().create(AutoFactory.class);
+        Cuid cuid = factory.extendedCuid().as();
         cuid.setCuid("xyz123");
 
         AutoBean<Cuid> cuidAutoBean = AutoBeanUtils.getAutoBean(cuid);
