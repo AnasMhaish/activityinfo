@@ -25,8 +25,10 @@
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.user.User'/>
   <inherits name='org.activityinfo.datamodel.DataModelEmul'/>
+  <inherits name="com.google.web.bindery.autobean.AutoBean"/>
 
   <!-- Include generated sources -->
+  <source path='autobean'/>
   <source path='client'/>
   <source path="shared"/>
 

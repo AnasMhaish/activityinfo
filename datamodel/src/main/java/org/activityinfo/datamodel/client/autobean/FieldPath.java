@@ -1,4 +1,4 @@
-package org.activityinfo.datamodel.shared.form;
+package org.activityinfo.datamodel.client.autobean;
 /*
  * #%L
  * ActivityInfo Server
@@ -21,21 +21,40 @@ package org.activityinfo.datamodel.shared.form;
  * #L%
  */
 
-import org.activityinfo.datamodel.shared.record.RecordBean;
+import java.util.List;
 
 /**
- * @author yuriyz on 6/10/14.
+ * @author yuriyz on 6/11/14.
  */
-public interface FieldPathRecord extends RecordBean {
+public interface FieldPath {
 
-//    protected FieldPathRecord() {
-//    }
-//
-//    public final RecordArray<Reference> getPath() {
-//        return (RecordArray<Reference>) get(Cuid.create("path"));
-//    }
-//
-//    public final boolean isNested() {
-//        return getPath().size() > 1;
-//    }
+    List<Cuid> getPath();
+
+    void setPath(List<Cuid> path);
+
+    String getComponentName();
+
+    void setComponentName(String componentName);
+
+    boolean isNested();
+
+    int getDepth();
+
+    FieldPath relativeTo(Cuid rootFieldId);
+
+    Cuid getLeafId();
+
+    /**
+     * Creates a new FieldPath that describes the nth ancestor of this
+     * path. n=1 is the direct parent, n=2, grand parent, etc.
+     */
+    FieldPath ancestor(int n);
+
+    Cuid getRoot();
+
+    boolean isDescendantOf(Cuid fieldId);
+
+    FieldPath component(String componentName);
+
+//    String toString();
 }

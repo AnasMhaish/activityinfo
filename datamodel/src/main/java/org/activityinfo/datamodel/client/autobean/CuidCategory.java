@@ -1,4 +1,4 @@
-package org.activityinfo.datamodel.shared.form;
+package org.activityinfo.datamodel.client.autobean;
 /*
  * #%L
  * ActivityInfo Server
@@ -21,21 +21,19 @@ package org.activityinfo.datamodel.shared.form;
  * #L%
  */
 
-import org.activityinfo.datamodel.shared.record.RecordBean;
+import com.google.web.bindery.autobean.shared.AutoBean;
 
 /**
- * @author yuriyz on 6/10/14.
+ * @author yuriyz on 6/11/14.
  */
-public interface FieldPathRecord extends RecordBean {
+public class CuidCategory {
 
-//    protected FieldPathRecord() {
-//    }
-//
-//    public final RecordArray<Reference> getPath() {
-//        return (RecordArray<Reference>) get(Cuid.create("path"));
-//    }
-//
-//    public final boolean isNested() {
-//        return getPath().size() > 1;
-//    }
+    public static String asString(AutoBean<Cuid> cuid) {
+        return cuid.as().getCuid();
+    }
+
+    public static char domain(AutoBean<Cuid> cuid) {
+        String cuidAsString = cuid.as().getCuid();
+        return cuidAsString != null && cuidAsString.length() > 0 ? cuidAsString.charAt(0) : ' ';
+    }
 }

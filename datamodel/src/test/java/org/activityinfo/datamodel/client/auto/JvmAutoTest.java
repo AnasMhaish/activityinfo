@@ -1,4 +1,4 @@
-package org.activityinfo.datamodel.shared.form;
+package org.activityinfo.datamodel.client.auto;
 /*
  * #%L
  * ActivityInfo Server
@@ -21,21 +21,22 @@ package org.activityinfo.datamodel.shared.form;
  * #L%
  */
 
-import org.activityinfo.datamodel.shared.record.RecordBean;
+import org.activityinfo.datamodel.server.autobean.JvmAutoBeanFactoryCreator;
+import org.activityinfo.datamodel.shared.autobean.AutoBeanFactoryCreator;
+import org.junit.Test;
 
 /**
- * @author yuriyz on 6/10/14.
+ * @author yuriyz on 6/11/14.
  */
-public interface FieldPathRecord extends RecordBean {
-
-//    protected FieldPathRecord() {
-//    }
-//
-//    public final RecordArray<Reference> getPath() {
-//        return (RecordArray<Reference>) get(Cuid.create("path"));
-//    }
-//
-//    public final boolean isNested() {
-//        return getPath().size() > 1;
-//    }
+public class JvmAutoTest {
+    @Test
+    public void test() {
+        AutoTest test = new AutoTest() {
+            @Override
+            public AutoBeanFactoryCreator creator() {
+                return new JvmAutoBeanFactoryCreator();
+            }
+        };
+        test.test();
+    }
 }

@@ -1,4 +1,4 @@
-package org.activityinfo.datamodel.shared.form;
+package org.activityinfo.datamodel.server.autobean;
 /*
  * #%L
  * ActivityInfo Server
@@ -21,21 +21,23 @@ package org.activityinfo.datamodel.shared.form;
  * #L%
  */
 
-import org.activityinfo.datamodel.shared.record.RecordBean;
+import com.google.web.bindery.autobean.shared.AutoBeanFactory;
+import com.google.web.bindery.autobean.vm.AutoBeanFactorySource;
+import org.activityinfo.datamodel.shared.autobean.AutoBeanFactoryCreator;
 
 /**
- * @author yuriyz on 6/10/14.
+ * @author yuriyz on 6/11/14.
  */
-public interface FieldPathRecord extends RecordBean {
+public class JvmAutoBeanFactoryCreator implements AutoBeanFactoryCreator {
 
-//    protected FieldPathRecord() {
-//    }
-//
-//    public final RecordArray<Reference> getPath() {
-//        return (RecordArray<Reference>) get(Cuid.create("path"));
-//    }
-//
-//    public final boolean isNested() {
-//        return getPath().size() > 1;
-//    }
+    private static final JvmAutoBeanFactoryCreator INSTANCE = new JvmAutoBeanFactoryCreator();
+
+    @Override
+    public <T extends AutoBeanFactory> T create(Class<T> clazz) {
+        return AutoBeanFactorySource.create(clazz);
+    }
+
+    public static AutoBeanFactoryCreator instance() {
+        return INSTANCE;
+    }
 }
