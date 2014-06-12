@@ -50,6 +50,7 @@
     <gae.version>1.8.8</gae.version>
     <jersey.version>1.17</jersey.version>
     <appengine.export.version>0.1.1</appengine.export.version>
+    <jackson.version>1.9.2</jackson.version> <!-- used 1.9.2 to not conflict with jersey 1.17-->
   </properties>
 
 
@@ -130,6 +131,21 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-core-asl</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-mapper-asl</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.fusesource.restygwt</groupId>
+        <artifactId>restygwt</artifactId>
+        <version>1.3.1-SNAPSHOT</version>
+      </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava-gwt</artifactId>

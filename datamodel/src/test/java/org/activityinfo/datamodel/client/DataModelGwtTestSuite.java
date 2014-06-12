@@ -3,7 +3,7 @@ package org.activityinfo.datamodel.client;
 import com.google.gwt.junit.tools.GWTTestSuite;
 import junit.framework.Test;
 import junit.framework.TestCase;
-import org.activityinfo.datamodel.client.resty.RestyTest;
+import org.activityinfo.datamodel.client.resty.GwtRestyTest;
 
 
 public class DataModelGwtTestSuite extends TestCase {
@@ -13,7 +13,7 @@ public class DataModelGwtTestSuite extends TestCase {
         GWTTestSuite suite = new GWTTestSuite("DataModel Tests");
 //        suite.addTestSuite( GwtTestInstance.class );
 //        suite.addTestSuite( GwtAutoTest.class );
-        suite.addTestSuite( RestyTest.class );
+        suite.addTestSuite( GwtRestyTest.class );
         return suite;
     }
 }

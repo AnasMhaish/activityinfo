@@ -21,30 +21,44 @@ package org.activityinfo.datamodel.client.resty;
  * #L%
  */
 
-import org.codehaus.jackson.annotate.JsonCreator;
-import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonSubTypes;
+import org.codehaus.jackson.annotate.JsonTypeInfo;
+
+import java.io.Serializable;
 
 /**
  * @author yuriyz on 6/11/14.
  */
-public class Cuid {
+@JsonSubTypes({@JsonSubTypes.Type(value=ExtendedCuid.class, name="ExtendedCuid"), @JsonSubTypes.Type(value=Cuid.class, name="Cuid")})
+@JsonTypeInfo(use= JsonTypeInfo.Id.CLASS, include= JsonTypeInfo.As.PROPERTY)
+//@JsonTypeInfo(use= JsonTypeInfo.Id.CLASS, include= JsonTypeInfo.As.WRAPPER_ARRAY)
+public class Cuid implements Serializable {
 
-    @JsonProperty
+//    @JsonProperty
     String cuid;
 
     public static Cuid create(String cuid) {
         return new Cuid(cuid);
     }
 
-    @JsonCreator
-    public Cuid(@JsonProperty("cuid") String cuid) {
+    public Cuid() {
+    }
+
+    public Cuid(String cuid) {
         this.cuid = cuid;
     }
+
+    //    @JsonCreator
+//    public Cuid(@JsonProperty("cuid") String cuid) {
+//        this.cuid = cuid;
+//    }
 
     public String asString() {
         return this.cuid;
     }
 
+    @JsonIgnore
     public char getDomain() {
         return cuid.charAt(0);
     }
