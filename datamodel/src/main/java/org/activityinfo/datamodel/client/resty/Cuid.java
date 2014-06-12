@@ -22,6 +22,7 @@ package org.activityinfo.datamodel.client.resty;
  */
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonSubTypes;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 
@@ -35,7 +36,7 @@ import java.io.Serializable;
 //@JsonTypeInfo(use= JsonTypeInfo.Id.CLASS, include= JsonTypeInfo.As.WRAPPER_ARRAY)
 public class Cuid implements Serializable {
 
-//    @JsonProperty
+    @JsonProperty
     String cuid;
 
     public static Cuid create(String cuid) {

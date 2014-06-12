@@ -21,6 +21,8 @@ package org.activityinfo.datamodel.client.resty;
  * #L%
  */
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,7 @@ import java.util.List;
  */
 public class FieldPath {
 
-//    @JsonProperty("path")
+    @JsonProperty
     List<Cuid> path = new ArrayList<>();
 
 //    /**

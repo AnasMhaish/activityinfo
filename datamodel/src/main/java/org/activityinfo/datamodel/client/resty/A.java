@@ -21,6 +21,8 @@ package org.activityinfo.datamodel.client.resty;
  * #L%
  */
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,8 @@ import java.util.List;
  * @author yuriyz on 6/12/14.
  */
 public class A {
+
+    @JsonProperty
     List<String> list = new ArrayList<>();
 
     @Override
