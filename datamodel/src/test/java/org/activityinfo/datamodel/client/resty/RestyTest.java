@@ -64,11 +64,9 @@ public abstract class RestyTest {
 
         final List<Cuid> path = new ArrayList<>();
 
-        // ATTENTION : break serialization !!! it will NOT work!
-        // ignore please ;), read below
         path.add(new Cuid("cuid1")); // OMG -> Trick is to declare itself in @JsonSubTypes
-        path.add(new ExtendedCuid("cuid1", "extendedCuid1")); // this will work
-        path.add(new ExtendedCuid("cuid2", "extendedCuid2")); // this will work
+        path.add(new ExtendedCuid("cuid1", "extendedCuid1"));
+        path.add(new ExtendedCuid("cuid2", "extendedCuid2"));
 
         final FieldPath fieldPath = new FieldPath(path);
         String json = getJsonEncoder().encode(fieldPath);

@@ -26,15 +26,12 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonSubTypes;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 
-import java.io.Serializable;
-
 /**
  * @author yuriyz on 6/11/14.
  */
 @JsonSubTypes({@JsonSubTypes.Type(value=ExtendedCuid.class, name="ExtendedCuid"), @JsonSubTypes.Type(value=Cuid.class, name="Cuid")})
 @JsonTypeInfo(use= JsonTypeInfo.Id.CLASS, include= JsonTypeInfo.As.PROPERTY)
-//@JsonTypeInfo(use= JsonTypeInfo.Id.CLASS, include= JsonTypeInfo.As.WRAPPER_ARRAY)
-public class Cuid implements Serializable {
+public class Cuid {
 
     @JsonProperty
     String cuid;
@@ -49,11 +46,6 @@ public class Cuid implements Serializable {
     public Cuid(String cuid) {
         this.cuid = cuid;
     }
-
-    //    @JsonCreator
-//    public Cuid(@JsonProperty("cuid") String cuid) {
-//        this.cuid = cuid;
-//    }
 
     public String asString() {
         return this.cuid;
