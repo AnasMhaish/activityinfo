@@ -24,17 +24,14 @@
 
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.user.User'/>
-  <inherits name='org.activityinfo.datamodel.DataModelEmul'/>
-  <inherits name="com.google.web.bindery.autobean.AutoBean"/>
   <inherits name="org.fusesource.restygwt.RestyGWT"/>
 
   <!-- Include generated sources -->
-  <source path='autobean'/>
   <source path='client'/>
   <source path="shared"/>
 
-  <generate-with class="org.activityinfo.datamodel.rebind.RecordBeanGenerator">
-    <when-type-assignable class="org.activityinfo.datamodel.client.record.impl.RecordBeanFactory" />
-  </generate-with>
+  <!--<generate-with class="org.activityinfo.datamodel.rebind.RecordBeanGenerator">-->
+    <!--<when-type-assignable class="org.activityinfo.datamodel.client.record.impl.RecordBeanFactory" />-->
+  <!--</generate-with>-->
 
 </module>
